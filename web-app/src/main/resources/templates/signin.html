@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Connexion</title>
+</head>
+
+<body>
+
+<h1>Connexion Médecin</h1>
+
+<form th:action="@{/signin}" method="post">
+
+    <label>Username</label>
+    <input type="text" name="username"/>
+
+    <label>Password</label>
+    <input type="password" name="password"/>
+
+    <button type="submit">
+        Se connecter
+    </button>
+
+</form>
+
+<a th:href="@{/signup}">
+    Créer un compte
+</a>
+
+</body>
+</html>

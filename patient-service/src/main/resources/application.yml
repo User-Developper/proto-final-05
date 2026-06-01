@@ -1,0 +1,38 @@
+server:
+  port: 8082
+spring:
+  application:
+    name: "patient-service"
+
+  datasource:
+    url: jdbc:mysql://localhost:3308/medical_db
+
+    username: root
+    password: mddb
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+  sql:
+    init:
+      mode: always
+
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        enabled: true
+        health-check-path: /actuator/health
+        health-check-interval: 15s
+
+
+
+
+
+
+

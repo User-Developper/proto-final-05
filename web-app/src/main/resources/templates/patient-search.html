@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+<h1>Recherche Patient</h1>
+
+<form th:action="@{/patients/search}" method="post">
+
+    <input type="text"
+           name="email"
+           placeholder="email"/>
+
+    <button type="submit">
+        Rechercher
+    </button>
+
+</form>
+
+</body>
+</html>
