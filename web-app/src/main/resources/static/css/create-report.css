@@ -46,14 +46,7 @@ body {
     width: 33%;
     height: 100%;
     background: #3b82f6;
-}
-
-/* ===== FORM CARD ===== */
-.form-card {
-    background: white;
-    padding: 25px;
-    border-radius: 14px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    transition: width 0.3s ease;
 }
 
 /* ===== SECTION ===== */
@@ -93,22 +86,37 @@ input:focus, textarea:focus {
 .category-card {
     padding: 12px;
     border: 1px solid #e5e7eb;
-    border-radius: 10px;
+    border-radius: 12px;
     cursor: pointer;
     text-align: center;
-    transition: 0.2s;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
     user-select: none;
 }
 
 .category-card:hover {
     border-color: #3b82f6;
+    box-shadow: 0 4px 8px rgba(59,130,246,0.2);
 }
 
 .category-card input {
     display: none;
 }
 
-/* ===== GRAVITY ===== */
+/* ===== CATEGORY SELECTED ===== */
+.category-card input:checked + span {
+    border: 2px solid #3b82f6;
+    border-radius: 12px;
+    padding: 8px;
+    display: inline-block;
+    background: #dbeafe;
+    box-shadow: 0 6px 12px rgba(59,130,246,0.25);
+}
+
+/* ===== GRAVITY GRID ===== */
 .gravity-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -117,11 +125,15 @@ input:focus, textarea:focus {
 
 .gravity {
     padding: 10px;
-    border-radius: 10px;
+    border-radius: 12px;
     text-align: center;
     cursor: pointer;
     border: 1px solid #ddd;
     user-select: none;
+    transition: all 0.2s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .gravity input {
@@ -132,6 +144,15 @@ input:focus, textarea:focus {
 .medium { background: #fffbeb; }
 .high { background: #fff7ed; }
 .critical { background: #fef2f2; }
+
+.gravity input:checked + span {
+    border: 2px solid #3b82f6;
+    border-radius: 12px;
+    padding: 8px;
+    display: inline-block;
+    background: #dbeafe;
+    box-shadow: 0 6px 12px rgba(59,130,246,0.25);
+}
 
 /* ===== LOCATION BUTTON ===== */
 .location-btn {
@@ -168,27 +189,12 @@ input:focus, textarea:focus {
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
-
-    .category-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .gravity-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
+    .category-grid { grid-template-columns: repeat(2, 1fr); }
+    .gravity-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 480px) {
-
-    .container {
-        padding: 10px;
-    }
-
-    .category-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .gravity-grid {
-        grid-template-columns: 1fr;
-    }
+    .container { padding: 10px; }
+    .category-grid { grid-template-columns: 1fr; }
+    .gravity-grid { grid-template-columns: 1fr; }
 }

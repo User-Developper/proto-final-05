@@ -26,25 +26,34 @@
             <h2>Type de signalement</h2>
 
             <div class="category-grid">
-
                 <label class="category-card">
                     <input type="radio" th:field="*{category}" value="AIR_POLLUTION">
-                    🌫 Air
+                    <span>🌫 Air</span>
                 </label>
 
                 <label class="category-card">
                     <input type="radio" th:field="*{category}" value="WATER_POLLUTION">
-                    💧 Eau
+                    <span>💧 Eau</span>
                 </label>
 
                 <label class="category-card">
                     <input type="radio" th:field="*{category}" value="VEGETATION">
-                    🌿 Végétation
+                    <span>🌿 Végétation</span>
                 </label>
 
                 <label class="category-card">
                     <input type="radio" th:field="*{category}" value="TOXIC_PRODUCTS">
-                    ☠ Produits toxiques
+                    <span>☠ Produits toxiques</span>
+                </label>
+
+                <label class="category-card">
+                    <input type="radio" th:field="*{category}" value="WASTE">
+                    <span>🗑 Déchets</span>
+                </label>
+
+                <label class="category-card">
+                    <input type="radio" th:field="*{category}" value="NOISE">
+                    <span>🔊 Bruit</span>
                 </label>
             </div>
         </div>
@@ -52,14 +61,13 @@
         <!-- TITLE -->
         <div class="section">
             <h2>Titre</h2>
-            <input type="text" name="title" th:field="*{title}" placeholder="Ex: Odeur suspecte près du parc">
+            <input type="text" th:field="*{title}" placeholder="Ex: Odeur suspecte près du parc">
         </div>
 
         <!-- DESCRIPTION -->
         <div class="section">
             <h2>Description</h2>
-            <textarea name="description" rows="5" th:field="*{description}"
-                      placeholder="Décris la situation en détail..."></textarea>
+            <textarea th:field="*{description}" rows="5" placeholder="Décris la situation en détail..."></textarea>
         </div>
 
         <!-- GRAVITY -->
@@ -67,51 +75,45 @@
             <h2>Gravité</h2>
 
             <div class="gravity-grid">
-
                 <label class="gravity basic">
                     <input type="radio" th:field="*{gravity}" value="BASIC">
-                    🟢 Basique
+                    <span>🟢 Basique</span>
                 </label>
 
                 <label class="gravity medium">
                     <input type="radio" th:field="*{gravity}" value="MEDIUM">
-                    🟡 Moyen
+                    <span>🟡 Moyen</span>
                 </label>
 
                 <label class="gravity high">
                     <input type="radio" th:field="*{gravity}" value="HIGH">
-                    🟠 Élevé
+                    <span>🟠 Élevé</span>
                 </label>
 
                 <label class="gravity critical">
                     <input type="radio" th:field="*{gravity}" value="CRITICAL">
-                    🔴 Critique
+                    <span>🔴 Critique</span>
                 </label>
-
             </div>
         </div>
 
-        <!-- LOCATION (simple version step 1) -->
+        <!-- LOCATION -->
         <div class="section">
             <h2>Localisation</h2>
-
-            <input type="text" name="location"  th:field="*{location}" placeholder="Adresse ou lieu">
-
-            <button type="button" class="location-btn">
-                📍 Utiliser ma position actuelle
-            </button>
+            <input type="text" th:field="*{location}" placeholder="Adresse ou lieu">
+            <button type="button" class="location-btn">📍 Utiliser ma position actuelle</button>
         </div>
 
         <!-- SUBMIT -->
         <div class="actions">
-            <button type="submit" class="btn-primary">
-                Continuer
-            </button>
+            <button type="submit" class="btn-primary">Continuer</button>
         </div>
 
     </form>
 
 </div>
+
+<script th:src="@{/js/geolocation.js}"></script>
 
 </body>
 </html>
