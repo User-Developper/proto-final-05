@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Signalement</title>
+    <link rel="stylesheet" th:href="@{/css/report.css}">
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header class="header">
+    <div class="logo">🌿 LOGO</div>
+
+    <nav class="nav">
+        <a th:href="@{/}">Accueil</a>
+        <a th:href="@{/signalements}">Signalements</a>
+    </nav>
+
+    <div class="profile">
+        <span th:text="${user.username}">Profil</span>
+    </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+    <h1>Tous acteurs de la dépollution</h1>
+    <p>Signalement > Pollution végétation</p>
+</section>
+
+<!-- USER INFO -->
+<section class="user-bar">
+    <div>
+        <strong>Jean-Baptiste</strong>
+
+        <div class="badge">
+            Fiabilité : 92%
+        </div>
+    </div>
+
+    <div>
+        05/12/2026 12:35
+    </div>
+</section>
+
+<!-- TITLE -->
+<section class="section-title">
+    <h2>Produit toxique abandonné</h2>
+
+    <div>
+        <span class="tag green">Végétation</span>
+        <span class="tag red">Grave</span>
+        <span class="tag blue">Vérifié</span>
+    </div>
+</section>
+
+<!-- IMAGE -->
+<section class="image-section">
+    <img
+            src="https://placehold.co/1000x500/png?text=Image+du+signalement"
+            alt="Image du signalement">
+</section>
+
+<!-- CONTENT -->
+<section class="content">
+
+    <div class="location">
+        <span>Marseille</span>
+        (13)
+        -
+        <span>Parc Porte d'Aix</span>
+    </div>
+
+    <p class="description">
+        Présence d'un liquide suspect à proximité de plusieurs arbres.
+        Une forte odeur chimique a été signalée par plusieurs riverains.
+        Une intervention des services compétents est demandée afin de
+        vérifier la nature du produit et son impact potentiel sur
+        l'environnement.
+    </p>
+
+</section>
+
+<!-- ACTIONS -->
+<div class="actions">
+    <button class="btn">Contester</button>
+
+    <a href="#">
+        <button class="btn primary">
+            Ouvrir carte globale
+        </button>
+    </a>
+</div>
+
+<!-- RELATED -->
+<section>
+    <h3 style="padding:20px;">Autres signalements :</h3>
+
+    <div class="cards">
+
+        <div class="card">
+            <img
+                    src="https://placehold.co/300x180/png?text=Signalement+1"
+                    alt="Signalement">
+
+            <h4>Dépôt sauvage</h4>
+        </div>
+
+        <div class="card">
+            <img
+                    src="https://placehold.co/300x180/png?text=Signalement+2"
+                    alt="Signalement">
+
+            <h4>Déchets industriels</h4>
+        </div>
+
+        <div class="card">
+            <img
+                    src="https://placehold.co/300x180/png?text=Signalement+3"
+                    alt="Signalement">
+
+            <h4>Pollution d'un cours d'eau</h4>
+        </div>
+
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <span>© 2026 Tous droits réservés</span>
+    <a href="#" style="color:white;">
+        Conditions d'utilisation
+    </a>
+</footer>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<body>-->
+
+<!--&lt;!&ndash; HEADER &ndash;&gt;-->
+<!--<header class="header">-->
+<!--    <div class="logo">🌿 LOGO</div>-->
+
+<!--    <nav class="nav">-->
+<!--        <a th:href="@{/}">Accueil</a>-->
+<!--        <a th:href="@{/signalements}">Signalements</a>-->
+<!--    </nav>-->
+
+<!--    <div class="profile">-->
+<!--        <span th:text="${user.username}">Profil</span>-->
+<!--    </div>-->
+<!--</header>-->
+
+<!--&lt;!&ndash; HERO &ndash;&gt;-->
+<!--<section class="hero">-->
+<!--    <h1>Tous acteurs de la dépolution</h1>-->
+<!--    <p>Signalement > Pollution végétation</p>-->
+<!--</section>-->
+
+<!--&lt;!&ndash; USER INFO &ndash;&gt;-->
+<!--<section class="user-bar">-->
+<!--    <div>-->
+<!--        <strong th:text="${signalement.author.name}">Jean-Baptiste</strong>-->
+<!--        <div class="badge"-->
+<!--             th:text="'Fiabilité Auteur : ' + ${signalement.author.reliability} + '% (' + ${signalement.author.validReports} + ' signalements validés)'">-->
+<!--            Fiabilité-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <div th:text="${signalement.createdAt}">-->
+<!--        05/12/25 12:35-->
+<!--    </div>-->
+<!--</section>-->
+
+<!--&lt;!&ndash; TITLE &ndash;&gt;-->
+<!--<section class="section-title">-->
+<!--    <h2 th:text="${signalement.title}">Produit toxique</h2>-->
+
+<!--    <div>-->
+<!--        <span class="tag green" th:text="${signalement.category}">Végétation</span>-->
+<!--        <span class="tag red" th:text="${signalement.severity}">Grave</span>-->
+<!--        <span class="tag blue" th:text="${signalement.status}">Vérifié</span>-->
+<!--    </div>-->
+<!--</section>-->
+
+<!--&lt;!&ndash; IMAGE &ndash;&gt;-->
+<!--<section class="image-section">-->
+<!--    <img th:src="@{${signalement.imageUrl}}" alt="signalement image"/>-->
+<!--</section>-->
+
+<!--&lt;!&ndash; CONTENT &ndash;&gt;-->
+<!--<section class="content">-->
+
+<!--    <div class="location">-->
+<!--        <span th:text="${signalement.location.city}">Marseille</span>-->
+<!--        (<span th:text="${signalement.location.zip}">13</span>)-->
+<!--        - -->
+<!--        <span th:text="${signalement.location.place}">Parc porte d’Aix</span>-->
+<!--    </div>-->
+
+<!--    <p class="description" th:text="${signalement.description}">-->
+<!--        Description...-->
+<!--    </p>-->
+
+<!--</section>-->
+
+<!--&lt;!&ndash; ACTIONS &ndash;&gt;-->
+<!--<div class="actions">-->
+<!--    <button class="btn">Contester</button>-->
+
+<!--    <a th:href="@{/map/{id}(id=${signalement.id})}">-->
+<!--        <button class="btn primary">Ouvrir carte globale</button>-->
+<!--    </a>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; RELATED &ndash;&gt;-->
+<!--<section>-->
+<!--    <h3 style="padding:20px;">Autres signalements :</h3>-->
+
+<!--    <div class="cards">-->
+<!--        <div class="card" th:each="item : ${related}">-->
+<!--            <h4 th:text="${item.title}">Titre</h4>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</section>-->
+
+<!--&lt;!&ndash; FOOTER &ndash;&gt;-->
+<!--<footer class="footer">-->
+<!--    <span>© 2026 Tous droits réservés</span>-->
+<!--    <a href="#" style="color:white;">Condition d’utilisation</a>-->
+<!--</footer>-->
+
+<!--</body>-->

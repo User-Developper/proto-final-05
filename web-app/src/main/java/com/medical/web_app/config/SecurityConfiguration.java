@@ -45,7 +45,9 @@ public class SecurityConfiguration {
                                 "/signin",
                                 "/signup",
                                 "/css/**",
-                                "/images/**"
+                                "/images/**",
+                                "/report",
+                                "/js/**"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
@@ -54,6 +56,7 @@ public class SecurityConfiguration {
                         .loginPage("/signin")
                         .usernameParameter("username")
                         .passwordParameter("password")
+                        .failureUrl("/signin?error")
                         .defaultSuccessUrl("/", true)
                         .permitAll()
                 )

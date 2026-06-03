@@ -1,0 +1,305 @@
+/* ===== RESET ===== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Segoe UI", sans-serif;
+    background: #f5f7fa;
+    color: #222;
+    line-height: 1.6;
+}
+
+/* ===== HEADER ===== */
+
+.header {
+    height: 80px;
+    background: white;
+    padding: 0 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border-bottom: 1px solid #e5e5e5;
+    box-shadow: 0 2px 8px rgba(0,0,0,.04);
+
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo {
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.nav {
+    display: flex;
+    gap: 30px;
+}
+
+.nav a {
+    text-decoration: none;
+    color: #444;
+    font-weight: 500;
+    transition: .2s;
+}
+
+.nav a:hover {
+    color: #2ecc71;
+}
+
+.profile {
+    font-weight: 600;
+}
+
+/* ===== HERO ===== */
+
+.hero {
+    min-height: 300px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+
+    background:
+        linear-gradient(
+            rgba(0,0,0,.45),
+            rgba(0,0,0,.45)
+        ),
+        url("https://images.unsplash.com/photo-1506744038136-46273834b3fb")
+        center/cover;
+
+    color: white;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    margin-bottom: 15px;
+}
+
+.hero p {
+    font-size: 1.1rem;
+    opacity: .9;
+}
+
+/* ===== USER BAR ===== */
+
+.user-bar {
+    max-width: 1200px;
+    margin: 30px auto 0;
+
+    background: white;
+    border-radius: 12px;
+
+    padding: 20px 30px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    box-shadow: 0 3px 12px rgba(0,0,0,.08);
+}
+
+.badge {
+    display: inline-block;
+
+    margin-top: 8px;
+    padding: 5px 10px;
+
+    border-radius: 50px;
+
+    background: #e9fff1;
+    color: #1d8a4d;
+
+    font-size: .8rem;
+    font-weight: 600;
+}
+
+/* ===== TITLE ===== */
+
+.section-title {
+    text-align: center;
+    padding: 40px 20px 20px;
+}
+
+.section-title h2 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+}
+
+.tag {
+    display: inline-block;
+
+    padding: 6px 14px;
+    margin: 5px;
+
+    border-radius: 30px;
+
+    font-size: .8rem;
+    font-weight: 600;
+}
+
+.green {
+    background: #dff8e6;
+    color: #208847;
+}
+
+.red {
+    background: #ffe2e2;
+    color: #c0392b;
+}
+
+.blue {
+    background: #e1edff;
+    color: #2c6be0;
+}
+
+/* ===== IMAGE ===== */
+
+.image-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.image-section img {
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+
+    border-radius: 15px;
+
+    box-shadow: 0 8px 25px rgba(0,0,0,.12);
+}
+
+/* ===== CONTENT ===== */
+
+.content {
+    max-width: 1200px;
+    margin: 20px auto;
+
+    background: white;
+    border-radius: 15px;
+
+    padding: 30px;
+
+    box-shadow: 0 3px 12px rgba(0,0,0,.08);
+}
+
+.location {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #2ecc71;
+
+    margin-bottom: 20px;
+}
+
+.description {
+    font-size: 1rem;
+    color: #444;
+}
+
+/* ===== ACTIONS ===== */
+
+.actions {
+    max-width: 1200px;
+    margin: 20px auto;
+
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.btn {
+    padding: 12px 25px;
+
+    border: none;
+    border-radius: 10px;
+
+    cursor: pointer;
+    font-size: .95rem;
+    font-weight: 600;
+
+    transition: .2s;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+.primary {
+    background: #2ecc71;
+    color: white;
+}
+
+.primary:hover {
+    background: #27ae60;
+}
+
+/* ===== RELATED ===== */
+
+.cards {
+    max-width: 1200px;
+    margin: 20px auto 50px;
+
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
+    gap: 20px;
+}
+
+.card {
+    background: white;
+
+    border-radius: 15px;
+    overflow: hidden;
+
+    box-shadow: 0 4px 15px rgba(0,0,0,.08);
+
+    transition: .2s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.card h4 {
+    padding: 15px;
+}
+
+/* ===== FOOTER ===== */
+
+.footer {
+    background: #111;
+    color: white;
+
+    padding: 25px 40px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-top: 40px;
+}
+
+.footer a {
+    color: white;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}

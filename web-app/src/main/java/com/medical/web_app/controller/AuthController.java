@@ -3,6 +3,7 @@ package com.medical.web_app.controller;
 
 import com.medical.web_app.model.User;
 import com.medical.web_app.service.WebAppService;
+import com.medical.web_app.service.form.ReportForm;
 import com.medical.web_app.service.form.SignupForm;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.security.Principal;
 
 @Controller
 public class AuthController {
@@ -58,5 +61,30 @@ public class AuthController {
         System.out.println("USER CREATED: " + created);
 
         return "redirect:/signin";
+    }
+
+
+
+    @GetMapping("/report")
+    public String reportPage(Model model, Principal principal) {
+
+        String username = principal.getName();
+
+        User user = webAppService.getUser(username)
+                .orElse(null);
+
+        model.addAttribute("user", user);
+
+        return "report";
+    }
+
+    @GetMapping("/create-report")
+    public String createReport(Model model, ReportForm reportForm){
+
+        model.addAttribute("reportForm", new ReportForm());
+
+        return "create-report";
+
+
     }
 }

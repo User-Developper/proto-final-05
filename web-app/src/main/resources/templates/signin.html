@@ -2,29 +2,96 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Connexion</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/signin.css}">
+
 </head>
 
 <body>
 
-<h1>Connexion Médecin</h1>
+<div class="login-container">
 
-<form th:action="@{/signin}" method="post">
+    <div class="login-card">
 
-    <label>Username</label>
-    <input type="text" name="username"/>
+        <h1>Connexion</h1>
 
-    <label>Password</label>
-    <input type="password" name="password"/>
+        <form th:action="@{/signin}" method="post">
 
-    <button type="submit">
-        Se connecter
-    </button>
+            <div>
+                <label>Username *</label>
+                <input type="text" name="username" id="username">
+                <small class="error" id="usernameError"></small>
+            </div>
 
-</form>
+            <div>
+                <label>Password *</label>
+                <input type="password" name="password" id="password">
+                <small class="error" id="passwordError"></small>
+            </div>
 
-<a th:href="@{/signup}">
-    Créer un compte
-</a>
+            <button type="submit">
+                Se connecter
+            </button>
 
+        </form>
+
+        <div th:if="${param.error}" class="error-box">
+            ❌ Username ou mot de passe incorrect
+        </div>
+
+        <div class="links"><a href="#" id="forgotPassword">Mot de passe oublié ?</a></div>
+
+
+        <div class="links">
+            <a th:href="@{/signup}">Pas encore inscrit ? Créez un compte</a>
+        </div>
+
+    </div>
+
+</div>
+
+<script th:src="@{/js/signin.js}"></script>
 </body>
+
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<body>-->
+
+<!--<h1>Connexion Médecin</h1>-->
+
+<!--<form th:action="@{/signin}" method="post">-->
+
+<!--    <label>Username</label>-->
+<!--    <input type="text" name="username"/>-->
+
+<!--    <label>Password</label>-->
+<!--    <input type="password" name="password"/>-->
+
+<!--    <button type="submit">-->
+<!--        Se connecter-->
+<!--    </button>-->
+
+<!--</form>-->
+
+<!--<a th:href="@{/signup}">-->
+<!--    Créer un compte-->
+<!--</a>-->
+<!--<a th:href="@{/report}">-->
+<!--    Créer-->
+<!--</a>-->
+
+<!--</body>-->
