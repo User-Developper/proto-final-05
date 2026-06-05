@@ -4,9 +4,16 @@
     <meta charset="UTF-8">
     <title>Signalement</title>
     <link rel="stylesheet" th:href="@{/css/report.css}">
+
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+    <script th:src="@{/js/app.js}" defer></script>
 </head>
 
 <body>
+
+<div th:replace="~{fragments/header :: header}"></div>
+
+<body style="padding-bottom: 70px;">
 
 <!-- HEADER -->
 <header class="header">
@@ -132,6 +139,10 @@
         Conditions d'utilisation
     </a>
 </footer>
+
+
+<div th:replace="~{fragments/mobile-nav :: mobileNav}"></div>
+<div th:replace="~{fragments/footer :: footer}"></div>
 
 </body>
 </html>

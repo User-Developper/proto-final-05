@@ -1,6 +1,11 @@
 package com.medical.web_app.controller;
 
+import com.medical.web_app.service.dto.CreateReportRequest;
+import com.medical.web_app.service.dto.ReportResponse;
+import jakarta.servlet.http.HttpSession;
 
+
+import com.medical.web_app.model.Report;
 import com.medical.web_app.model.User;
 import com.medical.web_app.service.WebAppService;
 import com.medical.web_app.service.form.ReportForm;
@@ -21,9 +26,12 @@ public class AuthController {
 
     private final WebAppService webAppService;
 
+
     public AuthController(WebAppService webAppService) {
         this.webAppService = webAppService;
+
     }
+
 
     @GetMapping("/signin")
     public ModelAndView signin() {
@@ -79,7 +87,7 @@ public class AuthController {
     }
 
     @GetMapping("/create-report")
-    public String createReport(Model model, ReportForm reportForm){
+    public String createReport(Model model){
 
         model.addAttribute("reportForm", new ReportForm());
 
@@ -87,4 +95,29 @@ public class AuthController {
 
 
     }
+
+
+    @PostMapping("/create-report")
+    public String submitReportStep1(@ModelAttribute ReportForm form,
+                                    HttpSession session) {
+
+        ReportResponse report = webAppService.submitReportStep1(form);
+
+        session.setAttribute("report", report);
+
+        return "home";
+    }
+
+//    @PostMapping("/create-report")
+//    public String submitReportStep1(@ModelAttribute ReportForm form){
+//
+//
+//        ReportResponse report = webAppService.submitReportStep1(form);
+//
+//        session.setAttribute("report", report);
+//
+//
+//        return "redirect:/create-report/map";
+//
+//    }
 }

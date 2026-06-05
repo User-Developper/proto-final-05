@@ -57,19 +57,19 @@ document.addEventListener("DOMContentLoaded", () => {
             clearError(prenom);
         }
 
-        if (!validateEmail(email.value)) {
-            showError(email, "Adresse e-mail invalide");
-            isValid = false;
-        } else {
-            clearError(email);
-        }
+//        if (!validateEmail(email.value)) {
+//            showError(email, "Adresse e-mail invalide");
+//            isValid = false;
+//        } else {
+//            clearError(email);
+//        }
 
-        if (password.value.length < 8) {
-            showError(password, "Minimum 8 caractères");
-            isValid = false;
-        } else {
-            clearError(password);
-        }
+//        if (password.value.length < 8) {
+//            showError(password, "Minimum 8 caractères");
+//            isValid = false;
+//        } else {
+//            clearError(password);
+//        }
 
         if (password.value !== confirmPassword.value) {
             showError(confirmPassword, "Les mots de passe ne correspondent pas");

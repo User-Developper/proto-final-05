@@ -198,3 +198,14 @@ input:focus, textarea:focus {
     .category-grid { grid-template-columns: 1fr; }
     .gravity-grid { grid-template-columns: 1fr; }
 }
+
+.sticky-actions {
+    position: fixed;
+    bottom: 70px;
+    left: 0;
+    right: 0;
+
+    padding: 12px;
+    background: white;
+    border-top: 1px solid #e2e8f0;
+}

@@ -4,9 +4,16 @@
     <title>Nouveau signalement</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/css/create-report.css}">
+
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+    <script th:src="@{/js/app.js}" defer></script>
 </head>
 
 <body>
+
+<div th:replace="~{fragments/header :: header}"></div>
+
+<body style="padding-bottom: 70px;">
 
 <div class="container">
 
@@ -104,9 +111,12 @@
             <button type="button" class="location-btn">📍 Utiliser ma position actuelle</button>
         </div>
 
+        <input type="hidden" th:field="*{latitude}">
+        <input type="hidden" th:field="*{longitude}">
+
         <!-- SUBMIT -->
-        <div class="actions">
-            <button type="submit" class="btn-primary">Continuer</button>
+        <div class="sticky-actions">
+            <button type="submit" class="btn-primary">Continuer →</button>
         </div>
 
     </form>
@@ -115,5 +125,9 @@
 
 <script th:src="@{/js/geolocation.js}"></script>
 
+
+<div th:replace="~{fragments/mobile-nav :: mobileNav}"></div>
+<div th:replace="~{fragments/footer :: footer}"></div>
 </body>
+
 </html>
