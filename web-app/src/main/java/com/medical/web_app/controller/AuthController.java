@@ -73,40 +73,6 @@ public class AuthController {
 
 
 
-    @GetMapping("/report")
-    public String reportPage(Model model, Principal principal) {
-
-        String username = principal.getName();
-
-        User user = webAppService.getUser(username)
-                .orElse(null);
-
-        model.addAttribute("user", user);
-
-        return "report";
-    }
-
-    @GetMapping("/create-report")
-    public String createReport(Model model){
-
-        model.addAttribute("reportForm", new ReportForm());
-
-        return "create-report";
-
-
-    }
-
-
-    @PostMapping("/create-report")
-    public String submitReportStep1(@ModelAttribute ReportForm form,
-                                    HttpSession session) {
-
-        ReportResponse report = webAppService.submitReportStep1(form);
-
-        session.setAttribute("report", report);
-
-        return "home";
-    }
 
 //    @PostMapping("/create-report")
 //    public String submitReportStep1(@ModelAttribute ReportForm form){

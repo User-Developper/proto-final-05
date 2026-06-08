@@ -4,6 +4,7 @@ import com.medical.web_app.model.Patient;
 import com.medical.web_app.model.Report;
 import com.medical.web_app.model.User;
 import com.medical.web_app.service.dto.CreateReportRequest;
+import com.medical.web_app.service.dto.CreateReportTemp;
 import com.medical.web_app.service.dto.ReportResponse;
 import com.medical.web_app.service.form.ReportForm;
 import com.medical.web_app.service.form.SignupForm;
@@ -52,9 +53,9 @@ public class WebAppService {
 
 
 
-    public ReportResponse submitReportStep1(ReportForm form) {
+    public CreateReportTemp submitFinal(ReportForm form) {
 
-        CreateReportRequest req = new CreateReportRequest();
+        CreateReportTemp req = new CreateReportTemp();
 
         req.setTitle(form.getTitle());
         req.setDescription(form.getDescription());
@@ -65,6 +66,7 @@ public class WebAppService {
         req.setLongitude(form.getLongitude());
 
         return patientserviceFeignClient.submitReportStep1(req);
+
     }
 
 

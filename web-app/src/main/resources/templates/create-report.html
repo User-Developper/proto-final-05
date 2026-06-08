@@ -7,6 +7,9 @@
 
     <link rel="stylesheet" th:href="@{/css/app.css}">
     <script th:src="@{/js/app.js}" defer></script>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
 
 <body>
@@ -105,11 +108,11 @@
         </div>
 
         <!-- LOCATION -->
-        <div class="section">
-            <h2>Localisation</h2>
-            <input type="text" th:field="*{location}" placeholder="Adresse ou lieu">
-            <button type="button" class="location-btn">📍 Utiliser ma position actuelle</button>
-        </div>
+<!--        <div class="section">-->
+<!--            <h2>Localisation</h2>-->
+<!--            <input type="text" th:field="*{location}" placeholder="Adresse ou lieu">-->
+<!--            <button type="button" class="location-btn">📍 Utiliser ma position actuelle</button>-->
+<!--        </div>-->
 
         <input type="hidden" th:field="*{latitude}">
         <input type="hidden" th:field="*{longitude}">
@@ -126,7 +129,7 @@
 <script th:src="@{/js/geolocation.js}"></script>
 
 
-<div th:replace="~{fragments/mobile-nav :: mobileNav}"></div>
+
 <div th:replace="~{fragments/footer :: footer}"></div>
 </body>
 
