@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Localisation - Signalement</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" th:href="@{/css/create-report-step-0.css}">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<div th:replace="~{fragments/header :: header}"></div>
+
+
+
+<form th:action="@{/create-report-step-0}" method="post">
+
+    <div class="page">
+
+        <!-- HEADER -->
+        <div class="step-header">
+            <h1>Localisation</h1>
+            <p>Étape 2 / 3 — Choisis précisément le lieu</p>
+
+            <div class="progress-bar">
+                <div class="progress step2"></div>
+            </div>
+        </div>
+
+        <!-- SEARCH AUTOCOMPLETE -->
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Rechercher une adresse..." autocomplete="off">
+            <div id="suggestions" class="suggestions"></div>
+        </div>
+
+        <!-- MAP -->
+        <div class="map-card">
+            <div id="map"></div>
+
+            <button type="button" class="gps-btn" id="locateBtn">
+                📍 Me localiser
+            </button>
+        </div>
+
+        <!-- ADDRESS -->
+        <div class="address-card">
+            <span class="label">Adresse sélectionnée</span>
+            <p id="address">Aucune position sélectionnée</p>
+        </div>
+
+        <!-- HIDDEN -->
+        <input type="hidden" id="latitude" name="latitude">
+        <input type="hidden" id="longitude" name="longitude">
+        <input type="hidden" id="location" name="location">
+
+    </div>
+
+    <!-- BOTTOM BAR -->
+    <div class="bottom-bar">
+
+        <button type="button" class="btn-back" onclick="history.back()">
+            ← Retour
+        </button>
+
+        <button type="submit" class="btn-next">
+            Continuer →
+        </button>
+
+
+
+    </div>
+
+</form>
+
+
+
+<!--<form th:action="@{/create-report-step-2}" method="post">-->
+
+<!--    <div class="page">-->
+
+<!--        &lt;!&ndash; HEADER &ndash;&gt;-->
+<!--        <div class="step-header">-->
+<!--            <h1>Localisation</h1>-->
+<!--            <p>Étape 2 / 3</p>-->
+
+<!--            <div class="progress-bar">-->
+<!--                <div class="progress step2"></div>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; MAP &ndash;&gt;-->
+<!--        <div class="map-card">-->
+<!--            <div id="map"></div>-->
+
+<!--            <button type="button" class="gps-btn" id="locateBtn">-->
+<!--                📍 Me localiser-->
+<!--            </button>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; ADDRESS &ndash;&gt;-->
+<!--        <div class="address-card">-->
+<!--            <span class="label">Adresse sélectionnée</span>-->
+<!--            <p id="address">Aucune position sélectionnée</p>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; HIDDEN DATA &ndash;&gt;-->
+<!--        <input type="hidden" id="latitude" name="latitude">-->
+<!--        <input type="hidden" id="longitude" name="longitude">-->
+
+<!--    </div>-->
+
+<!--    &lt;!&ndash; BOTTOM BAR &ndash;&gt;-->
+<!--    <div class="bottom-bar">-->
+
+<!--        <button class="btn-secondary btn-back" type="button">-->
+<!--            ← Retour-->
+<!--        </button>-->
+
+<!--        <button class="btn-primary btn-next" type="submit">-->
+<!--            Continuer →-->
+<!--        </button>-->
+
+<!--    </div>-->
+
+<!--</form>-->
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+    const map = L.map('map').setView([46.603354, 1.888334], 6);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap'
+    }).addTo(map);
+
+    let marker = null;
+
+    const searchInput = document.getElementById("searchInput");
+    const suggestionsBox = document.getElementById("suggestions");
+
+    const latInput = document.getElementById("latitude");
+    const lngInput = document.getElementById("longitude");
+    const locationInput = document.getElementById("location");
+    const addressBox = document.getElementById("address");
+
+    // ===== REVERSE GEOCODING =====
+    function reverseGeocode(lat, lng) {
+        fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`)
+            .then(r => r.json())
+            .then(data => {
+                const addr = data.display_name || "Adresse inconnue";
+                addressBox.textContent = addr;
+                locationInput.value = addr;
+            });
+    }
+
+    // ===== SET MARKER =====
+    function setMarker(lat, lng) {
+
+        if (marker) map.removeLayer(marker);
+
+        marker = L.marker([lat, lng], { draggable: true }).addTo(map);
+
+        map.setView([lat, lng], 16);
+
+        latInput.value = lat;
+        lngInput.value = lng;
+
+        reverseGeocode(lat, lng);
+
+        marker.on("dragend", function () {
+            const p = marker.getLatLng();
+            setMarker(p.lat, p.lng);
+        });
+    }
+
+    // ===== AUTOCOMPLETE =====
+    let timeout = null;
+
+    searchInput.addEventListener("input", function () {
+
+        clearTimeout(timeout);
+
+        const query = this.value;
+        if (query.length < 3) {
+            suggestionsBox.innerHTML = "";
+            return;
+        }
+
+        timeout = setTimeout(() => {
+
+            fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${query}`)
+                .then(r => r.json())
+                .then(data => {
+
+                    suggestionsBox.innerHTML = "";
+
+                    data.slice(0, 5).forEach(item => {
+
+                        const div = document.createElement("div");
+                        div.className = "suggestion-item";
+                        div.textContent = item.display_name;
+
+                        div.onclick = () => {
+                            setMarker(item.lat, item.lon);
+                            searchInput.value = item.display_name;
+                            suggestionsBox.innerHTML = "";
+                        };
+
+                        suggestionsBox.appendChild(div);
+                    });
+
+                });
+
+        }, 300);
+    });
+
+    // ===== CLICK MAP =====
+    map.on("click", function (e) {
+        setMarker(e.latlng.lat, e.latlng.lng);
+    });
+
+    // ===== GPS =====
+    document.getElementById("locateBtn").addEventListener("click", function () {
+
+        navigator.geolocation.getCurrentPosition(function (pos) {
+            setMarker(pos.coords.latitude, pos.coords.longitude);
+        });
+
+    });
+
+});
+</script>
+
+
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<script th:src="@{/js/app.js}" defer></script>
+
+<!--<script>-->
+<!--    document.addEventListener("DOMContentLoaded", function () {-->
+
+<!--        // ===== MAP =====-->
+<!--        const map = L.map('map').setView([46.603354, 1.888334], 6);-->
+
+<!--        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {-->
+<!--            attribution: '&copy; OpenStreetMap contributors'-->
+<!--        }).addTo(map);-->
+
+<!--        let marker = null;-->
+
+<!--        // ===== INPUTS =====-->
+<!--        const latInput = document.getElementById("latitude");-->
+<!--        const lngInput = document.getElementById("longitude");-->
+<!--        const addressBox = document.getElementById("address");-->
+
+<!--        // ===== REVERSE GEOCODING =====-->
+<!--        function getAddress(lat, lng, callback) {-->
+
+<!--            fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`)-->
+<!--                .then(res => res.json())-->
+<!--                .then(data => {-->
+<!--                    if (data && data.display_name) {-->
+<!--                        callback(data.display_name);-->
+<!--                    } else {-->
+<!--                        callback("Adresse introuvable");-->
+<!--                    }-->
+<!--                })-->
+<!--                .catch(() => {-->
+<!--                    callback("Erreur récupération adresse");-->
+<!--                });-->
+<!--        }-->
+
+<!--        // ===== UPDATE UI =====-->
+<!--        function setPosition(lat, lng) {-->
+
+<!--            latInput.value = lat;-->
+<!--            lngInput.value = lng;-->
+
+<!--            addressBox.textContent = "Recherche de l'adresse...";-->
+
+<!--            getAddress(lat, lng, function (address) {-->
+<!--                addressBox.textContent = address;-->
+<!--            });-->
+<!--        }-->
+
+<!--        // ===== CLICK ON MAP =====-->
+<!--        map.on("click", function (e) {-->
+
+<!--            const lat = e.latlng.lat;-->
+<!--            const lng = e.latlng.lng;-->
+
+<!--            if (marker) map.removeLayer(marker);-->
+
+<!--            marker = L.marker([lat, lng], {-->
+<!--                draggable: true-->
+<!--            }).addTo(map);-->
+
+<!--            setPosition(lat, lng);-->
+
+<!--            marker.on("dragend", function () {-->
+<!--                const pos = marker.getLatLng();-->
+<!--                setPosition(pos.lat, pos.lng);-->
+<!--            });-->
+<!--        });-->
+
+<!--        // ===== GPS BUTTON =====-->
+<!--        document.getElementById("locateBtn").addEventListener("click", function () {-->
+
+<!--            if (!navigator.geolocation) {-->
+<!--                alert("Géolocalisation non supportée");-->
+<!--                return;-->
+<!--            }-->
+
+<!--            navigator.geolocation.getCurrentPosition(function (pos) {-->
+
+<!--                const lat = pos.coords.latitude;-->
+<!--                const lng = pos.coords.longitude;-->
+
+<!--                map.setView([lat, lng], 15);-->
+
+<!--                if (marker) map.removeLayer(marker);-->
+
+<!--                marker = L.marker([lat, lng], {-->
+<!--                    draggable: true-->
+<!--                }).addTo(map);-->
+
+<!--                setPosition(lat, lng);-->
+
+<!--                marker.on("dragend", function () {-->
+<!--                    const p = marker.getLatLng();-->
+<!--                    setPosition(p.lat, p.lng);-->
+<!--                });-->
+
+<!--            }, function () {-->
+<!--                alert("Impossible d'obtenir la position");-->
+<!--            });-->
+<!--        });-->
+
+<!--    });-->
+<!--</script>-->
+
+
+
+
+
+
+
+<!--<script>-->
+<!--    document.addEventListener("DOMContentLoaded", function () {-->
+
+<!--        const map = L.map('map').setView([46.603354, 1.888334], 6);-->
+
+<!--        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {-->
+<!--            attribution: '&copy; OpenStreetMap'-->
+<!--        }).addTo(map);-->
+
+<!--        let marker = null;-->
+
+<!--        const latInput = document.getElementById("latitude");-->
+<!--        const lngInput = document.getElementById("longitude");-->
+<!--        const addressBox = document.getElementById("address");-->
+
+<!--        function setPosition(lat, lng) {-->
+<!--    latInput.value = lat;-->
+<!--    lngInput.value = lng;-->
+
+<!--    addressBox.textContent = "Chargement de l'adresse…";-->
+
+<!--    getAddress(lat, lng, function(address) {-->
+<!--        addressBox.textContent = address;-->
+<!--    });-->
+<!--}-->
+
+<!--        // CLICK MAP-->
+<!--        map.on("click", function (e) {-->
+
+<!--            const lat = e.latlng.lat;-->
+<!--            const lng = e.latlng.lng;-->
+
+<!--            if (marker) map.removeLayer(marker);-->
+
+<!--            marker = L.marker([lat, lng], { draggable: true }).addTo(map);-->
+
+<!--            setPosition(lat, lng, "Position sélectionnée sur la carte");-->
+
+<!--            marker.on("dragend", function () {-->
+<!--                const pos = marker.getLatLng();-->
+<!--                setPosition(pos.lat, pos.lng, "Position ajustée");-->
+<!--            });-->
+<!--        });-->
+
+<!--        // GPS BUTTON-->
+<!--        document.getElementById("locateBtn").addEventListener("click", function () {-->
+
+<!--            if (!navigator.geolocation) {-->
+<!--                alert("Géolocalisation non supportée");-->
+<!--                return;-->
+<!--            }-->
+
+<!--            navigator.geolocation.getCurrentPosition(function (pos) {-->
+
+<!--                const lat = pos.coords.latitude;-->
+<!--                const lng = pos.coords.longitude;-->
+
+<!--                map.setView([lat, lng], 15);-->
+
+<!--                if (marker) map.removeLayer(marker);-->
+
+<!--                marker = L.marker([lat, lng], { draggable: true }).addTo(map);-->
+
+<!--                setPosition(lat, lng, "Votre position actuelle");-->
+
+<!--            });-->
+
+<!--        });-->
+
+<!--    });-->
+
+
+<!--    function getAddress(lat, lng, callback) {-->
+<!--    const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`;-->
+
+<!--    fetch(url)-->
+<!--        .then(response => response.json())-->
+<!--        .then(data => {-->
+<!--            if (data && data.display_name) {-->
+<!--                callback(data.display_name);-->
+<!--            } else {-->
+<!--                callback("Adresse inconnue");-->
+<!--            }-->
+<!--        })-->
+<!--        .catch(() => {-->
+<!--            callback("Impossible de récupérer l'adresse");-->
+<!--        });-->
+<!--}-->
+<!--</script>-->
+
+
+
+
+
+</body>
+</html>

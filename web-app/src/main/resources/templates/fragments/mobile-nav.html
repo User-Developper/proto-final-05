@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+
+
+<th:block th:fragment="mobile-nav">
+
+    <nav class="mobile-nav">
+
+        <a th:href="@{/}">
+            <i class="fa-solid fa-house"></i>
+            Accueil
+        </a>
+
+        <a th:href="@{/map}">
+            <i class="fa-solid fa-map-location-dot"></i>
+            Carte
+        </a>
+
+        <a th:href="@{/report-list}">
+            <i class="fa-solid fa-list"></i>
+            Signalements
+        </a>
+
+        <a th:href="@{/create-report}">
+            <i class="fa-solid fa-plus"></i>
+            Nouveau signalement
+        </a>
+
+        <a th:href="@{/logout}">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            Déconnexion
+        </a>
+
+        <a th:href="@{/profile}">
+            <i class="fa-solid fa-user"></i>
+            Profil
+        </a>
+
+    </nav>
+
+</th:block>
+
+</html>

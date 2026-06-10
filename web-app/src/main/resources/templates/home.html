@@ -1,7 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Accueil</title>
+
+
+    <meta charset="UTF-8">
+    <title>Accueil - Alert</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
 
 <body>
@@ -29,6 +40,97 @@
 <a th:href="@{/create-report-step-0}">
     Créer
 </a>
+
+
+<!-- HEADER -->
+<div th:replace="~{fragments/header :: header}"></div>
+
+<!-- MOBILE NAV -->
+<div th:replace="~{fragments/mobile-nav :: mobile-nav}"></div>
+
+<main class="home-page">
+
+    <!-- HERO SIMPLE -->
+    <section class="hero">
+
+        <h1>Signalements autour de vous</h1>
+
+        <p>
+            Consulte les incidents récents et contribue à améliorer la sécurité.
+        </p>
+
+        <!-- ACTION CTA -->
+        <a th:href="@{/create-report}" class="cta-button">
+            <i class="fa-solid fa-plus"></i>
+            Nouveau signalement
+        </a>
+
+    </section>
+
+    <!-- FILTERS (future ready) -->
+    <section class="filters">
+
+        <button class="filter active">Tous</button>
+        <button class="filter">Faible</button>
+        <button class="filter">Moyen</button>
+        <button class="filter">Élevé</button>
+        <button class="filter">Critique</button>
+
+    </section>
+
+    <!-- FEED -->
+    <section class="feed">
+
+        <!-- CARD (DYNAMIC THYMELEAF) -->
+        <article class="report-card" th:each="report : ${reports}">
+
+            <div class="report-header">
+
+                <h3 th:text="${report.title}">
+                    Titre du signalement
+                </h3>
+
+                <span class="badge"
+                      th:text="${report.gravity}">
+                    Gravité
+                </span>
+
+            </div>
+
+            <p class="report-desc"
+               th:text="${report.description}">
+                Description...
+            </p>
+
+            <div class="report-meta">
+
+                <span>
+                    📍 <span th:text="${report.location}"></span>
+                </span>
+
+                <span>
+                    🕒 <span th:text="${#temporals.format(report.createdAt,'dd/MM HH:mm')}"></span>
+                </span>
+
+            </div>
+
+            <a th:href="@{'/report/' + ${report.id}}"
+               class="open-btn">
+                Voir détails
+            </a>
+
+        </article>
+
+    </section>
+
+
+    <script th:src="@{/js/app.js}"></script>
+    <div th:replace="~{fragments/footer :: footer}"></div>
+
+</main>
+
+
+
 
 </body>
 </html>

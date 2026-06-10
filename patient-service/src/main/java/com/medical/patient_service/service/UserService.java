@@ -10,6 +10,7 @@ import com.medical.patient_service.service.DTO.ReportResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -73,6 +74,42 @@ public class UserService {
 
         return response;
     }
+
+
+
+    public List<ReportResponse> getAllReports() {
+
+        return reportRepository.findAll()
+                .stream()
+                .map(this::toResponse)
+                .toList();
+    }
+
+    public ReportResponse toResponse(Report report) {
+
+        ReportResponse response = new ReportResponse();
+
+        response.setId(report.getId());
+        response.setTitle(report.getTitle());
+        response.setDescription(report.getDescription());
+        response.setCategory(report.getCategory());
+        response.setGravity(report.getGravity());
+        response.setLatitude(report.getLatitude());
+        response.setLongitude(report.getLongitude());
+        response.setLocation(report.getLocation());
+
+        return response;
+    }
+
+//    public ReportResponse getAllReports(){
+//
+//        ReportResponse reponse = new ReportResponse();
+//
+//
+//
+//
+//
+//    }
 
 
 

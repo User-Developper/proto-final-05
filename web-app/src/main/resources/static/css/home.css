@@ -1,0 +1,258 @@
+/* =========================
+   RESET GLOBAL (léger)
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+body {
+    background: #f8fafc;
+    color: #0f172a;
+}
+
+/* =========================
+   HOME LAYOUT
+========================= */
+
+.home-page {
+    padding: 14px;
+    padding-bottom: 90px;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+    text-align: center;
+    padding: 20px 10px 10px;
+}
+
+.hero h1 {
+    font-size: 20px;
+    font-weight: 900;
+    letter-spacing: -0.3px;
+    margin-bottom: 8px;
+}
+
+.hero p {
+    font-size: 13px;
+    color: #64748b;
+    margin-bottom: 16px;
+}
+
+/* CTA BUTTON */
+.cta-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 12px 16px;
+
+    border-radius: 14px;
+
+    background: linear-gradient(90deg, #2563eb, #7c3aed);
+    color: white;
+
+    text-decoration: none;
+
+    font-weight: 800;
+    font-size: 14px;
+
+    box-shadow: 0 10px 25px rgba(37,99,235,0.25);
+
+    transition: 0.2s;
+}
+
+.cta-button:active {
+    transform: scale(0.96);
+}
+
+/* =========================
+   FILTERS
+========================= */
+
+.filters {
+    display: flex;
+    gap: 8px;
+
+    overflow-x: auto;
+
+    padding: 10px 2px;
+
+    margin-top: 12px;
+    margin-bottom: 10px;
+}
+
+.filter {
+    flex: 0 0 auto;
+
+    padding: 8px 12px;
+
+    border-radius: 999px;
+
+    border: 1px solid #e2e8f0;
+    background: white;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    color: #475569;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.filter.active {
+    background: #2563eb;
+    color: white;
+    border-color: #2563eb;
+}
+
+/* =========================
+   FEED
+========================= */
+
+.feed {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* =========================
+   REPORT CARD
+========================= */
+
+.report-card {
+    background: white;
+
+    border-radius: 16px;
+
+    padding: 14px;
+
+    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+
+    transition: 0.2s;
+}
+
+.report-card:active {
+    transform: scale(0.99);
+}
+
+/* HEADER CARD */
+.report-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 8px;
+}
+
+.report-header h3 {
+    font-size: 15px;
+    font-weight: 800;
+}
+
+/* BADGE */
+.badge {
+    font-size: 11px;
+    font-weight: 700;
+
+    padding: 4px 10px;
+
+    border-radius: 999px;
+
+    background: #e2e8f0;
+    color: #334155;
+}
+
+/* DESCRIPTION */
+.report-desc {
+    font-size: 13px;
+    color: #475569;
+
+    margin-bottom: 10px;
+    line-height: 1.4;
+}
+
+/* META */
+.report-meta {
+    display: flex;
+    justify-content: space-between;
+
+    font-size: 11px;
+    color: #94a3b8;
+
+    margin-bottom: 10px;
+}
+
+/* BUTTON */
+.open-btn {
+    display: inline-block;
+
+    width: 100%;
+    text-align: center;
+
+    padding: 10px;
+
+    border-radius: 12px;
+
+    background: #f1f5f9;
+    color: #0f172a;
+
+    text-decoration: none;
+
+    font-weight: 700;
+    font-size: 13px;
+
+    transition: 0.2s;
+}
+
+.open-btn:active {
+    transform: scale(0.98);
+}
+
+/* =========================
+   GRAVITY COLORS (OPTIONAL)
+========================= */
+
+.badge.low {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.badge.medium {
+    background: #fef9c3;
+    color: #854d0e;
+}
+
+.badge.high {
+    background: #ffedd5;
+    color: #9a3412;
+}
+
+.badge.critical {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+/* =========================
+   DESKTOP (BASIC UPGRADE)
+========================= */
+
+@media (min-width: 768px) {
+
+    .home-page {
+        max-width: 900px;
+        margin: auto;
+    }
+
+    .report-card:hover {
+        transform: translateY(-2px);
+    }
+}

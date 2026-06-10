@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmation signalement</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" th:href="@{/css/create-report-step-1.css}">
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+
+<body>
+
+<div th:replace="~{fragments/header :: header}"></div>
+
+<!-- PAGE WRAPPER -->
+<div class="page">
+
+    <div class="container">
+
+        <!-- HEADER -->
+        <div class="step-header">
+            <h1>Confirmation</h1>
+            <p>Étape 3 / 3 — Vérifiez votre signalement</p>
+        </div>
+
+        <!-- STATUS (optionnel UX premium) -->
+        <div class="status-badge">
+            ✔ Prêt à être envoyé
+        </div>
+
+        <!-- CARD -->
+        <div class="report-card">
+
+            <div class="report-title" th:text="${report.title}">
+                Titre
+            </div>
+
+            <!-- TYPE -->
+            <div class="section-block">
+
+                <div class="section-label">Type de signalement</div>
+
+                <span class="badge category"
+                      th:text="${report.category}">
+            Catégorie
+        </span>
+
+            </div>
+
+            <!-- GRAVITY -->
+            <div class="section-block">
+
+                <div class="section-label">Niveau de gravité</div>
+
+                <span class="badge"
+                      th:classappend="${report.gravity.name() == 'BASIC'} ? ' low' :
+                              (${report.gravity.name() == 'MEDIUM'} ? ' medium' :
+                              (${report.gravity.name() == 'HIGH'} ? ' high' :
+                              ' critical'))"
+                      th:text="${report.gravity}">
+            Gravité
+        </span>
+
+            </div>
+
+            <!-- DESCRIPTION -->
+            <div class="section-block">
+
+                <div class="section-label">Description</div>
+
+                <p class="description"
+                   th:text="${report.description}">
+                </p>
+
+            </div>
+
+            <!-- LOCATION -->
+            <div class="section-block">
+
+                <div class="section-label">Localisation</div>
+
+                <div class="location-box">
+
+                    <div class="location">
+                        📍 <span th:text="${report.location}"></span>
+                    </div>
+
+                    <!-- coords visibles (texte seulement si tu veux) -->
+                    <div class="coords">
+                        <span th:text="${report.latitude}"></span>,
+                        <span th:text="${report.longitude}"></span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- HIDDEN FIELDS (SI TU LES PASSES AU BACKEND) -->
+        <input type="hidden" th:value="${report.latitude}">
+        <input type="hidden" th:value="${report.longitude}">
+
+        <!-- SPACER (évite que bottom bar écrase contenu) -->
+        <div class="page-spacer"></div>
+
+    </div>
+</div>
+
+<!-- BOTTOM ACTION BAR -->
+<div class="bottom-bar">
+
+    <button type="button"
+            class="btn-secondary"
+            onclick="history.back()">
+        ← Modifier
+    </button>
+
+    <button type="button"
+            id="openModal"
+            class="btn-primary">
+        Envoyer 🚀
+    </button>
+
+</div>
+
+<!-- FORM INVISIBLE -->
+<form id="submitForm"
+      th:action="@{/create-report-step-1}"
+      method="post"
+      style="display:none;">
+</form>
+
+<!-- MODAL -->
+<div id="confirmModal" class="modal hidden">
+
+    <div class="modal-content">
+
+        <h2>Confirmer l’envoi ?</h2>
+
+        <p>
+            Votre signalement sera envoyé et ne pourra plus être modifié.
+        </p>
+
+        <div class="modal-actions">
+
+            <button type="button"
+                    id="cancelSend"
+                    class="btn-secondary">
+                Annuler
+            </button>
+
+            <button type="button"
+                    id="confirmSend"
+                    class="btn-primary">
+                Oui, envoyer
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script th:src="@{/js/create-report-step-1.js}" defer></script>
+
+
+
+
+
+</body>
+</html>

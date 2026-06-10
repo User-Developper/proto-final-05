@@ -8,9 +8,12 @@ import com.medical.web_app.service.dto.CreateReportTemp;
 import com.medical.web_app.service.dto.ReportResponse;
 import com.medical.web_app.service.form.ReportForm;
 import com.medical.web_app.service.form.SignupForm;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClient;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -18,6 +21,7 @@ public class WebAppService {
 
     private final PatientserviceFeignClient patientserviceFeignClient;
     private final PasswordEncoder passwordEncoder;
+
 
     public WebAppService(PatientserviceFeignClient patientserviceFeignClient, PasswordEncoder passwordEncoder) {
         this.patientserviceFeignClient = patientserviceFeignClient;
@@ -53,9 +57,9 @@ public class WebAppService {
 
 
 
-    public CreateReportTemp submitFinal(ReportForm form) {
+    public CreateReportRequest submitFinal(CreateReportTemp form) {
 
-        CreateReportTemp req = new CreateReportTemp();
+        CreateReportRequest req = new CreateReportRequest();
 
         req.setTitle(form.getTitle());
         req.setDescription(form.getDescription());
@@ -65,7 +69,15 @@ public class WebAppService {
         req.setLatitude(form.getLatitude());
         req.setLongitude(form.getLongitude());
 
-        return patientserviceFeignClient.submitReportStep1(req);
+        return patientserviceFeignClient.submitFinal(req);
+
+    }
+
+
+
+    public List<ReportResponse> getAllReports() {
+
+        return patientserviceFeignClient.getAllReports();
 
     }
 

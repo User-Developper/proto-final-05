@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+
+    <meta charset="UTF-8">
+    <title>Accueil - Alert</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+    <link rel="stylesheet" th:href="@{/css/report-list.css}">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+
+<body>
+
+
+<div th:replace="~{fragments/header :: header}"></div>
+
+
+<div th:replace="~{fragments/mobile-nav :: mobile-nav}"></div>
+
+<main class="reports-page">
+
+    <section class="page-header">
+
+        <h1>Signalements</h1>
+
+        <p>
+            Consultez les incidents signalés par la communauté
+        </p>
+
+    </section>
+
+    <!-- SEARCH -->
+
+    <div class="search-container">
+
+        <input type="text"
+               placeholder="Rechercher un signalement...">
+
+        <i class="fa-solid fa-magnifying-glass"></i>
+
+    </div>
+
+    <!-- FILTERS -->
+
+    <div class="filters">
+
+        <button class="filter active">Tous</button>
+        <button class="filter">Sécurité</button>
+        <button class="filter">Voirie</button>
+        <button class="filter">Transport</button>
+        <button class="filter">Critique</button>
+
+    </div>
+
+    <!-- GRID -->
+
+    <section class="reports-grid">
+
+        <article class="report-card"
+                 th:each="report : ${reports}">
+
+            <img class="report-image"
+                 th:src="${report.imageUrl != null ? report.imageUrl : '/img/default-report.jpg'}"
+                 alt="Signalement">
+
+            <div class="report-content">
+
+                <h3 th:text="${report.title}">
+                    Titre
+                </h3>
+
+                <div class="badges">
+
+                    <span class="badge type"
+                          th:text="${report.category}">
+                        Type
+                    </span>
+
+                    <span class="badge gravity"
+                          th:text="${report.gravity}">
+                        Gravité
+                    </span>
+
+                </div>
+
+                <p class="description"
+                   th:text="${#strings.abbreviate(report.description,120)}">
+                </p>
+
+                <div class="date">
+
+                    <i class="fa-regular fa-calendar"></i>
+
+                    <span th:text="${#temporals.format(report.createdAt,'dd/MM/yyyy')}">
+                    </span>
+
+                </div>
+
+            </div>
+
+        </article>
+
+    </section>
+
+    <!-- PAGINATION -->
+
+    <div class="pagination">
+
+        <button>Précédent</button>
+
+        <button class="active">
+            1
+        </button>
+
+        <button>2</button>
+
+        <button>3</button>
+
+        <button>Suivant</button>
+
+    </div>
+
+</main>
+
+<script th:src="@{/js/app.js}"></script>
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+</body>
+</html>

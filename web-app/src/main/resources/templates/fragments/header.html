@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:fragment="header">
+
+    <header class="app-header">
+
+
+
+
+
+        <button class="burger-btn" onclick="toggleSidebar()">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <div class="app-logo">
+            Alert
+        </div>
+
+        <a th:href="@{/profile}" class="profile-btn">
+            <i class="fa-solid fa-user"></i>
+        </a>
+    </header>
+
+    <div id="sidebar" class="sidebar">
+
+        <div class="sidebar-header">
+            <span>Menu</span>
+            <button onclick="toggleSidebar()">✕</button>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a th:href="@{/}">
+                🏠 Accueil
+            </a>
+
+            <a th:href="@{/map}">
+                🗺 Carte
+            </a>
+
+            <a th:href="@{/signalements}">
+                📋 Signalements
+            </a>
+
+            <a th:href="@{/create-report}">
+                ➕ Nouveau signalement
+            </a>
+
+            <a th:href="@{/profile}">
+                👤 Profil
+            </a>
+
+            <a th:href="@{/settings}">
+                ⚙ Paramètres
+            </a>
+
+            <a th:href="@{/logout}">
+                🚪 Déconnexion
+            </a>
+
+        </nav>
+
+    </div>
+
+    <div id="sidebar-overlay"
+         class="sidebar-overlay"
+         onclick="toggleSidebar()">
+    </div>
+
+</th:block>
+
+</html>
