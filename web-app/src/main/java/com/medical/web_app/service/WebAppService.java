@@ -1,14 +1,15 @@
 package com.medical.web_app.service;
 
-import com.medical.web_app.model.Patient;
-import com.medical.web_app.model.Report;
-import com.medical.web_app.model.User;
+import com.medical.web_app.model.*;
 import com.medical.web_app.service.dto.CreateReportRequest;
 import com.medical.web_app.service.dto.CreateReportTemp;
+import com.medical.web_app.service.dto.PageResponse;
 import com.medical.web_app.service.dto.ReportResponse;
 import com.medical.web_app.service.form.ReportForm;
 import com.medical.web_app.service.form.SignupForm;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
@@ -75,9 +76,9 @@ public class WebAppService {
 
 
 
-    public List<ReportResponse> getAllReports() {
+    public PageResponse<ReportResponse> getAllReports(int page, int size, Category category, Gravity gravity, String q) {
 
-        return patientserviceFeignClient.getAllReports();
+        return patientserviceFeignClient.getAllReports(page, size, category, gravity, q);
 
     }
 

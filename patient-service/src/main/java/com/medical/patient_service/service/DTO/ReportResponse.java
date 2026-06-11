@@ -15,9 +15,9 @@ public class ReportResponse {
         private Double longitude;
         private String location;
 
-    public String getLocation() {
-        return location;
-    }
+
+
+
 
 
 
@@ -77,6 +77,11 @@ public class ReportResponse {
         this.longitude = longitude;
     }
 
+
     public void setLocation(String location) {
+        this.location = location;
+    }
+    public String getLocation() {
+        return location;
     }
 }
