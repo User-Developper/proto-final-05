@@ -34,24 +34,26 @@ public class ReportController {
         return userService.submitReportStep1(request);
     }
 
-    @GetMapping()
-    public PageResponse<ReportResponse> getAllReports(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "6") int size, @RequestParam(required = false)Category category, @RequestParam(required = false)Gravity gravity, @RequestParam(required = false) String q){
+//    @GetMapping()
+//    public PageResponse<ReportResponse> getAllReports(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "6") int size, @RequestParam(required = false)Category category, @RequestParam(required = false)Gravity gravity, @RequestParam(required = false) String q){
+//
+//        Pageable pageable = PageRequest.of(page, size, Sort.by("date").descending());
+//
+//        return reportService.getAllReports(pageable, category, gravity, q);
+//    }
 
-        Pageable pageable = PageRequest.of(page, size, Sort.by("date").descending());
+//    @GetMapping("/api/reports")
+//    public PageResponse<ReportResponse> getReports(
+//            @RequestParam(defaultValue = "0") int page,
+//            @RequestParam(defaultValue = "6") int size,
+//            @RequestParam(required = false) Category category,
+//            @RequestParam(required = false) Gravity gravity,
+//            @RequestParam(required = false) String q
+//    ) {
+//        return reportService.getAllReports(page, size, category, gravity, q);
+//    }
 
-        return reportService.getAllReports(pageable, category, gravity, q);
-    }
 
-    @GetMapping()
-    public PageResponse<ReportResponse> getReports(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "6") int size,
-            @RequestParam(required = false) Category category,
-            @RequestParam(required = false) Gravity gravity,
-            @RequestParam(required = false) String q
-    ) {
-        return reportService.getAllReports(page, size, category, gravity, q);
-    }
 
 
 

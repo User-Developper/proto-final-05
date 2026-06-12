@@ -1,8 +1,10 @@
 package com.medical.patient_service.service;
 
 
+import com.medical.patient_service.model.ProfessionalClient;
 import com.medical.patient_service.model.Report;
 import com.medical.patient_service.model.User;
+import com.medical.patient_service.repository.ProfessionalClientRepository;
 import com.medical.patient_service.repository.ReportRepository;
 import com.medical.patient_service.repository.UserRepository;
 import com.medical.patient_service.service.DTO.CreateReportRequest;
@@ -73,6 +75,16 @@ public class UserService {
         response.setLongitude(saved.getLongitude());
 
         return response;
+    }
+
+    @Autowired
+    ProfessionalClientRepository professionalClientRepository;
+
+
+    public List<ProfessionalClient> getClientsForUser(){
+
+        return professionalClientRepository.findAll();
+
     }
 
 

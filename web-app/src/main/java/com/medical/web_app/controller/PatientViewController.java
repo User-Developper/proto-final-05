@@ -28,17 +28,17 @@ public class PatientViewController {
         return new ModelAndView("patient-search");
     }
 
-    @PostMapping("/search")
-    public ModelAndView searchPatient(
-            @RequestParam String email,
-            Model model
-    ) {
-
-        Optional<Patient> patient =
-                webAppService.getPatient(email);
-
-        model.addAttribute("patient", patient.orElse(null));
-
-        return new ModelAndView("patient-details");
-    }
+//    @PostMapping("/search")
+//    public ModelAndView searchPatient(
+//            @RequestParam String email,
+//            Model model
+//    ) {
+//
+//        Optional<Patient> patient =
+//                webAppService.getPatient(email);
+//
+//        model.addAttribute("patient", patient.orElse(null));
+//
+//        return new ModelAndView("patient-details");
+//    }
 }

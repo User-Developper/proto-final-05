@@ -320,3 +320,8 @@
     background: white;
     font-size: 14px;
 }
+
+.filter-sheet {
+    max-height: 85vh;
+    overflow-y: auto;
+}

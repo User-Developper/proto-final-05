@@ -82,6 +82,14 @@ public class WebAppService {
 
     }
 
+    public List<ProfessionalClient> getClientsForUser(User user){
+
+
+        return patientserviceFeignClient.getClientsForUser();
+
+
+    }
+
 
 
 

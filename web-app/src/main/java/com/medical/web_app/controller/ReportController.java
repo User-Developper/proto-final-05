@@ -13,10 +13,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
@@ -157,39 +154,56 @@ public class ReportController {
 
     }
 
+//    @GetMapping("/report-list")
+//    public String reportList(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "6") int size, @RequestParam(required = false) Category category,
+//                             @RequestParam(required = false) Gravity gravity,
+//                             @RequestParam(required = false) String q,Model model) {
+//
+//        System.out.println("CATEGORY = " + category);
+//        System.out.println("GRAVITY = " + gravity);
+//        System.out.println("Q = " + q);
+//
+//        PageResponse<ReportResponse> reports =
+//                webAppService.getAllReports(page, size, category, gravity, q);
+//
+//        model.addAttribute("reports", reports);
+//        model.addAttribute("currentPage", reports.getNumber());
+//        model.addAttribute("totalPages", reports.getTotalPages());
+//
+//        model.addAttribute("selectedCategory", category);
+//        model.addAttribute("selectedGravity", gravity);
+//        model.addAttribute("search", q);
+//
+//        return "report-list";
+//    }
+
+//    @GetMapping("/api")
+//    public PageResponse<ReportResponse> getReports(
+//            @RequestParam(defaultValue = "0") int page,
+//            @RequestParam(defaultValue = "6") int size,
+//            @RequestParam(required = false) Category category,
+//            @RequestParam(required = false) Gravity gravity,
+//            @RequestParam(required = false) String q
+//    ) {
+//        return webAppService.getAllReports(page, size, category, gravity, q);
+//    }
+
     @GetMapping("/report-list")
-    public String reportList(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "6") int size, @RequestParam(required = false) Category category,
-                             @RequestParam(required = false) Gravity gravity,
-                             @RequestParam(required = false) String q,Model model) {
-
-        System.out.println("CATEGORY = " + category);
-        System.out.println("GRAVITY = " + gravity);
-        System.out.println("Q = " + q);
-
-        PageResponse<ReportResponse> reports =
-                webAppService.getAllReports(page, size, category, gravity, q);
-
-        model.addAttribute("reports", reports);
-        model.addAttribute("currentPage", reports.getNumber());
-        model.addAttribute("totalPages", reports.getTotalPages());
-
-        model.addAttribute("selectedCategory", category);
-        model.addAttribute("selectedGravity", gravity);
-        model.addAttribute("search", q);
-
+    public String reportList() {
         return "report-list";
     }
 
-    @GetMapping("/api")
-    public PageResponse<ReportResponse> getReports(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "6") int size,
-            @RequestParam(required = false) Category category,
-            @RequestParam(required = false) Gravity gravity,
-            @RequestParam(required = false) String q
-    ) {
-        return webAppService.getAllReports(page, size, category, gravity, q);
-    }
+//    @GetMapping("/api/reports")
+//    public PageResponse<ReportResponse> getReports(
+//            @RequestParam(defaultValue = "0") int page,
+//            @RequestParam(defaultValue = "6") int size,
+//            @RequestParam(required = false) Category category,
+//            @RequestParam(required = false) Gravity gravity,
+//            @RequestParam(required = false) String q
+//    ) {
+//        return webAppService.getAllReports(page, size, category, gravity, q);
+//    }
+
 
 
 }

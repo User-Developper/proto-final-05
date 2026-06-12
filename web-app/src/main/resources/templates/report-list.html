@@ -16,15 +16,12 @@
 
 <body>
 
-<!-- HEADER -->
 <div th:replace="~{fragments/header :: header}"></div>
-
-<!-- MOBILE NAV -->
 <div th:replace="~{fragments/mobile-nav :: mobile-nav}"></div>
 
 <main class="reports-page">
 
-    <!-- PAGE HEADER -->
+    <!-- HEADER -->
     <section class="page-header">
         <h1>Signalements</h1>
         <p>Consultez les incidents signalés par la communauté</p>
@@ -33,30 +30,18 @@
     <!-- TOOLBAR -->
     <div class="toolbar">
 
-        <form th:action="@{/report-list}"
-              method="get"
-              class="search-container">
+        <!-- ❌ plus de form submit -->
+        <div class="search-container">
 
             <input type="text"
-                   name="q"
                    id="searchInput"
-                   th:value="${search}"
                    placeholder="Rechercher un signalement...">
 
-            <button type="submit" class="search-btn">
+            <button class="search-btn" id="searchBtn">
                 <i class="fa-solid fa-magnifying-glass"></i>
             </button>
 
-            <!-- conserver les filtres actifs -->
-            <input type="hidden"
-                   name="category"
-                   th:value="${selectedCategory}">
-
-            <input type="hidden"
-                   name="gravity"
-                   th:value="${selectedGravity}">
-
-        </form>
+        </div>
 
         <button class="filter-btn" id="openFilters">
             <i class="fa-solid fa-filter"></i>
@@ -66,76 +51,14 @@
     </div>
 
     <!-- GRID -->
-    <section class="reports-grid">
-
-        <article class="report-card"
-                 th:each="report : ${reports.content}">
-
-            <!-- IMAGE (disabled for now)
-            <img class="report-image"
-                 th:src="${report.imageUrl != null ? report.imageUrl : '/img/default-report.jpg'}"
-                 alt="Signalement">
-            -->
-
-            <div class="report-content">
-
-                <h3 th:text="${report.title}">Titre</h3>
-
-                <div class="badges">
-
-                    <span class="badge type"
-                          th:text="${report.category}">
-                        Type
-                    </span>
-
-                    <span class="badge gravity"
-                          th:text="${report.gravity}">
-                        Gravité
-                    </span>
-
-                </div>
-
-                <p class="description"
-                   th:text="${#strings.abbreviate(report.description,120)}">
-                </p>
-
-                <!-- DATE (later enable)
-                <div class="date">
-                    <i class="fa-regular fa-calendar"></i>
-                    <span th:text="${#temporals.format(report.createdAt,'dd/MM/yyyy')}"></span>
-                </div>
-                -->
-
-            </div>
-
-        </article>
-
-    </section>
+    <section class="reports-grid" id="reportsGrid"></section>
 
     <!-- PAGINATION -->
-    <div class="pagination">
-
-        <a th:if="${currentPage > 0}"
-           th:href="@{/report-list(page=${currentPage - 1}, category=${selectedCategory},
-        gravity=${selectedGravity},
-        q=${search})}">
-            Précédent
-        </a>
-
-        <span th:text="${currentPage + 1}"></span>
-
-        <a th:if="${currentPage < totalPages - 1}"
-           th:href="@{/report-list(page=${currentPage + 1}, category=${selectedCategory},
-        gravity=${selectedGravity},
-        q=${search})}">
-            Suivant
-        </a>
-
-    </div>
+    <div class="pagination" id="pagination"></div>
 
 </main>
 
-<!-- FILTER BOTTOM SHEET -->
+<!-- FILTER SHEET -->
 <div class="filter-sheet" id="filterSheet">
 
     <div class="sheet-header">
@@ -145,104 +68,46 @@
 
     <div class="sheet-body">
 
-        <!-- Catégorie -->
         <div class="filter-group">
-
-            <label for="categoryFilter">
-                Catégorie
-            </label>
-
+            <label>Catégorie</label>
             <select id="categoryFilter" class="filter-select">
-
-                <option value="">
-                    Toutes
-                </option>
-
-                <option value="AIR_POLLUTION">
-                    Pollution de l'air
-                </option>
-
-                <option value="WATER_POLLUTION">
-                    Pollution de l'eau
-                </option>
-
-                <option value="SOIL_POLLUTION">
-                    Pollution des sols
-                </option>
-
-                <option value="NOISE">
-                    Bruit
-                </option>
-
-                <option value="WASTE">
-                    Déchets
-                </option>
-
-                <option value="VEGETATION">
-                    Végétation
-                </option>
-
-                <option value="TOXIC_PRODUCTS">
-                    Produits toxiques
-                </option>
-
+                <option value="">Toutes</option>
+                <option value="AIR_POLLUTION">Air</option>
+                <option value="WATER_POLLUTION">Eau</option>
+                <option value="SOIL_POLLUTION">Sol</option>
+                <option value="NOISE">Bruit</option>
+                <option value="WASTE">Déchets</option>
+                <option value="VEGETATION">Végétation</option>
+                <option value="TOXIC_PRODUCTS">Toxiques</option>
             </select>
-
         </div>
 
-        <!-- Gravité -->
         <div class="filter-group">
-
-            <label for="gravityFilter">
-                Gravité
-            </label>
-
+            <label>Gravité</label>
             <select id="gravityFilter" class="filter-select">
-
-                <option value="">
-                    Toutes
-                </option>
-
-                <option value="BASIC">
-                    Faible
-                </option>
-
-                <option value="MEDIUM">
-                    Moyenne
-                </option>
-
-                <option value="HIGH">
-                    Élevée
-                </option>
-
-                <option value="CRITICAL">
-                    Critique
-                </option>
-
+                <option value="">Toutes</option>
+                <option value="BASIC">Faible</option>
+                <option value="MEDIUM">Moyenne</option>
+                <option value="HIGH">Élevée</option>
+                <option value="CRITICAL">Critique</option>
             </select>
-
         </div>
 
     </div>
 
-    <div class="sheet-footer">
-
-        <button class="apply-btn">
-            Appliquer
-        </button>
-
-    </div>
+<!--    <div class="sheet-footer">-->
+<!--        <button class="apply-btn" id="applyFilters">-->
+<!--            Appliquer-->
+<!--        </button>-->
+<!--    </div>-->
 
 </div>
 
-<!-- OVERLAY -->
 <div class="overlay" id="overlay"></div>
 
-<!-- SCRIPTS -->
 <script th:src="@{/js/app.js}"></script>
 <script th:src="@{/js/report-list.js}"></script>
 
-<!-- FOOTER -->
 <div th:replace="~{fragments/footer :: footer}"></div>
 
 </body>
