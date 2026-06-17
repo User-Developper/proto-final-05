@@ -48,8 +48,11 @@ public interface PatientserviceFeignClient {
             @RequestParam(required = false) String q
     );
 
-    @GetMapping("/profile")
+    @GetMapping("/client-selector")
     List<ProfessionalClient> getClientsForUser();
+
+//    @GetMapping("/profile")
+//    User user getUser();
 
 
 

@@ -1,7 +1,7 @@
 @charset "UTF-8";
 body {
   font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, #eef2f7, #f8fafc);
+  background-color: red;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -17,28 +17,33 @@ body {
   width: 380px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
 }
+
 .signup-container h1 {
   text-align: center;
   margin-bottom: 35px;
   font-size: 26px;
   color: #222;
 }
+
 .signup-container .subtitle {
   text-align: center;
   font-size: 14px;
   color: #666;
   margin-bottom: 25px;
 }
+
 .signup-container .form-group {
   margin-bottom: 15px;
 }
+
 .signup-container .form-group label {
   display: block;
   margin-bottom: 6px;
   font-size: 14px;
   color: #333;
 }
-.signup-container .form-group input:not([type="checkbox"]) {
+
+.signup-container .form-group input:not([type=checkbox]) {
   width: 100%;
   padding: 11px;
   border: 1px solid #d0d7de;
@@ -46,6 +51,7 @@ body {
   font-size: 14px;
   transition: 0.2s;
 }
+
 .checkbox-label {
   display: flex;
   align-items: center;
@@ -53,17 +59,19 @@ body {
   cursor: pointer;
 }
 
-.checkbox-label input[type="checkbox"] {
+.checkbox-label input[type=checkbox] {
   width: auto;
   height: auto;
   margin: 0;
   flex-shrink: 0;
 }
+
 .signup-container .form-group input:focus {
   border-color: #4a90e2;
   outline: none;
   box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.15);
 }
+
 .signup-container button {
   width: 100%;
   padding: 12px;
@@ -76,9 +84,11 @@ body {
   margin-top: 5px;
   transition: 0.2s;
 }
+
 .signup-container button:hover {
   background: #357bd8;
 }
+
 .signup-container .footer-text {
   margin-top: 18px;
   font-size: 12px;
@@ -100,6 +110,7 @@ body {
   line-height: 1.4;
   cursor: pointer;
 }
+
 .checkbox-label input {
   width: 16px;
   height: 16px;
@@ -120,84 +131,70 @@ body {
   margin-top: 10px; /* 👈 IMPORTANT */
   transition: 0.2s;
 }
+
 .btn-submit:hover {
   background: #357bd8;
-}/*# sourceMappingURL=style.css.map */
-
-
+} 
 .error {
-    border: 2px solid red !important;
+  border: 2px solid red !important;
 }
 
 .error-message {
-    display: block;
-    color: red;
-    margin-top: 5px;
-    font-size: 0.85rem;
+  display: block;
+  color: red;
+  margin-top: 5px;
+  font-size: 0.85rem;
 }
-
-
 
 /* =========================
    Responsive tablette
    ========================= */
 @media (max-width: 768px) {
-
-    body {
-        padding: 20px;
-        height: auto;
-        min-height: 100vh;
-    }
-
-    .signup-container {
-        width: 100%;
-        max-width: 450px;
-        padding: 30px;
-        box-sizing: border-box;
-    }
-
-    .signup-container h1 {
-        font-size: 24px;
-    }
+  body {
+    padding: 20px;
+    height: auto;
+    min-height: 100vh;
+  }
+  .signup-container {
+    width: 100%;
+    max-width: 450px;
+    padding: 30px;
+    box-sizing: border-box;
+  }
+  .signup-container h1 {
+    font-size: 24px;
+  }
 }
-
 /* =========================
    Responsive mobile
    ========================= */
 @media (max-width: 480px) {
-
-    body {
-        padding: 15px;
-    }
-
-    .signup-container {
-        width: 100%;
-        padding: 20px;
-        border-radius: 10px;
-    }
-
-    .signup-container h1 {
-        font-size: 22px;
-        margin-bottom: 25px;
-    }
-
-    .form-group label {
-        font-size: 13px;
-    }
-
-    .signup-container .form-group input:not([type="checkbox"]) {
-        font-size: 16px; /* évite le zoom automatique sur iPhone */
-        padding: 12px;
-        box-sizing: border-box;
-    }
-
-    .checkbox-label {
-        font-size: 11px;
-        gap: 8px;
-    }
-
-    .btn-submit {
-        font-size: 16px;
-        padding: 14px;
-    }
-}
+  body {
+    padding: 15px;
+  }
+  .signup-container {
+    width: 100%;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  .signup-container h1 {
+    font-size: 22px;
+    margin-bottom: 25px;
+  }
+  .form-group label {
+    font-size: 13px;
+  }
+  .signup-container .form-group input:not([type=checkbox]) {
+    font-size: 16px; /* évite le zoom automatique sur iPhone */
+    padding: 12px;
+    box-sizing: border-box;
+  }
+  .checkbox-label {
+    font-size: 11px;
+    gap: 8px;
+  }
+  .btn-submit {
+    font-size: 16px;
+    padding: 14px;
+  }
+}/*# sourceMappingURL=style.css.map */

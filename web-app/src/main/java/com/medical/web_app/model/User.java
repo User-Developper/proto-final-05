@@ -18,6 +18,25 @@ public class User {
     private String password;
     private String role;
 
+    public String getClients() {
+        return clients;
+    }
+
+    public void setClients(String clients) {
+        this.clients = clients;
+    }
+
+    public String getActiveClient() {
+        return ActiveClient;
+    }
+
+    public void setActiveClient(String activeClient) {
+        ActiveClient = activeClient;
+    }
+
+    private String clients;
+    private String ActiveClient;
+
     public String getRole() {
         return role;
     }
