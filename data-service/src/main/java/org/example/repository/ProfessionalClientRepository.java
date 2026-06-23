@@ -1,7 +1,7 @@
 package org.example.repository;
 
 
-import com.medical.patient_service.model.ProfessionalClient;
+import org.example.model.ProfessionalClient;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
