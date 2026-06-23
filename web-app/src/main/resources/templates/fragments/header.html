@@ -1,13 +1,6 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-
-<th:block th:fragment="header">
+<th:block th:fragment="header" xmlns:sec="http://www.w3.org/1999/xhtml">
 
     <header class="app-header">
-
-
-
-
 
         <button class="burger-btn" onclick="toggleSidebar()">
             <i class="fa-solid fa-bars"></i>
@@ -20,54 +13,60 @@
         <a th:href="@{/profile}" class="profile-btn">
             <i class="fa-solid fa-user"></i>
         </a>
+
     </header>
 
     <div id="sidebar" class="sidebar">
 
         <div class="sidebar-header">
-            <span>Menu</span>
-            <button onclick="toggleSidebar()">✕</button>
+
+            <div class="user">
+                <div class="avatar">
+                    <i class="fa-solid fa-circle-user"></i>
+                </div>
+
+                <div class="user-info">
+                    <strong sec:authentication="principal.username">Mon compte</strong>
+                    <small th:href="@{/profile}">Voir profil</small>
+                </div>
+            </div>
+
+            <button class="close-btn" onclick="toggleSidebar()">✕</button>
+
         </div>
 
         <nav class="sidebar-nav">
 
-            <a th:href="@{/}">
-                🏠 Accueil
-            </a>
-
-            <a th:href="@{/map}">
-                🗺 Carte
-            </a>
-
-            <a th:href="@{/signalements}">
-                📋 Signalements
-            </a>
-
-            <a th:href="@{/create-report}">
-                ➕ Nouveau signalement
-            </a>
-
             <a th:href="@{/profile}">
-                👤 Profil
+                <i class="fa-solid fa-user"></i>
+                Profil
             </a>
 
             <a th:href="@{/settings}">
-                ⚙ Paramètres
+                <i class="fa-solid fa-gear"></i>
+                Paramètres
             </a>
 
-            <a th:href="@{/logout}">
-                🚪 Déconnexion
+            <a th:href="@{/security}">
+                <i class="fa-solid fa-shield"></i>
+                Sécurité
+            </a>
+
+            <a th:href="@{/logout}" class="danger">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                Déconnexion
             </a>
 
         </nav>
+
+<!--        <div class="sidebar-footer">-->
+<!--            <small>Alert v1.0</small>-->
+<!--        </div>-->
 
     </div>
 
     <div id="sidebar-overlay"
          class="sidebar-overlay"
-         onclick="toggleSidebar()">
-    </div>
+         onclick="toggleSidebar()"></div>
 
 </th:block>
-
-</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+    <title>Choisir votre zone</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet"
+          href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+    <link rel="stylesheet" th:href="@{/css/client-selector.css}">
+
+</head>
+
+<body>
+
+<div th:replace="~{fragments/header :: header}"></div>
+
+<div class="container">
+
+    <!-- HEADER -->
+
+    <div class="step-header">
+
+        <h1>
+            <i class="fa-solid fa-map-location-dot"></i>
+            Choisir votre zone
+        </h1>
+
+        <p>
+            Sélectionnez l'organisme responsable de votre secteur
+        </p>
+
+    </div>
+
+    <!-- SEARCH -->
+
+    <div class="search-card">
+
+        <div class="search-input-wrapper">
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+            <input
+                    type="text"
+                    id="searchClient"
+                    placeholder="Ville, zone ou organisme"
+                    autocomplete="off">
+
+        </div>
+
+        <div id="suggestions"></div>
+
+    </div>
+
+    <!-- CLIENT SELECTED -->
+
+    <div class="selected-card">
+
+        <div class="selected-label">
+
+            <i class="fa-solid fa-building"></i>
+            Client sélectionné
+
+        </div>
+
+        <div id="selectedClient" class="selected-name">
+            Aucun client sélectionné
+        </div>
+
+        <div id="selectedZone" class="selected-zone">
+
+            <i class="fa-solid fa-circle-info"></i>
+
+            Sélectionnez une zone
+
+        </div>
+
+    </div>
+
+    <!-- MAP -->
+
+    <div class="map-card">
+
+        <div class="map-header">
+
+            <i class="fa-solid fa-map"></i>
+            Zone couverte
+
+        </div>
+
+        <div id="map"></div>
+
+    </div>
+
+</div>
+
+<!-- BOTTOM BAR -->
+
+<div class="bottom-bar">
+
+    <form th:action="@{/profile/set-active-client}"
+          method="post">
+
+        <input
+                type="hidden"
+                name="clientId"
+                id="clientId">
+
+        <button
+                type="submit"
+                class="btn-primary" disabled>
+
+            <i class="fa-solid fa-check"></i>
+            Valider cette zone
+
+        </button>
+
+    </form>
+
+<!--    <span class="active-badge">-->
+<!--    ✓ Zone active-->
+<!--</span>-->
+</div>
+
+
+<!--<script th:inline="javascript">-->
+<!--    const clients = /*[[${clients}]]*/ [];-->
+<!--</script>-->
+<script th:inline="javascript">
+    window.clients = /*[[${clients}]]*/ [];
+</script>
+
+<script th:src="@{/js/client-selector.js}" defer></script>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+</body>
+</html>

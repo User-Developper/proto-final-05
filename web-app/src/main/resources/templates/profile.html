@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Profil utilisateur</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h2 {
+            text-align: center;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        label {
+            font-weight: bold;
+        }
+        select, button {
+            padding: 10px;
+            font-size: 16px;
+        }
+        button {
+            cursor: pointer;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<a th:href="@{/client-selector}">
+    Choix du client
+</a>
+<h2>Profil utilisateur</h2>
+
+<!--<form action="/profile/set-active-client" method="post">-->
+<!--    <label for="client">Choisir votre client actif :</label>-->
+<!--    <select name="clientId" id="client">-->
+<!--        <option value="">&#45;&#45; Sélectionnez un client &#45;&#45;</option>-->
+<!--        &lt;!&ndash; Boucle Thymeleaf pour les clients &ndash;&gt;-->
+<!--        <th:block th:each="c : ${clients}">-->
+<!--            <option th:value="${c.id}" th:text="${c.name}"></option>-->
+<!--        </th:block>-->
+<!--    </select>-->
+<!--&lt;!&ndash;    th:selected="${c.id == user.activeClient?.id}&ndash;&gt;-->
+<!--    <button type="submit">Enregistrer</button>-->
+<!--</form>-->
+
+
+</body>
+</html>

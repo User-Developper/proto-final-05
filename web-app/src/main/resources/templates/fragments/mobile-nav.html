@@ -7,35 +7,31 @@
 
     <nav class="mobile-nav">
 
-        <a th:href="@{/}">
+        <a th:href="@{/}" class="nav-item">
             <i class="fa-solid fa-house"></i>
-            Accueil
+            <span>Accueil</span>
         </a>
 
-        <a th:href="@{/map}">
+        <a th:href="@{/map}" class="nav-item">
             <i class="fa-solid fa-map-location-dot"></i>
-            Carte
+            <span>Carte</span>
         </a>
 
-        <a th:href="@{/report-list}">
-            <i class="fa-solid fa-list"></i>
-            Signalements
-        </a>
-
-        <a th:href="@{/create-report}">
+        <!-- ACTION PRINCIPALE -->
+        <a th:href="@{/create-report}" class="nav-item nav-center">
             <i class="fa-solid fa-plus"></i>
-            Nouveau signalement
         </a>
 
-        <a th:href="@{/logout}">
-            <i class="fa-solid fa-right-from-bracket"></i>
-            Déconnexion
+        <a th:href="@{/report-list}" class="nav-item">
+            <i class="fa-solid fa-list"></i>
+            <span>Alertes</span>
         </a>
 
-        <a th:href="@{/profile}">
+        <a th:href="@{/profile}" class="nav-item">
             <i class="fa-solid fa-user"></i>
-            Profil
+            <span>Profil</span>
         </a>
+
 
     </nav>
 

@@ -1,207 +1,328 @@
-/* =========================
+/* ========================================
    BASE PAGE
-========================= */
+======================================== */
 
 .reports-page {
-    padding: 16px;
-    background: #f8fafc;
+    padding: 20px 16px 32px;
+    background: #f1f5f9;
     min-height: 100vh;
 }
 
-/* =========================
+/* ========================================
    HEADER
-========================= */
+======================================== */
 
 .page-header {
-    text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
 }
 
 .page-header h1 {
-    font-size: 26px;
+    font-size: 30px;
     font-weight: 800;
+    letter-spacing: -0.5px;
     color: #0f172a;
+    margin-bottom: 6px;
 }
 
 .page-header p {
     color: #64748b;
-    margin-top: 6px;
     font-size: 14px;
+    line-height: 1.5;
 }
 
-/* =========================
-   TOOLBAR (SEARCH + FILTER BTN)
-========================= */
+/* ========================================
+   TOOLBAR (RESPONSIVE)
+======================================== */
 
 .toolbar {
     display: flex;
-    gap: 10px;
     align-items: center;
-    margin-bottom: 16px;
+    gap: 10px;
+
+    width: 100%;
+
+    position: sticky;
+    top: 70px;
+    z-index: 20;
+
+    padding: 8px 0;
+
+    background: #f1f5f9;
 }
+
+/* ========================================
+   SEARCH
+======================================== */
 
 .search-container {
     flex: 1;
+    min-width: 0;
     position: relative;
 }
 
 .search-container input {
     width: 100%;
-    padding: 12px 14px;
-    border-radius: 12px;
-    border: 1px solid #e2e8f0;
-    background: white;
-    outline: none;
+    height: 52px;
+
+    box-sizing: border-box;
+
+    padding: 0 44px 0 16px;
+
+    border: none;
+    border-radius: 16px;
+
+    background: #ffffff;
+
+    font-size: 14px;
+    color: #0f172a;
+
+    box-shadow:
+        0 4px 12px rgba(15, 23, 42, 0.05);
+
+    transition: all 0.2s ease;
 }
 
-.search-container i {
+.search-container input:focus {
+    outline: none;
+
+    box-shadow:
+        0 0 0 3px rgba(37, 99, 235, 0.12),
+        0 8px 20px rgba(15, 23, 42, 0.08);
+}
+
+/* icône recherche */
+.search-container::after {
+    content: "\f002";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+
     position: absolute;
-    right: 12px;
+    right: 18px;
     top: 50%;
     transform: translateY(-50%);
+
     color: #94a3b8;
+
+    pointer-events: none;
 }
+
+/* bouton recherche supprimé visuellement */
+.search-btn {
+    display: none;
+}
+
+/* ========================================
+   FILTER BUTTON
+======================================== */
 
 .filter-btn {
+    flex-shrink: 0;
+
+    width: 52px;
+    height: 52px;
+
+    padding: 0;
+
+    border: none;
+    border-radius: 16px;
+
     background: #2563eb;
     color: white;
-    border: none;
-    padding: 12px 14px;
-    border-radius: 12px;
+
     display: flex;
     align-items: center;
-    gap: 6px;
-    font-weight: 600;
+    justify-content: center;
+
     cursor: pointer;
+
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+
+    font-size: 0;
 }
 
-/* =========================
+.filter-btn i {
+    font-size: 16px;
+}
+
+/* ========================================
    GRID REPORTS
-========================= */
+======================================== */
 
 .reports-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 14px;
+    gap: 16px;
 }
 
-/* =========================
+/* ========================================
    CARD
-========================= */
+======================================== */
 
 .report-card {
+    position: relative;
+
     background: white;
-    border-radius: 16px;
-    padding: 14px;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.05);
-    transition: transform 0.2s ease;
+
+    border-radius: 22px;
+
+    padding: 18px;
+
+    border: 1px solid #e2e8f0;
+
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+
+    overflow: hidden;
+
+    transition: all 0.2s ease;
 }
 
 .report-card:active {
     transform: scale(0.98);
 }
 
-.report-content h3 {
-    font-size: 16px;
-    font-weight: 700;
-    margin-bottom: 10px;
-    color: #0f172a;
+.report-card:hover {
+    transform: translateY(-2px);
 }
 
-/* =========================
+/* barre couleur gravité */
+.report-card::before {
+    content: "";
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    width: 5px;
+    height: 100%;
+
+    background: #2563eb;
+}
+
+.report-content h3 {
+    font-size: 17px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 12px;
+    line-height: 1.4;
+}
+
+/* ========================================
    BADGES
-========================= */
+======================================== */
 
 .badges {
     display: flex;
+    flex-wrap: wrap;
     gap: 8px;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
 }
 
 .badge {
-    font-size: 11px;
-    padding: 5px 10px;
+    padding: 6px 12px;
+
     border-radius: 999px;
-    font-weight: 600;
+
+    font-size: 12px;
+    font-weight: 700;
 }
 
+/* catégorie */
 .type {
-    background: #eff6ff;
+    background: #dbeafe;
     color: #2563eb;
 }
 
+/* gravité */
 .gravity {
     background: #fee2e2;
     color: #dc2626;
 }
 
-/* =========================
+/* ========================================
    DESCRIPTION
-========================= */
+======================================== */
 
 .description {
-    color: #64748b;
-    font-size: 13px;
-    line-height: 1.4;
+    color: #475569;
+
+    font-size: 14px;
+    line-height: 1.6;
+
+    margin-bottom: 12px;
 
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
-    overflow: hidden;
 
-    margin-bottom: 10px;
+    overflow: hidden;
 }
 
-/* =========================
+/* ========================================
    DATE
-========================= */
+======================================== */
 
 .date {
-    font-size: 12px;
-    color: #94a3b8;
     display: flex;
     align-items: center;
     gap: 6px;
+
+    font-size: 12px;
+    color: #94a3b8;
 }
 
-/* =========================
-   PAGINATION
-========================= */
+/* ========================================
+   PAGINATION (AJAX MODE SIMPLE)
+======================================== */
 
 .pagination {
-    margin-top: 20px;
+    margin-top: 24px;
+
     display: flex;
     justify-content: center;
-    gap: 6px;
-    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
 }
 
 .pagination button {
     border: none;
+
+    height: 42px;
+    min-width: 42px;
+
+    padding: 0 14px;
+
+    border-radius: 12px;
+
     background: white;
-    padding: 10px 12px;
-    border-radius: 10px;
+
+    color: #334155;
+    font-weight: 600;
+
     cursor: pointer;
-    font-size: 13px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
 }
 
-.pagination .active {
-    background: #2563eb;
-    color: white;
+.pagination span {
+    color: #64748b;
+    font-weight: 600;
 }
 
-/* =========================
-   FILTER BOTTOM SHEET
-========================= */
+/* ========================================
+   FILTER OVERLAY
+======================================== */
 
 .overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.4);
+
+    background: rgba(15, 23, 42, 0.45);
+
     opacity: 0;
     pointer-events: none;
+
     transition: 0.25s ease;
+
     z-index: 1000;
 }
 
@@ -210,100 +331,86 @@
     pointer-events: all;
 }
 
+/* ========================================
+   FILTER SHEET
+======================================== */
+
 .filter-sheet {
     position: fixed;
-    bottom: -100%;
+
     left: 0;
     right: 0;
+    bottom: -100%;
+
     background: white;
-    border-radius: 18px 18px 0 0;
-    padding: 16px;
+
+    border-radius: 28px 28px 0 0;
+
+    padding: 16px 16px 24px;
+
+    max-height: 85vh;
+    overflow-y: auto;
+
     transition: 0.3s ease;
+
     z-index: 1001;
-    box-shadow: 0 -10px 30px rgba(0,0,0,0.1);
+
+    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.12);
 }
 
 .filter-sheet.active {
     bottom: 0;
 }
 
+.filter-sheet::before {
+    content: "";
+    display: block;
+
+    width: 48px;
+    height: 5px;
+
+    background: #cbd5e1;
+
+    border-radius: 999px;
+
+    margin: 0 auto 18px;
+}
+
+/* ========================================
+   SHEET HEADER
+======================================== */
+
 .sheet-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 14px;
+
+    margin-bottom: 18px;
 }
 
 .sheet-header h3 {
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 700;
+    color: #0f172a;
 }
 
-.sheet-body {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 14px;
-}
-
-.chip {
-    padding: 8px 12px;
-    border-radius: 999px;
-    border: 1px solid #e2e8f0;
-    background: white;
-    font-size: 13px;
-}
-
-.chip.active {
-    background: #2563eb;
-    color: white;
-    border-color: #2563eb;
-}
-
-.apply-btn {
-    width: 100%;
-    padding: 12px;
+.sheet-header button {
     border: none;
-    border-radius: 12px;
-    background: #2563eb;
-    color: white;
-    font-weight: 600;
+    background: transparent;
+    font-size: 18px;
+    cursor: pointer;
 }
 
-/* =========================
-   TABLET
-========================= */
-
-@media (min-width: 768px) {
-    .reports-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .page-header h1 {
-        font-size: 30px;
-    }
-}
-
-/* =========================
-   DESKTOP
-========================= */
-
-@media (min-width: 1200px) {
-    .reports-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-
-    .reports-page {
-        max-width: 1100px;
-        margin: 0 auto;
-    }
-}
+/* ========================================
+   FILTER GROUP
+======================================== */
 
 .filter-group {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    margin-bottom: 16px;
+
+    margin-bottom: 18px;
 }
 
 .filter-group label {
@@ -314,14 +421,76 @@
 
 .filter-select {
     width: 100%;
-    padding: 12px;
+    height: 50px;
+
+    border-radius: 14px;
     border: 1px solid #e2e8f0;
-    border-radius: 12px;
+
     background: white;
+
+    padding: 0 14px;
+
     font-size: 14px;
 }
 
-.filter-sheet {
-    max-height: 85vh;
-    overflow-y: auto;
+.filter-select:focus {
+    outline: none;
+
+    border-color: #2563eb;
+
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+/* ========================================
+   EMPTY STATE
+======================================== */
+
+.reports-grid p {
+    text-align: center;
+    color: #64748b;
+    padding: 40px 20px;
+}
+
+/* ========================================
+   TABLET
+======================================== */
+
+@media (min-width: 768px) {
+
+    .reports-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .reports-page {
+        padding: 24px;
+    }
+
+    .filter-btn {
+        width: auto;
+        min-width: 120px;
+
+        padding: 0 18px;
+
+        font-size: 14px;
+    }
+
+    .filter-btn i {
+        font-size: 14px;
+    }
+}
+
+/* ========================================
+   DESKTOP
+======================================== */
+
+@media (min-width: 1200px) {
+
+    .reports-page {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .reports-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
