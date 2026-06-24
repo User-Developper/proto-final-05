@@ -1,7 +1,7 @@
 package org.example.controler;
 
-import com.medical.patient_service.model.ProfessionalClient;
-import com.medical.patient_service.service.UserService;
+
+import org.example.model.ProfessionalClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

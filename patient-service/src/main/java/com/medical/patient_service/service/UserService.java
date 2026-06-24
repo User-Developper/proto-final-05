@@ -11,6 +11,7 @@ import com.medical.patient_service.repository.ReportRepository;
 import com.medical.patient_service.repository.UserRepository;
 import com.medical.patient_service.service.DTO.CreateReportRequest;
 import com.medical.patient_service.service.DTO.ReportResponse;
+import com.medical.patient_service.service.form.DataServiceFeignClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +28,9 @@ public class UserService {
 
     @Autowired
     ReportRepository reportRepository;
+
+    @Autowired
+    DataServiceFeignClient dataServiceFeignClient;
 
 
 
@@ -63,7 +67,7 @@ public class UserService {
         report.setLatitude(request.getLatitude());
         report.setLongitude(request.getLongitude());
 
-        Report saved = reportRepository.save(report);
+        Report saved = dataServiceFeignClient.submitFinal(report);
 
         ReportResponse response = new ReportResponse();
 

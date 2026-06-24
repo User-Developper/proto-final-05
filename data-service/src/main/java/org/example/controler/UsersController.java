@@ -1,9 +1,12 @@
 package org.example.controler;
 
 
-import com.medical.patient_service.model.User;
-import com.medical.patient_service.service.UserService;
+
+
+import org.example.model.User;
+import org.example.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -13,58 +16,38 @@ public class UsersController {
 
 
     @Autowired
-    UserService userService;
+    UserRepository userRepository;
+
 
 
 
     @PostMapping()
     public User addUser(@RequestBody User user){
 
-        System.out.println("🔥 RECEIVED USER IN PATIENT-SERVICE");
+        System.out.println("RECEIVED USER IN PATIENT-SERVICE");
         System.out.println(user.getUsername());
 
 
-        return userService.addUser(user);
+        return userRepository.save(user);
     }
 
     @GetMapping()
-    public Optional<User> findUser(@RequestParam  String username){
+    public Optional<User> findUser(@RequestParam String username){
 
-        return userService.findUser(username);
+        return userRepository.findByUsername(username);
     }
 
     @PutMapping()
     public User update(@RequestBody User user){
 
-        return userService.updateUser(user);
+        return userRepository.save(user);
     }
 
     @DeleteMapping()
     public void delete(@RequestParam String username){
 
-         userService.deleteUser(username);
+        userRepository.deleteByUsername(username);
     }
-
-
-
-
-
-
-//    @PostMapping()
-//    public String submitReportStep1(@RequestBody Report report){
-//
-//
-//
-//        System.out.println(reportForm.getCategory());
-//        System.out.println(reportForm.getTitle());
-//        System.out.println(reportForm.getDescription());
-//        System.out.println(reportForm.getGravity());
-//        System.out.println(reportForm.getLocation());
-//        System.out.println(reportForm.getLatitude());
-//        System.out.println(reportForm.getLongitude());
-//
-//
-//    }
 
 
 
