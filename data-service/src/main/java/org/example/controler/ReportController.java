@@ -4,6 +4,7 @@ package org.example.controler;
 
 import org.example.DTO.CreateReportRequest;
 import org.example.DTO.ReportResponse;
+import org.example.model.Report;
 import org.example.repository.ReportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +22,7 @@ public class ReportController {
     ReportRepository reportRepository;
 
     @PostMapping()
-    public ReportResponse submitReportStep1(@RequestBody CreateReportRequest request){
+    public Report submitReportStep1(@RequestBody Report report){
 
         return reportRepository.save(report);
     }

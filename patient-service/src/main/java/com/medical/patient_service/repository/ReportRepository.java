@@ -16,7 +16,7 @@ import java.util.Optional;
 
 @Repository
 
-public interface ReportRepository extends JpaRepository<Report, Integer>, JpaSpecificationExecutor<Report> {
+public interface ReportRepository extends JpaRepository<Report, Long>, JpaSpecificationExecutor<Report> {
 //    Page<Report> searchOnly(String q, Pageable pageable);
 //
 //    Page<Report> findByCategory(Category category, Pageable pageable);

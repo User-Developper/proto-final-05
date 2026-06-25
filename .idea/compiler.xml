@@ -19,6 +19,7 @@
         <module name="data-service" />
         <module name="config-server" />
         <module name="patient-service" />
+        <module name="mongo_bd" />
       </profile>
     </annotationProcessing>
   </component>

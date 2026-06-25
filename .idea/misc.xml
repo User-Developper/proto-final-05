@@ -8,6 +8,7 @@
         <option value="$PROJECT_DIR$/config-server/pom.xml" />
         <option value="$PROJECT_DIR$/patient-service/pom.xml" />
         <option value="$PROJECT_DIR$/data-service/pom.xml" />
+        <option value="$PROJECT_DIR$/mongo_bd/pom.xml" />
       </list>
     </option>
   </component>
