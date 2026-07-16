@@ -3,6 +3,7 @@ services:
 
 
 
+
   patient-service:
     image: devocin08/patient-service
     mem_limit: 700m
@@ -26,6 +27,31 @@ services:
       MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: "*"
       MANAGEMENT_ENDPOINT_HEALTH_SHOW_DETAILS: "always"
       SPRING_DATASOURCE_URL: "jdbc:mysql://mysql-medical:3306/medical_db"
+
+  data-service:
+    image: devocin08/data-service
+    mem_limit: 700m
+    ports:
+      - "8081:8085"
+    networks:
+      - healthcare-app
+    depends_on:
+      - consul
+
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    environment:
+      SPRING_PROFILES_ACTIVE: default
+      #      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
+      SPRING_CLOUD_CONSUL_HOST: consul
+      MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: "*"
+      MANAGEMENT_ENDPOINT_HEALTH_SHOW_DETAILS: "always"
+      SPRING_DATASOURCE_URL: "jdbc:mysql://mysql-medical:3306/medical_db"
+
 
   web-app:
     image: devocin08/web-app
@@ -103,12 +129,7 @@ services:
 
 
 
-#    volumes:
-#      - mysql_data:/var/lib/mysql
-#      - ./docker/mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
-#
-#volumes:
-#  mysql_data:
+
 
 
 
@@ -153,59 +174,5 @@ networks:
 
 
 
-#  accounts:
-#    image: devocin08/accounts-service:1.0
-#    mem_limit: 700m
-##    container_name: accounts-service
-#    ports:
-#      - "8081:8080"
-#    networks:
-#      - bankapplication
-#    depends_on:
-#      - configserver
-#      - consul
-#    deploy:
-#      restart_policy:
-#        condition: on-failure
-#        delay: 5s
-#        max_attempts: 3
-#        window: 120s
-#    environment:
-#      SPRING_PROFILES_ACTIVE: default
-#      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
-#      SPRING_CLOUD_CONSUL_HOST: consul
-#      MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: "*"
-#      MANAGEMENT_ENDPOINT_HEALTH_SHOW_DETAILS: "always"
 
 
-
-#  cards:
-#    image: devocin08/cards
-#    mem_limit: 700m
-#    ports:
-#      - "9001:9000"
-#    networks:
-#      - bankapplication
-#    depends_on:
-#      - configserver
-#      - consul
-#    deploy:
-#      restart_policy:
-#        condition: on-failure
-#        delay: 30s
-#        max_attempts: 3
-#        window: 120s
-#    environment:
-#      SPRING_PROFILES_ACTIVE: default
-#      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
-#      SPRING_CLOUD_CONSUL_HOST: consul
-
-
-
-
-
-#  loans:
-#    image: monusername/loans-service:1.0
-#    container_name: loans-service
-#    ports:
-#      - "8090:8080"

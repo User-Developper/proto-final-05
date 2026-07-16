@@ -1,15 +1,13 @@
 package com.medical.patient_service.controler;
 
 
-import com.medical.patient_service.model.Report;
 import com.medical.patient_service.model.User;
-import com.medical.patient_service.repository.UserRepository;
-import com.medical.patient_service.service.DTO.CreateReportRequest;
-import com.medical.patient_service.service.DTO.ReportResponse;
 import com.medical.patient_service.service.UserService;
+import com.medical.patient_service.service.form.DataServiceFeignClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.Optional;
 
 @RestController
@@ -20,6 +18,9 @@ public class UsersController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    DataServiceFeignClient dataServiceFeignClient;
+
 
 
     @PostMapping()
@@ -29,13 +30,13 @@ public class UsersController {
         System.out.println(user.getUsername());
 
 
-        return userService.addUser(user);
+        return dataServiceFeignClient.addUser(user);
     }
 
     @GetMapping()
     public Optional<User> findUser(@RequestParam  String username){
 
-        return userService.findUser(username);
+        return dataServiceFeignClient.findUser(username);
     }
 
     @PutMapping()

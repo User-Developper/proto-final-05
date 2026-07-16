@@ -6,9 +6,9 @@ import com.medical.patient_service.model.ProfessionalClient;
 import com.medical.patient_service.model.Report;
 import com.medical.patient_service.model.User;
 //import com.medical.patient_service.repository.ProfessionalClientRepository;
-import com.medical.patient_service.repository.ProfessionalClientRepository;
-import com.medical.patient_service.repository.ReportRepository;
-import com.medical.patient_service.repository.UserRepository;
+import com.medical.patient_service.repository_del.ProfessionalClientRepository;
+import com.medical.patient_service.repository_del.ReportRepository;
+import com.medical.patient_service.repository_del.UserRepository;
 import com.medical.patient_service.service.DTO.CreateReportRequest;
 import com.medical.patient_service.service.DTO.ReportResponse;
 import com.medical.patient_service.service.form.DataServiceFeignClient;
@@ -23,11 +23,7 @@ public class UserService {
 
 
 
-    @Autowired
-    UserRepository userRepository;
 
-    @Autowired
-    ReportRepository reportRepository;
 
     @Autowired
     DataServiceFeignClient dataServiceFeignClient;
@@ -36,7 +32,7 @@ public class UserService {
 
     public User addUser(User user){
 
-        return userRepository.save(user);
+        return dataServiceFeignClient.save(user);
     }
 
     public Optional<User> findUser(String username){
