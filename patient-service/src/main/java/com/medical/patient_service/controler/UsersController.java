@@ -39,17 +39,17 @@ public class UsersController {
         return dataServiceFeignClient.findUser(username);
     }
 
-    @PutMapping()
-    public User update(@RequestBody User user){
-
-        return userService.updateUser(user);
-    }
-
-    @DeleteMapping()
-    public void delete(@RequestParam String username){
-
-         userService.deleteUser(username);
-    }
+//    @PutMapping()
+//    public User update(@RequestBody User user){
+//
+//        return dataServiceFeignClient.updateUser(user);
+//    }
+//
+//    @DeleteMapping()
+//    public void delete(@RequestParam String username){
+//
+//         dataServiceFeignClient.deleteUser(username);
+//    }
 
 
 

@@ -6,8 +6,9 @@ import com.medical.patient_service.model.Gravity;
 import com.medical.patient_service.service.DTO.CreateReportRequest;
 import com.medical.patient_service.service.DTO.PageResponse;
 import com.medical.patient_service.service.DTO.ReportResponse;
-import com.medical.patient_service.service.ReportService;
+//import com.medical.patient_service.service.ReportService;
 import com.medical.patient_service.service.UserService;
+import com.medical.patient_service.service.form.DataServiceFeignClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,9 +25,12 @@ public class ReportController {
 
     @Autowired
     UserService userService;
+//
+//    @Autowired
+//    ReportService reportService;
 
     @Autowired
-    ReportService reportService;
+    DataServiceFeignClient dataServiceFeignClient;
 
     @PostMapping()
     public ReportResponse submitReportStep1(@RequestBody CreateReportRequest request){

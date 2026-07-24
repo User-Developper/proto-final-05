@@ -58,7 +58,7 @@ public class WebAppService {
 
 
 
-    public CreateReportRequest submitFinal(CreateReportTemp form) {
+    public ReportResponse submitFinal(CreateReportTemp form) {
 
         CreateReportRequest req = new CreateReportRequest();
 

@@ -31,7 +31,7 @@ public interface PatientserviceFeignClient {
     User addUser(@RequestBody User user);
 
     @PostMapping("/reports")
-    CreateReportRequest submitFinal(@RequestBody CreateReportRequest request);
+    ReportResponse submitFinal(@RequestBody CreateReportRequest request);
 
 //    @GetMapping("/reports")
 //    PageResponse<ReportResponse> getAllReports(@RequestParam("page") int page, @RequestParam("size") int size,@RequestParam(required = false) Category category,

@@ -28,29 +28,29 @@ services:
       MANAGEMENT_ENDPOINT_HEALTH_SHOW_DETAILS: "always"
       SPRING_DATASOURCE_URL: "jdbc:mysql://mysql-medical:3306/medical_db"
 
-  data-service:
-    image: devocin08/data-service
-    mem_limit: 700m
-    ports:
-      - "8081:8085"
-    networks:
-      - healthcare-app
-    depends_on:
-      - consul
-
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
-        window: 120s
-    environment:
-      SPRING_PROFILES_ACTIVE: default
-      #      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
-      SPRING_CLOUD_CONSUL_HOST: consul
-      MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: "*"
-      MANAGEMENT_ENDPOINT_HEALTH_SHOW_DETAILS: "always"
-      SPRING_DATASOURCE_URL: "jdbc:mysql://mysql-medical:3306/medical_db"
+#  data-service:
+#    image: devocin08/data-service
+#    mem_limit: 700m
+#    ports:
+#      - "8081:8085"
+#    networks:
+#      - healthcare-app
+#    depends_on:
+#      - consul
+#
+#    deploy:
+#      restart_policy:
+#        condition: on-failure
+#        delay: 5s
+#        max_attempts: 3
+#        window: 120s
+#    environment:
+#      SPRING_PROFILES_ACTIVE: default
+#      #      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
+#      SPRING_CLOUD_CONSUL_HOST: consul
+#      MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: "*"
+#      MANAGEMENT_ENDPOINT_HEALTH_SHOW_DETAILS: "always"
+#      SPRING_DATASOURCE_URL: "jdbc:mysql://mysql-medical:3306/medical_db"
 
 
   web-app:

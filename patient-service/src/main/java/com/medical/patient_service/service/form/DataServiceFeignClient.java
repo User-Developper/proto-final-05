@@ -29,7 +29,9 @@ public interface DataServiceFeignClient {
     User addUser(@RequestBody User user);
 
     @PostMapping("/reports")
-    Report submitFinal(@RequestBody Report report);
+    ReportResponse submitFinal(@RequestBody CreateReportRequest report);
+
+
 
 
 

@@ -37,24 +37,41 @@
 
         <nav class="sidebar-nav">
 
+            <a th:href="@{/}">
+                <i class="fa-solid fa-house"></i>
+                Accueil
+            </a>
+
+
+            <a th:href="@{/create-report}">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                Signaler un problème
+            </a>
+
+
+            <a th:href="@{/report-list}">
+                <i class="fa-solid fa-list"></i>
+                Mes signalements
+            </a>
+
+
+            <a th:href="@{/map}">
+                <i class="fa-solid fa-map"></i>
+                Carte
+            </a>
+
+
             <a th:href="@{/profile}">
                 <i class="fa-solid fa-user"></i>
                 Profil
             </a>
 
-            <a th:href="@{/settings}">
-                <i class="fa-solid fa-gear"></i>
-                Paramètres
-            </a>
-
-            <a th:href="@{/security}">
-                <i class="fa-solid fa-shield"></i>
-                Sécurité
-            </a>
 
             <a th:href="@{/logout}" class="danger">
+
                 <i class="fa-solid fa-right-from-bracket"></i>
                 Déconnexion
+
             </a>
 
         </nav>
