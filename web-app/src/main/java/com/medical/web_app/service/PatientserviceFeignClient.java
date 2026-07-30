@@ -27,6 +27,9 @@ public interface PatientserviceFeignClient {
     @GetMapping("/user")
     Optional<User>  findUser(@RequestParam("username") String username);
 
+    @GetMapping("profile")
+    Optional<User> findUserByProfile(@RequestParam("username") String username);
+
     @PostMapping("/user")
     User addUser(@RequestBody User user);
 

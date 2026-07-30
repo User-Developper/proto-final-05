@@ -45,7 +45,7 @@ public class ProfessionalClientController {
 //
 //        List<ProfessionalClient> clients = webAppService.getClientsForUser(user);
 //
-//        model.addAttribute("user", user);
+        model.addAttribute("user", user);
 //        model.addAttribute("clients", clients);
 
         return "profile";
