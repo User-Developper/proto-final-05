@@ -6,6 +6,16 @@ import com.medical.web_app.model.Gravity;
 public class CreateReportTemp {
 
     private String title;
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    private Long userId;
     private String description;
     private String location;
 

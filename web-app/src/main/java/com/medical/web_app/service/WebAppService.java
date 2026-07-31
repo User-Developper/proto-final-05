@@ -1,10 +1,7 @@
 package com.medical.web_app.service;
 
 import com.medical.web_app.model.*;
-import com.medical.web_app.service.dto.CreateReportRequest;
-import com.medical.web_app.service.dto.CreateReportTemp;
-import com.medical.web_app.service.dto.PageResponse;
-import com.medical.web_app.service.dto.ReportResponse;
+import com.medical.web_app.service.dto.*;
 import com.medical.web_app.service.form.ReportForm;
 import com.medical.web_app.service.form.SignupForm;
 import org.springframework.core.ParameterizedTypeReference;
@@ -60,6 +57,9 @@ public class WebAppService {
 
     public ReportResponse submitFinal(CreateReportTemp form) {
 
+        System.out.println("USER ID AVANT ENVOI PATIENT SERVICE = "
+                + form.getUserId());
+
         CreateReportRequest req = new CreateReportRequest();
 
         req.setTitle(form.getTitle());
@@ -69,6 +69,7 @@ public class WebAppService {
         req.setLocation(form.getLocation());
         req.setLatitude(form.getLatitude());
         req.setLongitude(form.getLongitude());
+        req.setUserId(form.getUserId());
 
         return patientserviceFeignClient.submitFinal(req);
 
@@ -87,6 +88,12 @@ public class WebAppService {
 
         return patientserviceFeignClient.getClientsForUser();
 
+
+    }
+
+    public List<ReportSummary> getReportsByUser(Long userId){
+
+        return patientserviceFeignClient.getReportsByUser(userId);
 
     }
 

@@ -7,6 +7,7 @@ import com.medical.patient_service.service.DTO.CreateReportRequest;
 import com.medical.patient_service.service.DTO.PageResponse;
 import com.medical.patient_service.service.DTO.ReportResponse;
 //import com.medical.patient_service.service.ReportService;
+import com.medical.patient_service.service.DTO.ReportSummary;
 import com.medical.patient_service.service.UserService;
 import com.medical.patient_service.service.form.DataServiceFeignClient;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +38,15 @@ public class ReportController {
 
         return userService.submitReportStep1(request);
     }
+
+    @GetMapping()
+    public List<ReportSummary> getReportsByUser(@RequestParam Long userId){
+
+        return userService.getReportsByUser(userId);
+
+    }
+
+
 
 //    @GetMapping()
 //    public PageResponse<ReportResponse> getAllReports(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "6") int size, @RequestParam(required = false)Category category, @RequestParam(required = false)Gravity gravity, @RequestParam(required = false) String q){

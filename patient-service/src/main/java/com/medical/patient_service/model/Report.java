@@ -13,6 +13,7 @@ public class Report {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    private Long userId;
     private String title;
     private String description;
     private String location;
@@ -31,7 +32,7 @@ public class Report {
     @Enumerated(EnumType.STRING)
     private Category category;
 
-    // ✅ lien avec TON User existant
-    @ManyToOne
-    private User user;
+//    // ✅ lien avec TON User existant
+//    @ManyToOne
+//    private User user;
 }

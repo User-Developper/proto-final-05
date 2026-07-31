@@ -13,6 +13,15 @@ public class Report {
 
     private Integer id;
 
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    private Long userId;
     private String title;
     private String description;
     private String location;
@@ -32,8 +41,8 @@ public class Report {
     private Category category;
 
     // ✅ lien avec TON User existant
-    @ManyToOne
-    private User user;
+//    @ManyToOne
+//    private User user;
 
     public Integer getId() {
         return id;
@@ -115,11 +124,11 @@ public class Report {
         this.category = category;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
+//    public User getUser() {
+//        return user;
+//    }
+//
+//    public void setUser(User user) {
+//        this.user = user;
+//    }
 }

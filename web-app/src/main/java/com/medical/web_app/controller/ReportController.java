@@ -57,11 +57,17 @@ public class ReportController {
 
 
     @PostMapping("/create-report")
-    public String submitReportStep1(@ModelAttribute ReportForm form,
+    public String submitReportStep1(@ModelAttribute ReportForm form, Principal principal,
                                     HttpSession session) {
+
+        String username = principal.getName();
+
+        User user = webAppService.getUser(username).orElse(null);
+        Long userId = user.getId();
 
         CreateReportTemp report = new CreateReportTemp();
 
+        report.setUserId(user.getId());
         report.setTitle(form.getTitle());
         report.setDescription(form.getDescription());
         report.setCategory(form.getCategory());

@@ -9,7 +9,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 public class PatientServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(PatientServiceApplication.class, args);
+		System.out.println("===== JE DEMARRE LE PATIENT SERVICE =====") ;SpringApplication.run(PatientServiceApplication.class, args);
 	}
 
 }

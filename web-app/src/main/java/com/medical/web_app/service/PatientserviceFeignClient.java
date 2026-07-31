@@ -5,6 +5,7 @@ import com.medical.web_app.model.*;
 import com.medical.web_app.service.dto.CreateReportRequest;
 import com.medical.web_app.service.dto.PageResponse;
 import com.medical.web_app.service.dto.ReportResponse;
+import com.medical.web_app.service.dto.ReportSummary;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,8 +28,12 @@ public interface PatientserviceFeignClient {
     @GetMapping("/user")
     Optional<User>  findUser(@RequestParam("username") String username);
 
-    @GetMapping("profile")
+    @GetMapping("/profile")
     Optional<User> findUserByProfile(@RequestParam("username") String username);
+
+    @GetMapping("/reports")
+    List<ReportSummary> getReportsByUser(@RequestParam("userId") Long userId);
+
 
     @PostMapping("/user")
     User addUser(@RequestBody User user);

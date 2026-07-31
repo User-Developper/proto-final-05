@@ -11,7 +11,9 @@ import com.medical.patient_service.model.User;
 //import com.medical.patient_service.repository_del.UserRepository;
 import com.medical.patient_service.service.DTO.CreateReportRequest;
 import com.medical.patient_service.service.DTO.ReportResponse;
+import com.medical.patient_service.service.DTO.ReportSummary;
 import com.medical.patient_service.service.form.DataServiceFeignClient;
+//import org.example.repository.ReportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -97,6 +99,53 @@ public class UserService {
 
         return response;
     }
+
+    public List<ReportSummary> getReportsByUser(Long userId){
+
+        List<Report> reports = dataServiceFeignClient.getReportsByUser(userId);
+
+        return reports.stream()
+                .map(this::toSummary)
+                .toList();
+
+    }
+
+    private ReportSummary toSummary(Report report){
+
+        ReportSummary dto = new ReportSummary();
+
+        dto.setId(report.getId());
+        dto.setUserId(report.getUserId());
+        dto.setTitle(report.getTitle());
+        dto.setDescription(report.getDescription());
+        dto.setLocation(report.getLocation());
+        dto.setLatitude(report.getLatitude());
+        dto.setLongitude(report.getLongitude());
+        dto.setCategory(report.getCategory());
+        dto.setGravity(report.getGravity());
+
+        return dto;
+    }
+
+//    public List<ReportSummary> getReportsByUser(ReportSummary reportSummary) {
+//
+//
+//
+//        Report report = new Report();
+//
+//        report.setTitle(reportSummary.getTitle());
+//        report.setDescription(reportSummary.getDescription());
+//        report.setCategory(reportSummary.getCategory());
+//        report.setGravity(reportSummary.getGravity());
+//        report.setLocation(reportSummary.getLocation());
+//        report.setLatitude(reportSummary.getLatitude());
+//        report.setLongitude(reportSummary.getLongitude());
+//
+//        Report saved = reportRepository.save(report);
+//
+//
+//
+//    }
 
 
 //    @Autowired

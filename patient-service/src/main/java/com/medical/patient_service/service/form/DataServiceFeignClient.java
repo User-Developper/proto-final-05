@@ -5,6 +5,7 @@ import com.medical.patient_service.model.*;
 import com.medical.patient_service.service.DTO.CreateReportRequest;
 import com.medical.patient_service.service.DTO.PageResponse;
 import com.medical.patient_service.service.DTO.ReportResponse;
+import com.medical.patient_service.service.DTO.ReportSummary;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,7 +32,8 @@ public interface DataServiceFeignClient {
     @PostMapping("/reports")
     ReportResponse submitFinal(@RequestBody CreateReportRequest report);
 
-
+    @GetMapping("/reports")
+    List<Report> getReportsByUser(@RequestParam("userId") Long userId);
 
 
 
