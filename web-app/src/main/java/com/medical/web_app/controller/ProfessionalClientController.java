@@ -45,7 +45,7 @@ public class ProfessionalClientController {
 
         User user = webAppService.getUser(username).orElse(null);
 //
-//        List<ProfessionalClient> clients = webAppService.getClientsForUser(user);
+        List<ProfessionalClient> clients = webAppService.getClientsForUser(user);
 
         assert user != null;
         Long userId = user.getId();

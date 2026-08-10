@@ -1,200 +1,423 @@
-@charset "UTF-8";
 
-/* =========================
+/* =========================================================
+   SIGN IN
+   Mobile First
+   ========================================================= */
+
+
+/* =========================================================
+   VARIABLES
+   ========================================================= */
+
+:root {
+    --primary: #172554;
+    --primary-dark: #0F172A;
+    --primary-light: #E8EEF9;
+
+    --text: #0F172A;
+    --text-secondary: #64748B;
+
+    --bg: #f8fafc;
+    --white: #FFFFFF;
+
+    --border: #E2E8F0;
+
+    --danger: #C94A4A;
+    --danger-bg: #FEF2F2;
+    --danger-border: #E8B7B7;
+
+    --shadow:
+        0 8px 30px rgba(15, 23, 42, 0.08);
+}
+
+/* =========================================================
    RESET
-========================= */
+   ========================================================= */
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* =========================
-   BODY
-========================= */
+html,
 body {
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #eef2f7, #f8fafc);
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
+    min-height: 100%;
 }
 
-/* =========================
+body {
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
+
+    color: var(--text);
+
+    /* Même fond que la page Home */
+    background: #f8fafc;
+
+    -webkit-font-smoothing: antialiased;
+}
+
+
+/* =========================================================
+   PAGE
+   ========================================================= */
+
+body {
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px 16px;
+}
+
+
+/* =========================================================
    CONTAINER
-========================= */
+   ========================================================= */
+
 .login-container {
     width: 100%;
     max-width: 420px;
 }
 
-/* =========================
+
+/* =========================================================
    CARD
-========================= */
+   ========================================================= */
+
 .login-card {
-    background: white;
-    padding: 40px;
-    border-radius: 14px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+    width: 100%;
+
+    padding: 30px 22px;
+
+    background: var(--white);
+
+    border: 1px solid var(--border);
+
+    border-radius: 18px;
+
+    box-shadow: var(--shadow);
 }
 
-/* =========================
+
+/* =========================================================
    TITLE
-========================= */
+   ========================================================= */
+
 .login-card h1 {
+    margin: 0 0 28px;
+
     text-align: center;
-    margin-bottom: 30px;
+
     font-size: 26px;
-    color: #4a90e2;
+    line-height: 1.2;
+
+    font-weight: 700;
+
+    color: var(--text);
 }
 
-/* =========================
+
+/* =========================================================
    FORM
-========================= */
-form {
+   ========================================================= */
+
+.login-card form {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+
+    gap: 18px;
 }
 
-label {
+
+/* =========================================================
+   FORM GROUP
+   ========================================================= */
+
+.login-card form > div {
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* =========================================================
+   LABEL
+   ========================================================= */
+
+.login-card label {
+    margin-bottom: 7px;
+
+    color: var(--text);
+
+    font-size: 14px;
     font-weight: 600;
-    color: #333;
-    font-size: 14px;
 }
 
-input {
+
+/* =========================================================
+   INPUT
+   ========================================================= */
+
+.login-card input {
     width: 100%;
-    padding: 12px;
-    border: 1px solid #d0d7de;
-    border-radius: 8px;
-    font-size: 14px;
-    transition: 0.2s;
-}
 
-input:focus {
+    min-height: 48px;
+
+    padding: 12px 14px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 11px;
+
     outline: none;
-    border-color: #4a90e2;
-    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.15);
-}
 
-/* =========================
-   BUTTON
-========================= */
-button {
-    margin-top: 10px;
-    padding: 12px;
-    border: none;
-    border-radius: 8px;
-    background: #4a90e2;
-    color: white;
+    background: var(--white);
+
+    color: var(--text);
+
+    font-family: inherit;
     font-size: 15px;
-    font-weight: bold;
+
+    transition:
+        border-color .2s ease,
+        box-shadow .2s ease,
+        background .2s ease;
+}
+
+
+/* =========================================================
+   PLACEHOLDER
+   ========================================================= */
+
+.login-card input::placeholder {
+    color: #9AA59E;
+}
+
+
+/* =========================================================
+   FOCUS
+   ========================================================= */
+
+.login-card input:focus {
+    border-color: var(--primary);
+
+    box-shadow:
+        0 0 0 3px rgba(47, 107, 79, 0.12);
+}
+
+
+/* =========================================================
+   JAVASCRIPT FIELD ERROR
+   ========================================================= */
+
+.error {
+    min-height: 17px;
+
+    margin-top: 5px;
+
+    color: var(--danger);
+
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+
+/* =========================================================
+   BUTTON
+   ========================================================= */
+
+.login-card button {
+    width: 100%;
+
+    min-height: 50px;
+
+    margin-top: 2px;
+
+    padding: 12px 18px;
+
+    border: none;
+
+    border-radius: 11px;
+
+    background: var(--primary);
+
+    color: var(--white);
+
+    font-family: inherit;
+
+    font-size: 15px;
+    font-weight: 600;
+
     cursor: pointer;
-    transition: 0.2s;
+
+    transition:
+        background .2s ease,
+        box-shadow .2s ease,
+        transform .15s ease;
 }
 
-button:hover {
-    background: #357bd8;
+
+/* =========================================================
+   BUTTON HOVER
+   ========================================================= */
+
+.login-card button:hover {
+    background: var(--primary-dark);
+
+    box-shadow:
+        0 7px 18px rgba(47, 107, 79, 0.20);
 }
 
-/* =========================
+
+/* =========================================================
+   BUTTON ACTIVE
+   ========================================================= */
+
+.login-card button:active {
+    transform: translateY(1px);
+}
+
+
+/* =========================================================
+   BUTTON ACCESSIBILITY
+   ========================================================= */
+
+.login-card button:focus-visible {
+    outline: 3px solid rgba(47, 107, 79, 0.20);
+
+    outline-offset: 2px;
+}
+
+
+/* =========================================================
+   SERVER ERROR
+   ========================================================= */
+
+.error-box {
+    margin-top: 18px;
+
+    padding: 12px 14px;
+
+    border: 1px solid var(--danger-border);
+
+    border-radius: 10px;
+
+    background: var(--danger-bg);
+
+    color: var(--danger);
+
+    font-size: 13px;
+
+    line-height: 1.5;
+
+    text-align: center;
+}
+
+
+/* =========================================================
    LINKS
-========================= */
+   ========================================================= */
+
 .links {
     margin-top: 20px;
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 10px;
+
+    text-align: center;
 }
+
+
+/* =========================================================
+   LINK
+   ========================================================= */
 
 .links a {
-    text-decoration: none;
-    color: #4a90e2;
+    color: var(--primary);
+
+    font-size: 13px;
     font-weight: 600;
-    font-size: 14px;
+
+    text-decoration: none;
+
+    transition:
+        color .2s ease;
 }
 
+
+/* =========================================================
+   LINK HOVER
+   ========================================================= */
+
 .links a:hover {
-    color: #357bd8;
+    color: var(--primary-dark);
+
     text-decoration: underline;
 }
 
-/* =========================
-   RESPONSIVE TABLET
-========================= */
-@media (max-width: 768px) {
+
+/* =========================================================
+   SEPARATION BETWEEN LINKS
+   ========================================================= */
+
+.links + .links {
+    margin-top: 12px;
+
+    padding-top: 18px;
+
+    border-top: 1px solid var(--border);
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (min-width: 600px) {
+
+    body {
+        padding: 40px 24px;
+    }
 
     .login-card {
-        padding: 30px;
+        padding: 38px 34px;
+
+        border-radius: 20px;
     }
 
     .login-card h1 {
-        font-size: 24px;
-    }
+        font-size: 28px;
 
-    input {
-        font-size: 15px;
-        padding: 14px;
-    }
-
-    button {
-        padding: 14px;
+        margin-bottom: 30px;
     }
 }
 
-/* =========================
-   RESPONSIVE MOBILE
-========================= */
-@media (max-width: 480px) {
+
+/* =========================================================
+   DESKTOP
+   ========================================================= */
+
+@media (min-width: 900px) {
+
+    body {
+        padding: 60px 30px;
+    }
+
+    .login-container {
+        max-width: 440px;
+    }
 
     .login-card {
-        padding: 22px;
-        border-radius: 10px;
+        padding: 42px 40px;
     }
 
     .login-card h1 {
-        font-size: 22px;
-    }
-
-    label {
-        font-size: 13px;
-    }
-
-    input {
-        font-size: 16px; /* évite zoom iPhone */
-    }
-
-    button {
-        font-size: 16px;
-        padding: 14px;
-    }
-
-    .links {
-        flex-direction: column;
-        align-items: center;
+        font-size: 30px;
     }
 }
 
-
-
-.error {
-    color: #e74c3c;
-    font-size: 12px;
-    margin-top: -10px;
-}
-
-
-.error-box {
-    background: #ffe5e5;
-    color: #d93025;
-    padding: 10px;
-    border-radius: 8px;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    font-size: 14px;
-    text-align: center;
-}

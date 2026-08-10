@@ -1,48 +1,55 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 
     <meta charset="UTF-8">
-    <title>Choisir votre zone</title>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet"
-          href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+    <title>Sélection du client</title>
 
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <link
+            rel="stylesheet"
+            th:href="@{/css/client-selector.css}">
 
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <link rel="stylesheet" th:href="@{/css/app.css}">
-    <link rel="stylesheet" th:href="@{/css/client-selector.css}">
+    <link
+            rel="stylesheet"
+            href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 
 </head>
 
 <body>
 
-<div th:replace="~{fragments/header :: header}"></div>
-
 <div class="container">
 
-    <!-- HEADER -->
+    <!-- =========================
+         HEADER
+    ========================== -->
 
     <div class="step-header">
 
         <h1>
-            <i class="fa-solid fa-map-location-dot"></i>
-            Choisir votre zone
+            <i class="fa-solid fa-user-check"></i>
+            Sélectionner un client
         </h1>
 
         <p>
-            Sélectionnez l'organisme responsable de votre secteur
+            Sélectionnez le client pour lequel vous souhaitez effectuer un signalement.
         </p>
 
     </div>
 
-    <!-- SEARCH -->
+
+    <!-- =========================
+         SEARCH
+    ========================== -->
 
     <div class="search-card">
 
@@ -53,48 +60,78 @@
             <input
                     type="text"
                     id="searchClient"
-                    placeholder="Ville, zone ou organisme"
+                    placeholder="Rechercher une ville ou une adresse..."
                     autocomplete="off">
 
-        </div>
+            <div id="suggestions"></div>
 
-        <div id="suggestions"></div>
+        </div>
 
     </div>
 
-    <!-- CLIENT SELECTED -->
 
-    <div class="selected-card">
+    <!-- =========================
+         SELECTED CLIENT
+    ========================== -->
+
+    <div
+            class="selected-card"
+            id="selectedClientCard">
+
+        <button
+                type="button"
+                class="deselect-button"
+                id="deselectClient"
+                aria-label="Désélectionner le client"
+                title="Désélectionner">
+
+            <i class="fa-solid fa-xmark"></i>
+
+        </button>
 
         <div class="selected-label">
+            Client sélectionné
+        </div>
 
-            <i class="fa-solid fa-building"></i>
+        <div
+                class="selected-name"
+                id="selectedClient">
+
+            Aucun client sélectionné
+
+        </div>
+
+        <div
+                class="selected-zone"
+                id="selectedZone">
+
+            Sélectionnez un client sur la carte.
+
+        </div>
+
+        <span
+                class="active-badge"
+                id="activeBadge">
+
+            <i class="fa-solid fa-circle-check"></i>
             Client sélectionné
 
-        </div>
-
-        <div id="selectedClient" class="selected-name">
-            Aucun client sélectionné
-        </div>
-
-        <div id="selectedZone" class="selected-zone">
-
-            <i class="fa-solid fa-circle-info"></i>
-
-            Sélectionnez une zone
-
-        </div>
+        </span>
 
     </div>
 
-    <!-- MAP -->
+
+    <!-- =========================
+         MAP
+    ========================== -->
 
     <div class="map-card">
 
         <div class="map-header">
 
-            <i class="fa-solid fa-map"></i>
-            Zone couverte
+            <i class="fa-solid fa-map-location-dot"></i>
+
+            Carte des clients
 
         </div>
 
@@ -102,47 +139,53 @@
 
     </div>
 
+
+    <!-- =========================
+         FORM / BOTTOM BAR
+    ========================== -->
+
+    <div class="bottom-bar">
+
+        <form
+                th:action="@{/report}"
+                method="get">
+
+            <input
+                    type="hidden"
+                    name="clientId"
+                    id="clientId">
+
+            <button
+                    type="submit"
+                    class="btn-primary"
+                    disabled>
+
+                <i class="fa-solid fa-arrow-right"></i>
+
+                Continuer le signalement
+
+            </button>
+
+        </form>
+
+    </div>
+
 </div>
 
-<!-- BOTTOM BAR -->
 
-<div class="bottom-bar">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-    <form th:action="@{/profile/set-active-client}"
-          method="post">
+<script
+        th:inline="javascript">
 
-        <input
-                type="hidden"
-                name="clientId"
-                id="clientId">
-
-        <button
-                type="submit"
-                class="btn-primary" disabled>
-
-            <i class="fa-solid fa-check"></i>
-            Valider cette zone
-
-        </button>
-
-    </form>
-
-<!--    <span class="active-badge">-->
-<!--    ✓ Zone active-->
-<!--</span>-->
-</div>
-
-
-<!--<script th:inline="javascript">-->
-<!--    const clients = /*[[${clients}]]*/ [];-->
-<!--</script>-->
-<script th:inline="javascript">
     window.clients = /*[[${clients}]]*/ [];
+
 </script>
 
-<script th:src="@{/js/client-selector.js}" defer></script>
-
-<div th:replace="~{fragments/footer :: footer}"></div>
+<script
+        th:src="@{/js/client-selector.js}">
+</script>
 
 </body>
+
 </html>

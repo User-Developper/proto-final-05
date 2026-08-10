@@ -150,13 +150,13 @@ public class UserService {
 
 //    @Autowired
 //    ProfessionalClientRepository professionalClientRepository;
-//
-//
-//    public List<ProfessionalClient> getClientsForUser(){
-//
-//        return professionalClientRepository.findAll();
-//
-//    }
+
+
+    public List<ProfessionalClient> getClientsForUser(){
+
+        return dataServiceFeignClient.getClientsForUser();
+
+    }
 
 
 
