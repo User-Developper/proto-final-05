@@ -1,10 +1,9 @@
 package com.medical.web_app.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class User {
@@ -18,24 +17,30 @@ public class User {
     private String password;
     private String role;
 
-    public String getClients() {
+    public List<ProfessionalClient> getClients() {
         return clients;
     }
 
-    public void setClients(String clients) {
+    public void setClients(List<ProfessionalClient> clients) {
         this.clients = clients;
     }
 
-    public String getActiveClient() {
-        return ActiveClient;
+    public ProfessionalClient getActiveClient() {
+        return activeClient;
     }
 
-    public void setActiveClient(String activeClient) {
-        ActiveClient = activeClient;
+    public void setActiveClient(ProfessionalClient activeClient) {
+        this.activeClient = activeClient;
     }
 
-    private String clients;
-    private String ActiveClient;
+    @ManyToMany
+    private List<ProfessionalClient> clients = new ArrayList<>();
+
+    @ManyToOne
+    private ProfessionalClient activeClient;
+
+//    private String clients;
+//    private String ActiveClient;
 
     public String getRole() {
         return role;

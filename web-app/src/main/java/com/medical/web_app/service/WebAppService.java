@@ -21,6 +21,14 @@ public class WebAppService {
     private final PasswordEncoder passwordEncoder;
 
 
+
+
+
+
+
+
+
+
     public WebAppService(PatientserviceFeignClient patientserviceFeignClient, PasswordEncoder passwordEncoder) {
         this.patientserviceFeignClient = patientserviceFeignClient;
         this.passwordEncoder = passwordEncoder;
@@ -37,6 +45,13 @@ public class WebAppService {
     public User getUserByUsername(String username) {
         return getUser(username).orElse(null);
     }
+
+
+    public User setActiveClient(String username, Integer clientId) {
+
+        return patientserviceFeignClient.setActiveClient(username, clientId);
+    }
+
 
 
     public User createUser(SignupForm form) {

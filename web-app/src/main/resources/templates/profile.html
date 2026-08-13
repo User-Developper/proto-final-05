@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.w3.org/1999/xhtml">
@@ -6,6 +5,9 @@
 <head>
 
     <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>Profil utilisateur</title>
 
@@ -23,53 +25,46 @@
 
 <body>
 
-
-<!-- ========================================================= -->
-<!-- HEADER -->
-<!-- ========================================================= -->
+<!-- =========================================================
+     HEADER
+========================================================= -->
 
 <div th:replace="~{fragments/header :: header}"></div>
 
 
-<!-- ========================================================= -->
-<!-- MOBILE NAV -->
-<!-- ========================================================= -->
+<!-- =========================================================
+     MOBILE NAV
+========================================================= -->
 
 <div th:replace="~{fragments/mobile-nav :: mobile-nav}"></div>
 
 
-<!-- ========================================================= -->
-<!-- PAGE PROFIL -->
-<!-- ========================================================= -->
+<!-- =========================================================
+     PAGE PROFIL
+========================================================= -->
 
 <main class="profile-page">
-
 
     <div class="profile-layout">
 
 
-        <!-- ================================================= -->
-        <!-- SIDEBAR -->
-        <!-- ================================================= -->
+        <!-- =================================================
+             SIDEBAR
+        ================================================= -->
 
         <aside class="profile-sidebar">
-
 
             <!-- USER CARD -->
 
             <div class="profile-card">
 
                 <div class="avatar">
-
                     <i class="fa-solid fa-circle-user"></i>
-
                 </div>
-
 
                 <h3 sec:authentication="principal.username">
                     Utilisateur
                 </h3>
-
 
                 <p>
                     Compte utilisateur
@@ -81,7 +76,6 @@
             <!-- MENU -->
 
             <nav class="profile-menu">
-
 
                 <!-- PROFIL -->
 
@@ -149,26 +143,27 @@
         </aside>
 
 
-
-        <!-- ================================================= -->
-        <!-- CONTENU -->
-        <!-- ================================================= -->
+        <!-- =================================================
+             CONTENU
+        ================================================= -->
 
         <section class="profile-content">
 
 
-            <!-- ================================================= -->
-            <!-- MON PROFIL -->
-            <!-- ================================================= -->
+            <!-- =================================================
+                 MON PROFIL
+            ================================================= -->
 
             <div id="profile-panel">
-
-
-                <!-- HEADER -->
 
                 <div class="content-header">
 
                     <div>
+
+                        <div class="section-eyebrow">
+                            <i class="fa-solid fa-user"></i>
+                            COMPTE
+                        </div>
 
                         <h1>
                             Mon profil
@@ -194,10 +189,7 @@
                 </div>
 
 
-
-                <!-- ================================================= -->
                 <!-- INFORMATIONS -->
-                <!-- ================================================= -->
 
                 <div class="profile-form">
 
@@ -210,12 +202,18 @@
                             Nom
                         </label>
 
-                        <input
-                                id="username0"
-                                name="username"
-                                type="text"
-                                th:value="${user.username}"
-                                readonly>
+                        <div class="input-wrapper">
+
+                            <i class="fa-regular fa-id-card"></i>
+
+                            <input
+                                    id="username0"
+                                    name="username"
+                                    type="text"
+                                    th:value="${user.username}"
+                                    readonly>
+
+                        </div>
 
                     </div>
 
@@ -228,12 +226,18 @@
                             Prénom
                         </label>
 
-                        <input
-                                id="prenom"
-                                name="prenom"
-                                type="text"
-                                th:value="${user.prenom}"
-                                readonly>
+                        <div class="input-wrapper">
+
+                            <i class="fa-regular fa-user"></i>
+
+                            <input
+                                    id="prenom"
+                                    name="prenom"
+                                    type="text"
+                                    th:value="${user.prenom}"
+                                    readonly>
+
+                        </div>
 
                     </div>
 
@@ -246,12 +250,18 @@
                             Nom d'utilisateur
                         </label>
 
-                        <input
-                                id="username"
-                                name="username"
-                                type="text"
-                                th:value="${user.username}"
-                                readonly>
+                        <div class="input-wrapper">
+
+                            <i class="fa-solid fa-at"></i>
+
+                            <input
+                                    id="username"
+                                    name="username"
+                                    type="text"
+                                    th:value="${user.username}"
+                                    readonly>
+
+                        </div>
 
                     </div>
 
@@ -264,27 +274,28 @@
                             Email
                         </label>
 
-                        <input
-                                id="email"
-                                name="email"
-                                type="email"
-                                th:value="${user.email}"
-                                readonly>
+                        <div class="input-wrapper">
+
+                            <i class="fa-regular fa-envelope"></i>
+
+                            <input
+                                    id="email"
+                                    name="email"
+                                    type="email"
+                                    th:value="${user.email}"
+                                    readonly>
+
+                        </div>
 
                     </div>
-
 
                 </div>
 
 
-
-                <!-- ================================================= -->
                 <!-- ACTIONS MODIFICATION -->
-                <!-- ================================================= -->
 
                 <div id="profile-actions"
                      class="profile-actions hidden">
-
 
                     <button type="button"
                             id="cancel-profile-btn"
@@ -293,7 +304,6 @@
                         Annuler
 
                     </button>
-
 
                     <button type="button"
                             id="save-profile-btn"
@@ -307,24 +317,25 @@
 
                 </div>
 
-
             </div>
 
 
-
-            <!-- ================================================= -->
-            <!-- MES SIGNALEMENTS -->
-            <!-- ================================================= -->
+            <!-- =================================================
+                 MES SIGNALEMENTS
+            ================================================= -->
 
             <div id="reports-panel"
                  class="hidden">
 
 
-                <!-- HEADER -->
-
                 <div class="reports-header">
 
                     <div>
+
+                        <div class="section-eyebrow">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                            ACTIVITÉ
+                        </div>
 
                         <h1>
                             Mes signalements
@@ -349,31 +360,22 @@
                 </div>
 
 
-
-                <!-- ================================================= -->
                 <!-- AUCUN SIGNALEMENT -->
-                <!-- ================================================= -->
 
                 <div th:if="${#lists.isEmpty(reports)}"
                      class="empty-state">
 
-
                     <div class="empty-icon">
-
                         <i class="fa-solid fa-clipboard-list"></i>
-
                     </div>
-
 
                     <h2>
                         Aucun signalement
                     </h2>
 
-
                     <p>
                         Vous n'avez encore créé aucun signalement.
                     </p>
-
 
                     <a th:href="@{/create-report}"
                        class="primary-btn">
@@ -387,10 +389,7 @@
                 </div>
 
 
-
-                <!-- ================================================= -->
                 <!-- LISTE -->
-                <!-- ================================================= -->
 
                 <div th:unless="${#lists.isEmpty(reports)}"
                      class="reports-list">
@@ -399,8 +398,6 @@
                     <div class="report-card"
                          th:each="report : ${reports}">
 
-
-                        <!-- INFORMATIONS -->
 
                         <div class="report-main">
 
@@ -413,7 +410,6 @@
 
 
                             <div class="report-info">
-
 
                                 <h3 th:text="${report.title}">
                                     Titre du signalement
@@ -448,16 +444,12 @@
 
                                     </span>
 
-
                                 </div>
 
                             </div>
 
                         </div>
 
-
-
-                        <!-- DETAILS -->
 
                         <a href="#"
                            class="details-link">
@@ -468,56 +460,114 @@
 
                         </a>
 
-
                     </div>
 
-
                 </div>
-
 
             </div>
 
 
-
-            <!-- ================================================= -->
-            <!-- CLIENTS -->
-            <!-- ================================================= -->
-
-            <!-- ================================================= -->
-            <!-- CLIENTS -->
-            <!-- ================================================= -->
+            <!-- =================================================
+                 CLIENTS
+            ================================================= -->
 
             <div id="clients-panel"
                  class="hidden">
 
+
+                <!-- HEADER -->
+
                 <div class="content-header">
 
                     <div>
-                        <h1>Clients</h1>
+
+                        <div class="section-eyebrow">
+                            <i class="fa-solid fa-building"></i>
+                            ENVIRONNEMENT
+                        </div>
+
+                        <h1>
+                            Mes clients
+                        </h1>
 
                         <p>
-                            Sélectionnez un client avant d'effectuer un signalement.
+                            Gérez les clients associés à votre compte.
                         </p>
+
                     </div>
 
                 </div>
 
 
-                <!-- ================================================= -->
-                <!-- AUCUN CLIENT SÉLECTIONNÉ -->
-                <!-- ================================================= -->
+                <!-- CLIENT ACTIF -->
 
-                <div class="clients-empty">
+                <div th:if="${user.activeClient != null}"
+                     class="active-client-card">
 
-                    <div class="empty-icon">
-                        <i class="fa-solid fa-building"></i>
+                    <div class="active-client-icon">
+
+                        <i class="fa-solid fa-location-dot"></i>
+
                     </div>
 
-                    <h2>Aucun client sélectionné</h2>
+
+                    <div class="active-client-content">
+
+                        <span class="active-client-label">
+                            CLIENT ACTIF
+                        </span>
+
+                        <h2 th:text="${user.activeClient.name}">
+                            Client actif
+                        </h2>
+
+                        <p>
+
+                            <span th:if="${user.activeClient.address != null}"
+                                  th:text="${user.activeClient.address}">
+                                Adresse
+                            </span>
+
+                            <span th:if="${user.activeClient.city != null}">
+                                ·
+                                <span th:text="${user.activeClient.city}">
+                                    Ville
+                                </span>
+                            </span>
+
+                        </p>
+
+                    </div>
+
+
+                    <span class="active-status">
+
+                        <i class="fa-solid fa-circle"></i>
+
+                        Actif
+
+                    </span>
+
+                </div>
+
+
+                <!-- AUCUN CLIENT -->
+
+                <div th:if="${user.clients == null or #lists.isEmpty(user.clients)}"
+                     class="clients-empty">
+
+                    <div class="empty-icon">
+
+                        <i class="fa-solid fa-building"></i>
+
+                    </div>
+
+                    <h2>
+                        Aucun client
+                    </h2>
 
                     <p>
-                        Vous devez sélectionner un client
-                        avant de pouvoir effectuer un signalement.
+                        Aucun client n'est actuellement associé à votre compte.
                     </p>
 
                     <a th:href="@{/client-selector}"
@@ -531,22 +581,119 @@
 
                 </div>
 
+
+                <!-- LISTE CLIENTS -->
+
+                <div th:if="${user.clients != null and !#lists.isEmpty(user.clients)}"
+                     class="clients-section">
+
+
+                    <div class="clients-section-header">
+
+                        <div>
+
+                            <h2>
+                                Clients associés
+                            </h2>
+
+                            <p>
+                                Sélectionnez un autre client pour changer le client actif.
+                            </p>
+
+                        </div>
+
+
+                        <a th:href="@{/client-selector}"
+                           class="change-client-link">
+
+                            <i class="fa-solid fa-arrow-right-arrow-left"></i>
+
+                            Changer de client actif
+
+                        </a>
+
+                    </div>
+
+
+                    <div class="clients-list">
+
+
+                        <div class="client-item"
+                             th:each="client : ${user.clients}">
+
+
+                            <div class="client-item-icon">
+
+                                <i class="fa-solid fa-building"></i>
+
+                            </div>
+
+
+                            <div class="client-item-info">
+
+                                <h3 th:text="${client.name}">
+                                    Nom du client
+                                </h3>
+
+                                <div class="client-details">
+
+                                    <span th:if="${client.city != null}">
+
+                                        <i class="fa-solid fa-location-dot"></i>
+
+                                        <span th:text="${client.city}">
+                                            Ville
+                                        </span>
+
+                                    </span>
+
+
+                                    <span th:if="${client.address != null}">
+
+                                        <i class="fa-solid fa-map-pin"></i>
+
+                                        <span th:text="${client.address}">
+                                            Adresse
+                                        </span>
+
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- CLIENT ACTIF -->
+
+                            <div th:if="${user.activeClient != null and user.activeClient.id == client.id}"
+                                 class="client-current">
+
+                                <i class="fa-solid fa-circle-check"></i>
+
+                                Client actif
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+
             </div>
 
 
         </section>
 
-
     </div>
-
 
 </main>
 
 
-
-<!-- ========================================================= -->
-<!-- JAVASCRIPT -->
-<!-- ========================================================= -->
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
 
 <script th:src="@{/js/profile.js}"
         defer>
@@ -556,9 +703,9 @@
 </script>
 
 
-<!-- ========================================================= -->
-<!-- FOOTER -->
-<!-- ========================================================= -->
+<!-- =========================================================
+     FOOTER
+========================================================= -->
 
 <div th:replace="~{fragments/footer :: footer}"></div>
 
@@ -566,4 +713,3 @@
 </body>
 
 </html>
-

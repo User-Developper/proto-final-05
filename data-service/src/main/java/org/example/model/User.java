@@ -1,11 +1,11 @@
 package org.example.model;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -23,6 +23,12 @@ public class User {
     private String email;
     private String password;
     private String role;
-    private String clients;
-    private String ActiveClient;
+//    private String clients;
+//    private String ActiveClient;
+
+    @ManyToMany
+    private List<ProfessionalClient> clients = new ArrayList<>();
+
+    @ManyToOne
+    private ProfessionalClient activeClient;
 }

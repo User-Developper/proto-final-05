@@ -5,10 +5,9 @@ import com.medical.patient_service.model.User;
 import com.medical.patient_service.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -24,5 +23,17 @@ public class ProfessionalClientController {
 
 
         return userService.getClientsForUser();
+    }
+
+    @PostMapping("/users/{username}/active-client/{clientId}")
+    public User setActiveClient(
+            @PathVariable String username,
+            @PathVariable Integer clientId) {
+
+
+
+        return userService.setActiveClient(username, clientId);
+
+
     }
 }

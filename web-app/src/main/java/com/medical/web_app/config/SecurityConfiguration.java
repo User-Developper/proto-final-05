@@ -47,7 +47,6 @@ public class SecurityConfiguration {
                                 "/signup",
                                 "/css/**",
                                 "/images/**",
-                                "/report",
                                 "/js/**"
                         ).permitAll()
                         .anyRequest().authenticated()

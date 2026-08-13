@@ -7,10 +7,7 @@ import com.medical.web_app.service.dto.PageResponse;
 import com.medical.web_app.service.dto.ReportResponse;
 import com.medical.web_app.service.dto.ReportSummary;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -58,6 +55,12 @@ public interface PatientserviceFeignClient {
 
     @GetMapping("/client-selector")
     List<ProfessionalClient> getClientsForUser();
+
+    @PostMapping("/client-selector/users/{username}/active-client/{clientId}")
+    User setActiveClient(
+            @PathVariable("username") String username,
+            @PathVariable("clientId") Integer clientId
+    );
 
 //    @GetMapping("/profile")
 //    User user getUser();

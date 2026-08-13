@@ -7,10 +7,7 @@ import com.medical.patient_service.service.DTO.PageResponse;
 import com.medical.patient_service.service.DTO.ReportResponse;
 import com.medical.patient_service.service.DTO.ReportSummary;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -51,6 +48,11 @@ public interface DataServiceFeignClient {
     List<ProfessionalClient> getClientsForUser();
 
 
+    @PostMapping("/client-selector/users/{username}/active-client/{clientId}")
+    User setActiveClient(
+            @PathVariable("username") String username,
+            @PathVariable("clientId") Integer clientId
+    );
 
 
 }

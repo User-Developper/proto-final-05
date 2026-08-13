@@ -158,6 +158,14 @@ public class UserService {
 
     }
 
+    public User setActiveClient(String username, Integer clientId) {
+
+
+        return dataServiceFeignClient.setActiveClient(username, clientId);
+
+
+    }
+
 
 
 //    public List<ReportResponse> getAllReports() {
