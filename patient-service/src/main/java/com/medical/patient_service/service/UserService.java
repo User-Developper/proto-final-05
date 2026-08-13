@@ -166,6 +166,11 @@ public class UserService {
 
     }
 
+    public ProfessionalClient getClientById(Integer clientId){
+
+        return dataServiceFeignClient.getClientById(clientId);
+    }
+
 
 
 //    public List<ReportResponse> getAllReports() {

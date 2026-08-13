@@ -43,6 +43,8 @@ public interface PatientserviceFeignClient {
 //                                               @RequestParam(required = false) Gravity gravity,
 //                                               @RequestParam(required = false) String q);
 
+    @GetMapping("/reports/client/{clientId}")
+    ProfessionalClient getClientById(@PathVariable Integer clientId);
 
     @GetMapping("/api/reports")
     PageResponse<ReportResponse> getAllReports(

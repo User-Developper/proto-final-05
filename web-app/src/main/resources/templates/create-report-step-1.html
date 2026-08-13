@@ -13,136 +13,321 @@
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
-
 <body>
 
 <div th:replace="~{fragments/header :: header}"></div>
 
-<!-- PAGE WRAPPER -->
-<div class="page">
+
+<main class="page">
 
     <div class="container">
 
-        <!-- HEADER -->
+        <!-- =========================
+             HEADER
+        ========================== -->
+
         <div class="step-header">
+
+            <div class="step-icon">
+                <i class="fa-solid fa-clipboard-check"></i>
+            </div>
+
             <h1>Confirmation</h1>
-            <p>Étape 3 / 3 — Vérifiez votre signalement</p>
+
+            <p>
+                Étape 3 / 3 — Vérifiez votre signalement
+            </p>
+
+            <div class="progress-bar">
+                <div class="progress"></div>
+            </div>
+
         </div>
 
-        <!-- STATUS (optionnel UX premium) -->
-        <div class="status-badge">
-            ✔ Prêt à être envoyé
+
+        <!-- =========================
+             STATUS
+        ========================== -->
+
+        <div class="status-wrapper">
+
+            <div class="status-badge">
+
+                <i class="fa-solid fa-circle-check"></i>
+
+                Prêt à être envoyé
+
+            </div>
+
         </div>
 
-        <!-- CARD -->
-        <div class="report-card">
 
-            <div class="report-title" th:text="${report.title}">
-                Titre
-            </div>
+        <!-- =========================
+             CLIENT
+        ========================== -->
 
-            <!-- TYPE -->
-            <div class="section-block">
+        <section class="client-card">
 
-                <div class="section-label">Type de signalement</div>
+            <div class="client-icon">
 
-                <span class="badge category"
-                      th:text="${report.category}">
-            Catégorie
-        </span>
+                <i class="fa-solid fa-building"></i>
 
             </div>
 
-            <!-- GRAVITY -->
-            <div class="section-block">
+            <div class="client-content">
 
-                <div class="section-label">Niveau de gravité</div>
+                <span class="section-label">
+                    Client concerné
+                </span>
 
-                <span class="badge"
-                      th:classappend="${report.gravity.name() == 'BASIC'} ? ' low' :
-                              (${report.gravity.name() == 'MEDIUM'} ? ' medium' :
-                              (${report.gravity.name() == 'HIGH'} ? ' high' :
-                              ' critical'))"
-                      th:text="${report.gravity}">
-            Gravité
-        </span>
+                <h2
+                        class="client-name"
+                        th:text="${client.name}">
+                    Nom du client
+                </h2>
+
+                <div
+                        class="client-detail"
+                        th:if="${client.address != null and !client.address.isEmpty()}">
+
+                    <i class="fa-solid fa-location-dot"></i>
+
+                    <span th:text="${client.address}">
+                        Adresse du client
+                    </span>
+
+                </div>
+
+                <div
+                        class="client-detail"
+                        th:if="${client.city != null and !client.city.isEmpty()}">
+
+                    <i class="fa-solid fa-city"></i>
+
+                    <span th:text="${client.city}">
+                        Ville
+                    </span>
+
+                </div>
 
             </div>
+
+        </section>
+
+
+        <!-- =========================
+             REPORT
+        ========================== -->
+
+        <section class="report-card">
+
+            <!-- TITLE -->
+
+            <div class="report-header">
+
+                <div>
+
+                    <span class="section-label">
+                        Signalement
+                    </span>
+
+                    <h2
+                            class="report-title"
+                            th:text="${report.title}">
+                        Titre du signalement
+                    </h2>
+
+                </div>
+
+                <div class="ready-icon">
+
+                    <i class="fa-solid fa-check"></i>
+
+                </div>
+
+            </div>
+
+
+            <!-- CATEGORY + GRAVITY -->
+
+            <div class="badges">
+
+                <span
+                        class="badge category"
+                        th:text="${report.category}">
+                    Catégorie
+                </span>
+
+                <span
+                        class="badge"
+                        th:classappend="${report.gravity.name() == 'BASIC'} ? ' low' :
+                            (${report.gravity.name() == 'MEDIUM'} ? ' medium' :
+                            (${report.gravity.name() == 'HIGH'} ? ' high' :
+                            ' critical'))"
+                        th:text="${report.gravity}">
+                    Gravité
+                </span>
+
+            </div>
+
 
             <!-- DESCRIPTION -->
+
             <div class="section-block">
 
-                <div class="section-label">Description</div>
+                <div class="section-label">
+                    Description
+                </div>
 
-                <p class="description"
-                   th:text="${report.description}">
-                </p>
+                <div class="description-box">
+
+                    <p
+                            class="description"
+                            th:text="${report.description}">
+                        Description du signalement
+                    </p>
+
+                </div>
 
             </div>
 
+
             <!-- LOCATION -->
+
             <div class="section-block">
 
-                <div class="section-label">Localisation</div>
+                <div class="section-label">
+                    Localisation du signalement
+                </div>
 
                 <div class="location-box">
 
-                    <div class="location">
-                        📍 <span th:text="${report.location}"></span>
+                    <div class="location-main">
+
+                        <div class="location-icon">
+
+                            <i class="fa-solid fa-location-dot"></i>
+
+                        </div>
+
+                        <div>
+
+                            <span
+                                    class="location-address"
+                                    th:text="${report.location}">
+                                Adresse sélectionnée
+                            </span>
+
+                        </div>
+
                     </div>
 
-                    <!-- coords visibles (texte seulement si tu veux) -->
                     <div class="coords">
-                        <span th:text="${report.latitude}"></span>,
-                        <span th:text="${report.longitude}"></span>
+
+                        <span>
+                            Latitude :
+                        </span>
+
+                        <strong th:text="${report.latitude}">
+                            0
+                        </strong>
+
+                        <span class="coord-separator">
+                            •
+                        </span>
+
+                        <span>
+                            Longitude :
+                        </span>
+
+                        <strong th:text="${report.longitude}">
+                            0
+                        </strong>
+
                     </div>
 
                 </div>
 
             </div>
 
-        </div>
+        </section>
 
-        <!-- HIDDEN FIELDS (SI TU LES PASSES AU BACKEND) -->
-        <input type="hidden" th:value="${report.latitude}">
-        <input type="hidden" th:value="${report.longitude}">
 
-        <!-- SPACER (évite que bottom bar écrase contenu) -->
+        <!-- =========================
+             BOTTOM SPACER
+        ========================== -->
+
         <div class="page-spacer"></div>
 
     </div>
-</div>
 
-<!-- BOTTOM ACTION BAR -->
+</main>
+
+
+<!-- =========================
+     BOTTOM BAR
+========================== -->
+
 <div class="bottom-bar">
 
-    <button type="button"
-            class="btn-secondary"
+    <button
+            type="button"
+            class="btn-back"
             onclick="history.back()">
-        ← Modifier
+
+        <i class="fa-solid fa-arrow-left"></i>
+
+        Modifier
+
     </button>
 
-    <button type="button"
+
+    <button
+            type="button"
             id="openModal"
-            class="btn-primary">
-        Envoyer 🚀
+            class="btn-next">
+
+        Envoyer
+
+        <i class="fa-solid fa-paper-plane"></i>
+
     </button>
 
 </div>
 
-<!-- FORM INVISIBLE -->
-<form id="submitForm"
-      th:action="@{/create-report-step-1}"
-      method="post"
-      style="display:none;">
+
+<!-- =========================
+     INVISIBLE FORM
+========================== -->
+
+<form
+        id="submitForm"
+        th:action="@{/create-report-step-1}"
+        method="post"
+        style="display:none;">
+
 </form>
 
-<!-- MODAL -->
-<div id="confirmModal" class="modal hidden">
+
+<!-- =========================
+     CONFIRMATION MODAL
+========================== -->
+
+<div
+        id="confirmModal"
+        class="modal hidden">
 
     <div class="modal-content">
 
-        <h2>Confirmer l’envoi ?</h2>
+        <div class="modal-icon">
+
+            <i class="fa-solid fa-paper-plane"></i>
+
+        </div>
+
+        <h2>
+            Confirmer l’envoi ?
+        </h2>
 
         <p>
             Votre signalement sera envoyé et ne pourra plus être modifié.
@@ -150,16 +335,24 @@
 
         <div class="modal-actions">
 
-            <button type="button"
+            <button
+                    type="button"
                     id="cancelSend"
                     class="btn-secondary">
+
                 Annuler
+
             </button>
 
-            <button type="button"
+            <button
+                    type="button"
                     id="confirmSend"
                     class="btn-primary">
+
+                <i class="fa-solid fa-check"></i>
+
                 Oui, envoyer
+
             </button>
 
         </div>
@@ -168,11 +361,15 @@
 
 </div>
 
-<script th:src="@{/js/create-report-step-1.js}" defer></script>
+
+<script
+        th:src="@{/js/create-report-step-1.js}"
+        defer>
+</script>
 
 
-
-
+<div th:replace="~{fragments/footer :: footer}"></div>
 
 </body>
+
 </html>

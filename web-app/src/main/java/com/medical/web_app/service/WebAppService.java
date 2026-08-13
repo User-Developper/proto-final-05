@@ -85,6 +85,7 @@ public class WebAppService {
         req.setLatitude(form.getLatitude());
         req.setLongitude(form.getLongitude());
         req.setUserId(form.getUserId());
+        req.setClientId(form.getClientId());
 
         return patientserviceFeignClient.submitFinal(req);
 
@@ -112,6 +113,11 @@ public class WebAppService {
 
     }
 
+    public ProfessionalClient getClientById(Integer clientId){
+
+        return patientserviceFeignClient.getClientById(clientId);
+
+    }
 
 
 

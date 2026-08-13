@@ -3,6 +3,7 @@ package com.medical.web_app.controller;
 
 import com.medical.web_app.model.Category;
 import com.medical.web_app.model.Gravity;
+import com.medical.web_app.model.ProfessionalClient;
 import com.medical.web_app.model.User;
 import com.medical.web_app.service.WebAppService;
 import com.medical.web_app.service.dto.CreateReportTemp;
@@ -84,19 +85,40 @@ public class ReportController {
 
     }
 
-    @GetMapping("/create-report-step-0")
-    public String submitReportStep2(Model model, HttpSession session){
+//    @GetMapping("/create-report-step-0")
+//    public String submitReportStep2(Model model, HttpSession session){
+//
+//
+//        return "create-report-step-0";
+//
+//
+//    }
 
+    @GetMapping("/create-report-step-0")
+    public String submitReportStep2(Model model,
+                                    HttpSession session,
+                                    Principal principal) {
+
+        String username = principal.getName();
+
+        User user = webAppService.getUser(username)
+                .orElse(null);
+
+        if (user == null) {
+            return "redirect:/signin";
+        }
+
+        model.addAttribute("user", user);
+        model.addAttribute("activeClient", user.getActiveClient());
 
         return "create-report-step-0";
-
-
     }
 
     @PostMapping("/create-report-step-0")
     public String submitStep2(@RequestParam Double latitude,
                               @RequestParam Double longitude,
                               @RequestParam String location,
+                              @RequestParam Integer clientId,
                               HttpSession session) {
 
         CreateReportTemp report =
@@ -105,6 +127,7 @@ public class ReportController {
         report.setLatitude(latitude);
         report.setLongitude(longitude);
         report.setLocation(location);
+        report.setClientId(clientId);
 
         session.setAttribute("report", report);
 
@@ -122,6 +145,9 @@ public class ReportController {
 
         model.addAttribute("report", report);
 
+        ProfessionalClient client = webAppService.getClientById(report.getClientId());
+
+        model.addAttribute("client", client);
 
         return "create-report-step-1";
 

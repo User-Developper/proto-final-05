@@ -24,66 +24,305 @@
 <div th:replace="~{fragments/header :: header}"></div>
 
 
-
-<form th:action="@{/create-report-step-0}" method="post">
+<form
+        th:action="@{/create-report-step-0}"
+        method="post">
 
     <div class="page">
 
-        <!-- HEADER -->
+        <!-- =========================
+             HEADER
+        ========================== -->
+
         <div class="step-header">
-            <h1>Localisation</h1>
-            <p>Étape 2 / 3 — Choisis précisément le lieu</p>
+
+            <h1>
+                <i class="fa-solid fa-location-dot"></i>
+                Localisation
+            </h1>
+
+            <p>
+                Étape 2 / 3 — Choisissez précisément le lieu du signalement
+            </p>
 
             <div class="progress-bar">
                 <div class="progress step2"></div>
             </div>
+
         </div>
 
-        <!-- SEARCH AUTOCOMPLETE -->
+
+        <!-- =========================
+             ACTIVE CLIENT
+        ========================== -->
+
+        <div
+                class="client-info-card"
+                th:if="${activeClient != null}">
+
+            <div class="client-info-icon">
+
+                <i class="fa-solid fa-building"></i>
+
+            </div>
+
+            <div class="client-info-content">
+
+                <span class="client-info-label">
+                    Client sélectionné
+                </span>
+
+                <strong
+                        class="client-info-name"
+                        th:text="${activeClient.name}">
+                    Client
+                </strong>
+
+                <span
+                        class="client-info-location"
+                        th:text="${activeClient.city}">
+                    Ville
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             NO ACTIVE CLIENT
+        ========================== -->
+
+        <div
+                class="client-warning"
+                th:if="${activeClient == null}">
+
+            <i class="fa-solid fa-triangle-exclamation"></i>
+
+            <div>
+
+                <strong>
+                    Aucun client sélectionné
+                </strong>
+
+                <p>
+                    Veuillez sélectionner un client avant de continuer.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             SEARCH
+        ========================== -->
+
         <div class="search-box">
-            <input type="text" id="searchInput" placeholder="Rechercher une adresse..." autocomplete="off">
-            <div id="suggestions" class="suggestions"></div>
+
+            <div class="search-icon">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+            </div>
+
+            <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Rechercher une adresse..."
+                    autocomplete="off">
+
+            <div
+                    id="suggestions"
+                    class="suggestions">
+            </div>
+
         </div>
 
-        <!-- MAP -->
+
+        <!-- =========================
+             MAP
+        ========================== -->
+
         <div class="map-card">
+
+            <div
+                    class="map-client-zone"
+                    th:if="${activeClient != null}">
+
+                <i class="fa-solid fa-crosshairs"></i>
+
+                Zone du client
+
+            </div>
+
             <div id="map"></div>
 
-            <button type="button" class="gps-btn" id="locateBtn">
-                📍 Me localiser
+            <button
+                    type="button"
+                    class="gps-btn"
+                    id="locateBtn">
+
+                <i class="fa-solid fa-location-crosshairs"></i>
+
+                Me localiser
+
             </button>
+
         </div>
 
-        <!-- ADDRESS -->
+
+        <!-- =========================
+             ADDRESS
+        ========================== -->
+
         <div class="address-card">
-            <span class="label">Adresse sélectionnée</span>
-            <p id="address">Aucune position sélectionnée</p>
+
+            <div class="address-header">
+
+                <div class="address-icon">
+
+                    <i class="fa-solid fa-location-dot"></i>
+
+                </div>
+
+                <div>
+
+                    <span class="label">
+                        Adresse sélectionnée
+                    </span>
+
+                    <p
+                            id="address">
+                        Aucune position sélectionnée
+                    </p>
+
+                </div>
+
+            </div>
+
         </div>
 
-        <!-- HIDDEN -->
-        <input type="hidden" id="latitude" name="latitude">
-        <input type="hidden" id="longitude" name="longitude">
-        <input type="hidden" id="location" name="location">
+
+        <!-- =========================
+             HIDDEN VALUES
+        ========================== -->
+
+        <input
+                type="hidden"
+                id="latitude"
+                name="latitude">
+
+        <input
+                type="hidden"
+                id="longitude"
+                name="longitude">
+
+        <input
+                type="hidden"
+                id="location"
+                name="location">
+
+        <input
+                type="hidden"
+                id="clientId"
+                name="clientId"
+                th:value="${activeClient != null ? activeClient.id : ''}">
 
     </div>
 
-    <!-- BOTTOM BAR -->
+
+    <!-- =========================
+         BOTTOM BAR
+    ========================== -->
+
     <div class="bottom-bar">
 
-        <button type="button" class="btn-back" onclick="history.back()">
-            ← Retour
+        <button
+                type="button"
+                class="btn-back"
+                onclick="history.back()">
+
+            <i class="fa-solid fa-arrow-left"></i>
+
+            Retour
+
         </button>
 
-        <button type="submit" class="btn-next">
-            Continuer →
+
+        <button
+                type="submit"
+                class="btn-next"
+                id="nextButton"
+                disabled>
+
+            Continuer
+
+            <i class="fa-solid fa-arrow-right"></i>
+
         </button>
-
-
 
     </div>
 
 </form>
 
+
+<!-- =========================
+     ACTIVE CLIENT DATA
+========================== -->
+
+<script th:inline="javascript">
+
+    /*
+     * Thymeleaf injecte ici le client actif.
+     *
+     * Le JavaScript pourra ensuite utiliser :
+     *
+     * activeClient.latitude
+     * activeClient.longitude
+     * activeClient.zoom
+     * activeClient.name
+     * activeClient.city
+     * activeClient.address
+     * activeClient.perimeter
+     */
+
+    window.activeClient = /*[[${activeClient}]]*/ null;
+
+</script>
+
+
+<!-- =========================
+     LEAFLET
+========================== -->
+
+<script
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+</script>
+
+
+<!-- =========================
+     REPORT STEP 0 JS
+========================== -->
+
+<script
+        th:src="@{/js/create-report-step-0.js}"
+        defer>
+</script>
+
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+
+<script
+        th:src="@{/js/app.js}"
+        defer>
+</script>
+
+
+</body>
+
+</html>
 
 
 <!--<form th:action="@{/create-report-step-2}" method="post">-->
@@ -137,120 +376,118 @@
 <!--</form>-->
 
 
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
+<!--<script>-->
+<!--    document.addEventListener("DOMContentLoaded", function () {-->
 
-    /*const map = L.map('map').setView([46.603354, 1.888334], 6);*/
-    const map = L.map('map').setView([45.603354, 1.688334], 8);
+<!--    /*const map = L.map('map').setView([46.603354, 1.888334], 6);*/-->
+<!--    const map = L.map('map').setView([45.603354, 1.688334], 8);-->
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; OpenStreetMap'
-    }).addTo(map);
+<!--    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {-->
+<!--        attribution: '&copy; OpenStreetMap'-->
+<!--    }).addTo(map);-->
 
-    let marker = null;
+<!--    let marker = null;-->
 
-    const searchInput = document.getElementById("searchInput");
-    const suggestionsBox = document.getElementById("suggestions");
+<!--    const searchInput = document.getElementById("searchInput");-->
+<!--    const suggestionsBox = document.getElementById("suggestions");-->
 
-    const latInput = document.getElementById("latitude");
-    const lngInput = document.getElementById("longitude");
-    const locationInput = document.getElementById("location");
-    const addressBox = document.getElementById("address");
+<!--    const latInput = document.getElementById("latitude");-->
+<!--    const lngInput = document.getElementById("longitude");-->
+<!--    const locationInput = document.getElementById("location");-->
+<!--    const addressBox = document.getElementById("address");-->
 
-    // ===== REVERSE GEOCODING =====
-    function reverseGeocode(lat, lng) {
-        fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`)
-            .then(r => r.json())
-            .then(data => {
-                const addr = data.display_name || "Adresse inconnue";
-                addressBox.textContent = addr;
-                locationInput.value = addr;
-            });
-    }
+<!--    // ===== REVERSE GEOCODING =====-->
+<!--    function reverseGeocode(lat, lng) {-->
+<!--        fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`)-->
+<!--            .then(r => r.json())-->
+<!--            .then(data => {-->
+<!--                const addr = data.display_name || "Adresse inconnue";-->
+<!--                addressBox.textContent = addr;-->
+<!--                locationInput.value = addr;-->
+<!--            });-->
+<!--    }-->
 
-    // ===== SET MARKER =====
-    function setMarker(lat, lng) {
+<!--    // ===== SET MARKER =====-->
+<!--    function setMarker(lat, lng) {-->
 
-        if (marker) map.removeLayer(marker);
+<!--        if (marker) map.removeLayer(marker);-->
 
-        marker = L.marker([lat, lng], { draggable: true }).addTo(map);
+<!--        marker = L.marker([lat, lng], { draggable: true }).addTo(map);-->
 
-        map.setView([lat, lng], 16);
+<!--        map.setView([lat, lng], 16);-->
 
-        latInput.value = lat;
-        lngInput.value = lng;
+<!--        latInput.value = lat;-->
+<!--        lngInput.value = lng;-->
 
-        reverseGeocode(lat, lng);
+<!--        reverseGeocode(lat, lng);-->
 
-        marker.on("dragend", function () {
-            const p = marker.getLatLng();
-            setMarker(p.lat, p.lng);
-        });
-    }
+<!--        marker.on("dragend", function () {-->
+<!--            const p = marker.getLatLng();-->
+<!--            setMarker(p.lat, p.lng);-->
+<!--        });-->
+<!--    }-->
 
-    // ===== AUTOCOMPLETE =====
-    let timeout = null;
+<!--    // ===== AUTOCOMPLETE =====-->
+<!--    let timeout = null;-->
 
-    searchInput.addEventListener("input", function () {
+<!--    searchInput.addEventListener("input", function () {-->
 
-        clearTimeout(timeout);
+<!--        clearTimeout(timeout);-->
 
-        const query = this.value;
-        if (query.length < 3) {
-            suggestionsBox.innerHTML = "";
-            return;
-        }
+<!--        const query = this.value;-->
+<!--        if (query.length < 3) {-->
+<!--            suggestionsBox.innerHTML = "";-->
+<!--            return;-->
+<!--        }-->
 
-        timeout = setTimeout(() => {
+<!--        timeout = setTimeout(() => {-->
 
-            fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${query}`)
-                .then(r => r.json())
-                .then(data => {
+<!--            fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${query}`)-->
+<!--                .then(r => r.json())-->
+<!--                .then(data => {-->
 
-                    suggestionsBox.innerHTML = "";
+<!--                    suggestionsBox.innerHTML = "";-->
 
-                    data.slice(0, 5).forEach(item => {
+<!--                    data.slice(0, 5).forEach(item => {-->
 
-                        const div = document.createElement("div");
-                        div.className = "suggestion-item";
-                        div.textContent = item.display_name;
+<!--                        const div = document.createElement("div");-->
+<!--                        div.className = "suggestion-item";-->
+<!--                        div.textContent = item.display_name;-->
 
-                        div.onclick = () => {
-                            setMarker(item.lat, item.lon);
-                            searchInput.value = item.display_name;
-                            suggestionsBox.innerHTML = "";
-                        };
+<!--                        div.onclick = () => {-->
+<!--                            setMarker(item.lat, item.lon);-->
+<!--                            searchInput.value = item.display_name;-->
+<!--                            suggestionsBox.innerHTML = "";-->
+<!--                        };-->
 
-                        suggestionsBox.appendChild(div);
-                    });
+<!--                        suggestionsBox.appendChild(div);-->
+<!--                    });-->
 
-                });
+<!--                });-->
 
-        }, 300);
-    });
+<!--        }, 300);-->
+<!--    });-->
 
-    // ===== CLICK MAP =====
-    map.on("click", function (e) {
-        setMarker(e.latlng.lat, e.latlng.lng);
-    });
+<!--    // ===== CLICK MAP =====-->
+<!--    map.on("click", function (e) {-->
+<!--        setMarker(e.latlng.lat, e.latlng.lng);-->
+<!--    });-->
 
-    // ===== GPS =====
-    document.getElementById("locateBtn").addEventListener("click", function () {
+<!--    // ===== GPS =====-->
+<!--    document.getElementById("locateBtn").addEventListener("click", function () {-->
 
-        navigator.geolocation.getCurrentPosition(function (pos) {
-            setMarker(pos.coords.latitude, pos.coords.longitude);
-        });
+<!--        navigator.geolocation.getCurrentPosition(function (pos) {-->
+<!--            setMarker(pos.coords.latitude, pos.coords.longitude);-->
+<!--        });-->
 
-    });
+<!--    });-->
 
-});
-</script>
+<!--});-->
+<!--</script>-->
 
 
 
-<div th:replace="~{fragments/footer :: footer}"></div>
 
-<script th:src="@{/js/app.js}" defer></script>
 
 <!--<script>-->
 <!--    document.addEventListener("DOMContentLoaded", function () {-->
@@ -455,5 +692,3 @@
 
 
 
-</body>
-</html>

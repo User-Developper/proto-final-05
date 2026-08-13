@@ -843,3 +843,52 @@ document.addEventListener(
         }
     }
 );
+
+
+/* =====================================================
+   MODAL CLIENT SÉLECTIONNÉ
+===================================================== */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const modal = document.getElementById("clientSelectedModal");
+
+    if (!modal) {
+        return;
+    }
+
+
+    /*
+     * La classe "show" est déjà ajoutée par Thymeleaf
+     * lorsque le serveur confirme que le client a été sauvegardé.
+     *
+     * On ajoute simplement la gestion de fermeture avec ESC.
+     */
+
+    document.addEventListener("keydown", function (event) {
+
+        if (event.key === "Escape" && modal.classList.contains("show")) {
+
+            modal.classList.remove("show");
+
+        }
+
+    });
+
+
+    /*
+     * Permet de fermer la modal en cliquant
+     * sur l'arrière-plan.
+     */
+
+    modal.addEventListener("click", function (event) {
+
+        if (event.target === modal) {
+
+            modal.classList.remove("show");
+
+        }
+
+    });
+
+});

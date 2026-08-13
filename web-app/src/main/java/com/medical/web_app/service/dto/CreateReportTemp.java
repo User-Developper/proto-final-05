@@ -16,6 +16,16 @@ public class CreateReportTemp {
     }
 
     private Long userId;
+
+    public Integer getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(Integer clientId) {
+        this.clientId = clientId;
+    }
+
+    private Integer clientId;
     private String description;
     private String location;
 

@@ -173,18 +173,131 @@
 </div>
 
 
+<!-- =====================================================
+     MODAL CLIENT SÉLECTIONNÉ
+====================================================== -->
+
+<div
+        class="client-modal-overlay"
+        id="clientSelectedModal"
+        th:classappend="${clientSelected} ? ' show' : ''">
+
+    <div
+            class="client-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="clientModalTitle">
+
+        <!-- ICON -->
+
+        <div class="modal-success-icon">
+
+            <i class="fa-solid fa-check"></i>
+
+        </div>
+
+
+        <!-- TITLE -->
+
+        <h2 id="clientModalTitle">
+            Client sélectionné
+        </h2>
+
+
+        <!-- CLIENT NAME -->
+
+        <div class="modal-client-name"
+             th:text="${selectedClient != null ? selectedClient.name : ''}">
+            Nom du client
+        </div>
+
+
+        <!-- CLIENT LOCATION -->
+
+        <div
+                class="modal-client-location"
+                th:if="${selectedClient != null}">
+
+            <i class="fa-solid fa-location-dot"></i>
+
+            <span
+                    th:text="${selectedClient.city}">
+                Ville
+            </span>
+
+        </div>
+
+
+        <!-- MESSAGE -->
+
+        <p class="modal-message">
+
+            Le client a bien été sélectionné.
+
+            <br>
+
+            Vous pouvez maintenant effectuer
+            un signalement pour ce client.
+
+        </p>
+
+
+        <!-- ACTION PRINCIPALE -->
+
+        <a
+                th:href="@{/create-report}"
+                class="modal-primary-button">
+
+            <i class="fa-solid fa-triangle-exclamation"></i>
+
+            Effectuer un signalement
+
+        </a>
+
+
+        <!-- ACTIONS SECONDAIRES -->
+
+        <div class="modal-secondary-actions">
+
+            <a
+                    th:href="@{/profile}"
+                    class="modal-secondary-button">
+
+                <i class="fa-solid fa-user"></i>
+
+                Retour au profil
+
+            </a>
+
+
+            <a
+                    th:href="@{/client-selector}"
+                    class="modal-secondary-button">
+
+                <i class="fa-solid fa-repeat"></i>
+
+                Changer de client
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-<script
-        th:inline="javascript">
+
+<script th:inline="javascript">
 
     window.clients = /*[[${clients}]]*/ [];
 
 </script>
 
-<script
-        th:src="@{/js/client-selector.js}">
-</script>
+
+<script th:src="@{/js/client-selector.js}"></script>
 
 </body>
 

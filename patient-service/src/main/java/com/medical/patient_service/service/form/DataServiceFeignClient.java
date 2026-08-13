@@ -54,5 +54,8 @@ public interface DataServiceFeignClient {
             @PathVariable("clientId") Integer clientId
     );
 
+    @GetMapping("/reports/client/{clientId}")
+    ProfessionalClient getClientById(@PathVariable Integer clientId);
+
 
 }

@@ -57,17 +57,47 @@ public class ProfessionalClientController {
 //
 //    }
 
+//    @PostMapping("/client-selector")
+//    public String setActiveClient(
+//            @RequestParam Integer clientId,
+//            Principal principal) {
+//
+//        String username = principal.getName();
+//
+//        webAppService.setActiveClient(username, clientId);
+//
+//        return "redirect:/profile";
+//    }
+
     @PostMapping("/client-selector")
     public String setActiveClient(
             @RequestParam Integer clientId,
-            Principal principal) {
+            Principal principal,
+            Model model) {
 
         String username = principal.getName();
 
-        webAppService.setActiveClient(username, clientId);
+        // Sauvegarde réelle du client actif
+        User user = webAppService.setActiveClient(username, clientId);
 
-        return "redirect:/profile";
+        // Récupération du client qui vient d'être sélectionné
+        ProfessionalClient client = user.getActiveClient();
+
+        model.addAttribute("user", user);
+        model.addAttribute("selectedClient", client);
+
+        // On indique à la page que la sauvegarde a réussi
+        model.addAttribute("clientSelected", true);
+
+        // On recharge les clients pour conserver la carte
+        List<ProfessionalClient> clients =
+                webAppService.getClientsForUser(user);
+
+        model.addAttribute("clients", clients);
+
+        return "client-selector";
     }
+
 
     @GetMapping("/profile")
     public String userProfile(Model model, Principal principal, HttpSession httpSession){

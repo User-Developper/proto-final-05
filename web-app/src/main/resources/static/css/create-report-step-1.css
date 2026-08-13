@@ -1,487 +1,1126 @@
-/* =========================
-   RESET + BASE
-========================= */
+/* =========================================================
+   RESET
+========================================================= */
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+html {
+    min-height: 100%;
 }
 
 body {
-    background: linear-gradient(180deg, #f8fafc 0%, #eef2f6 100%);
+    min-height: 100vh;
+
+    font-family:
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
+
+    background:
+        linear-gradient(
+            180deg,
+            #f8fafc 0%,
+            #eef3f8 100%
+        );
+
     color: #111827;
 }
 
-/* =========================
+
+/* =========================================================
    PAGE
-========================= */
+========================================================= */
 
 .page {
-    padding: 16px;
-    padding-bottom: 110px;
-    animation: fadeIn 0.35s ease;
+    width: 100%;
+
+    padding:
+        20px
+        16px
+        130px;
+
+    animation: fadeIn .3s ease;
 }
 
-/* =========================
+.container {
+    width: 100%;
+    max-width: 760px;
+
+    margin: 0 auto;
+}
+
+
+/* =========================================================
    HEADER
-========================= */
+========================================================= */
 
 .step-header {
     text-align: center;
-    margin-bottom: 14px;
+
+    margin-bottom: 16px;
+}
+
+.step-icon {
+    width: 46px;
+    height: 46px;
+
+    margin: 0 auto 10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+
+    background: rgba(37, 99, 235, .10);
+
+    color: #1d4ed8;
+
+    font-size: 20px;
 }
 
 .step-header h1 {
-    font-size: 22px;
+    font-size: 23px;
+
     font-weight: 800;
-    letter-spacing: -0.3px;
+
+    letter-spacing: -.4px;
+
+    color: #111827;
 }
 
 .step-header p {
+    margin-top: 5px;
+
     font-size: 13px;
+
     color: #6b7280;
-    margin-top: 4px;
 }
 
-/* =========================
-   STATUS BADGE
-========================= */
+
+/* =========================================================
+   PROGRESS BAR
+========================================================= */
+
+.progress-bar {
+    width: 100%;
+    height: 6px;
+
+    margin-top: 14px;
+
+    background: #e5e7eb;
+
+    border-radius: 999px;
+
+    overflow: hidden;
+}
+
+.progress {
+    width: 100%;
+    height: 100%;
+
+    border-radius: 999px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #1d4ed8,
+            #2563eb
+        );
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.status-wrapper {
+    display: flex;
+    justify-content: center;
+
+    margin-bottom: 16px;
+}
 
 .status-badge {
     display: inline-flex;
+
     align-items: center;
     justify-content: center;
-    gap: 6px;
 
-    margin: 10px auto 16px;
-    padding: 8px 14px;
+    gap: 7px;
+
+    padding: 8px 13px;
 
     border-radius: 999px;
 
-    font-size: 13px;
-    font-weight: 700;
+    background: rgba(22, 163, 74, .09);
 
-    color: #16a34a;
-    background: linear-gradient(90deg, rgba(34,197,94,0.18), rgba(34,197,94,0.06));
+    border: 1px solid rgba(22, 163, 74, .15);
 
-    box-shadow: 0 6px 18px rgba(34,197,94,0.12);
-    backdrop-filter: blur(8px);
-}
+    color: #15803d;
 
-/* =========================
-   REPORT CARD
-========================= */
-
-.report-card {
-    background: #ffffff;
-    border-radius: 22px;
-
-    padding: 18px;
-
-    box-shadow: 0 18px 45px rgba(0,0,0,0.08);
-
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-}
-
-.report-title {
-    font-size: 20px;
-    font-weight: 850;
-}
-
-/* =========================
-   BADGES
-========================= */
-
-.badges {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-}
-
-.badge {
-    padding: 6px 12px;
-    border-radius: 999px;
     font-size: 12px;
+
     font-weight: 700;
 }
 
-.badge.category {
-    background: rgba(37,99,235,0.12);
+
+/* =========================================================
+   CLIENT CARD
+========================================================= */
+
+.client-card {
+    position: relative;
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 13px;
+
+    width: 100%;
+
+    padding: 16px;
+
+    margin-bottom: 14px;
+
+    background: #ffffff;
+
+    border: 1px solid #dbe5ef;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 8px 25px rgba(15, 23, 42, .05);
+
+    overflow: hidden;
+}
+
+
+/* Ligne bleue gauche */
+
+.client-card::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    bottom: 0;
+    left: 0;
+
+    width: 4px;
+
+    background: #2563eb;
+}
+
+
+/* =========================================================
+   CLIENT ICON
+========================================================= */
+
+.client-icon {
+    flex-shrink: 0;
+
+    width: 44px;
+    height: 44px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 13px;
+
+    background: rgba(37, 99, 235, .10);
+
+    color: #2563eb;
+
+    font-size: 18px;
+}
+
+
+/* =========================================================
+   CLIENT CONTENT
+========================================================= */
+
+.client-content {
+    min-width: 0;
+
+    flex: 1;
+}
+
+.section-label {
+    display: block;
+
+    margin-bottom: 6px;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    text-transform: uppercase;
+
+    letter-spacing: .7px;
+
+    color: #94a3b8;
+}
+
+.client-name {
+    margin-bottom: 8px;
+
+    font-size: 17px;
+
+    line-height: 1.3;
+
+    font-weight: 800;
+
+    color: #172033;
+
+    overflow-wrap: anywhere;
+}
+
+.client-detail {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 7px;
+
+    margin-top: 5px;
+
+    font-size: 12px;
+
+    line-height: 1.4;
+
+    color: #64748b;
+
+    overflow-wrap: anywhere;
+}
+
+.client-detail i {
+    flex-shrink: 0;
+
+    width: 14px;
+
+    margin-top: 2px;
+
+    text-align: center;
+
     color: #2563eb;
 }
 
-.badge.low { background: rgba(34,197,94,0.12); color: #16a34a; }
-.badge.medium { background: rgba(234,179,8,0.12); color: #ca8a04; }
-.badge.high { background: rgba(249,115,22,0.12); color: #ea580c; }
-.badge.critical { background: rgba(239,68,68,0.12); color: #dc2626; }
 
-/* =========================
-   DESCRIPTION
-========================= */
+/* =========================================================
+   REPORT CARD
+========================================================= */
 
-.description {
-    font-size: 14px;
-    line-height: 1.5;
-    color: #374151;
+.report-card {
+    width: 100%;
 
-    padding: 12px;
+    padding: 17px;
 
-    background: #f8fafc;
-    border: 1px solid #e5e7eb;
-    border-radius: 14px;
+    background: #ffffff;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 12px 32px rgba(15, 23, 42, .06);
 }
 
-/* =========================
-   LOCATION
-========================= */
 
-.location-box {
-    padding: 12px;
+/* =========================================================
+   REPORT HEADER
+========================================================= */
 
-    border-radius: 16px;
+.report-header {
+    display: flex;
 
-    background: linear-gradient(180deg, #f8fafc, #ffffff);
-    border: 1px solid #e5e7eb;
+    align-items: flex-start;
+
+    justify-content: space-between;
+
+    gap: 12px;
+
+    padding-bottom: 14px;
+
+    border-bottom: 1px solid #eef2f7;
 }
 
-.location {
-    font-size: 14px;
-    font-weight: 600;
+.report-header > div:first-child {
+    min-width: 0;
 }
 
-.coords {
-    font-size: 11px;
-    color: #9ca3af;
-}
+.report-title {
+    font-size: 19px;
 
-/* =========================
-   BUTTONS
-========================= */
+    line-height: 1.3;
 
-.btn-primary {
-    flex: 2;
-
-    padding: 14px;
-
-    border: none;
-    border-radius: 16px;
-
-    background: linear-gradient(90deg, #2563eb, #7c3aed);
-    color: white;
-
-    font-size: 15px;
     font-weight: 800;
 
-    cursor: pointer;
+    color: #111827;
+
+    overflow-wrap: anywhere;
 }
 
-.btn-secondary {
-    flex: 1;
 
-    padding: 14px;
+/* =========================================================
+   READY ICON
+========================================================= */
 
-    border-radius: 16px;
+.ready-icon {
+    flex-shrink: 0;
 
-    border: 1px solid #e5e7eb;
-    background: white;
-
-    color: #6b7280;
-
-    font-weight: 700;
-
-    cursor: pointer;
-}
-
-/* =========================
-   LOADING OVERLAY
-========================= */
-
-.loading-overlay {
-    position: fixed;
-    inset: 0;
-
-    background: rgba(255,255,255,0.6);
-    backdrop-filter: blur(6px);
+    width: 32px;
+    height: 32px;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
-    z-index: 9998;
+    border-radius: 10px;
+
+    background: rgba(37, 99, 235, .09);
+
+    color: #2563eb;
+
+    font-size: 13px;
 }
 
-.loader-box {
-    background: white;
-    padding: 24px 30px;
-    border-radius: 16px;
+
+/* =========================================================
+   BADGES
+========================================================= */
+
+.badges {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 7px;
+
+    padding: 14px 0;
+}
+
+.badge {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 6px 11px;
+
+    border-radius: 999px;
+
+    font-size: 11px;
+
+    font-weight: 750;
+}
+
+
+/* =========================================================
+   CATEGORY
+========================================================= */
+
+.badge.category {
+    background: rgba(37, 99, 235, .10);
+
+    color: #1d4ed8;
+}
+
+
+/* =========================================================
+   GRAVITY
+========================================================= */
+
+.badge.low {
+    background: rgba(22, 163, 74, .10);
+
+    color: #15803d;
+}
+
+.badge.medium {
+    background: rgba(202, 138, 4, .11);
+
+    color: #a16207;
+}
+
+.badge.high {
+    background: rgba(234, 88, 12, .10);
+
+    color: #c2410c;
+}
+
+.badge.critical {
+    background: rgba(220, 38, 38, .10);
+
+    color: #b91c1c;
+}
+
+
+/* =========================================================
+   SECTIONS
+========================================================= */
+
+.section-block {
+    padding-top: 14px;
+
+    border-top: 1px solid #eef2f7;
+}
+
+.section-block + .section-block {
+    margin-top: 14px;
+}
+
+
+/* =========================================================
+   DESCRIPTION
+========================================================= */
+
+.description-box {
+    width: 100%;
+
+    padding: 13px;
+
+    border-radius: 14px;
+
+    background: #f8fafc;
+
+    border: 1px solid #e7edf4;
+}
+
+.description {
+    font-size: 13px;
+
+    line-height: 1.65;
+
+    color: #374151;
+
+    white-space: pre-wrap;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   LOCATION
+========================================================= */
+
+.location-box {
+    width: 100%;
+
+    padding: 13px;
+
+    border-radius: 15px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #f8fafc,
+            #ffffff
+        );
+
+    border: 1px solid #e3eaf2;
+}
+
+.location-main {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 10px;
+}
+
+.location-icon {
+    flex-shrink: 0;
+
+    width: 34px;
+    height: 34px;
 
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
 
-    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: rgba(37, 99, 235, .09);
+
+    color: #2563eb;
+
+    font-size: 13px;
+}
+
+.location-main > div:last-child {
+    min-width: 0;
+
+    flex: 1;
+}
+
+.location-address {
+    display: block;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+
+    font-weight: 600;
+
+    color: #334155;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   COORDONNEES
+========================================================= */
+
+.coords {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    align-items: center;
+
+    gap: 4px;
+
+    margin-top: 10px;
+
+    padding-top: 9px;
+
+    border-top: 1px solid #e8edf3;
+
+    font-size: 10px;
+
+    color: #94a3b8;
+}
+
+.coords strong {
+    color: #64748b;
+
     font-weight: 600;
 }
 
-.spinner {
-    width: 40px;
-    height: 40px;
+.coord-separator {
+    margin: 0 2px;
 
-    border: 4px solid #eee;
-    border-top: 4px solid #2563eb;
-    border-radius: 50%;
-
-    animation: spin 1s linear infinite;
+    color: #cbd5e1;
 }
-/* ===== MODAL FIX FINAL ===== */
+
+
+/* =========================================================
+   ESPACE POUR LA BARRE DU BAS
+========================================================= */
+
+.page-spacer {
+    height: 100px;
+}
+
+
+/* =========================================================
+   BOTTOM BAR
+   EXACTEMENT POUR TON HTML
+========================================================= */
+
+.bottom-bar {
+    position: fixed;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    z-index: 1000;
+
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 12px;
+
+    padding: 14px 40px;
+
+    background: rgba(255, 255, 255, .96);
+
+    border-top: 1px solid #e5e7eb;
+
+    box-shadow:
+        0 -4px 20px rgba(0, 0, 0, .08);
+
+    backdrop-filter: blur(12px);
+
+    -webkit-backdrop-filter: blur(12px);
+}
+
+
+/* =========================================================
+   BOUTON MODIFIER
+========================================================= */
+
+.bottom-bar .btn-back {
+    flex: 0 0 auto;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    min-height: 48px;
+
+    padding: 13px 22px;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 10px;
+
+    background: #ffffff;
+
+    color: #374151;
+
+    font-family: inherit;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background .2s ease,
+        border-color .2s ease,
+        transform .2s ease;
+}
+
+.bottom-bar .btn-back:hover {
+    background: #f3f4f6;
+
+    border-color: #9ca3af;
+}
+
+.bottom-bar .btn-back:active {
+    transform: translateY(1px);
+}
+
+
+/* =========================================================
+   BOUTON ENVOYER
+========================================================= */
+
+.bottom-bar .btn-next {
+    flex: 0 0 auto;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    min-height: 48px;
+
+    padding: 13px 26px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #2563eb;
+
+    color: #ffffff;
+
+    font-family: inherit;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 6px 16px rgba(37, 99, 235, .20);
+
+    transition:
+        background .2s ease,
+        transform .2s ease,
+        box-shadow .2s ease;
+}
+
+.bottom-bar .btn-next:hover {
+    background: #1d4ed8;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 8px 20px rgba(37, 99, 235, .25);
+}
+
+.bottom-bar .btn-next:active {
+    transform: translateY(0);
+
+    box-shadow:
+        0 4px 10px rgba(37, 99, 235, .18);
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
 
 .modal {
     position: fixed;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 
-    background: rgba(0,0,0,0.45);
-    backdrop-filter: blur(6px);
+    inset: 0;
 
     z-index: 9999;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 18px;
+
+    background: rgba(15, 23, 42, .48);
+
+    backdrop-filter: blur(7px);
+
+    -webkit-backdrop-filter: blur(7px);
 }
 
-/* hidden state */
 .hidden {
     display: none !important;
 }
 
-/* modal box */
+
+/* =========================================================
+   MODAL CONTENT
+========================================================= */
+
 .modal-content {
-    width: 92%;
+    width: 100%;
+
     max-width: 420px;
 
-    background: white;
-    border-radius: 18px;
+    padding: 24px 20px;
 
-    padding: 24px;
     text-align: center;
 
-    box-shadow: 0 25px 80px rgba(0,0,0,0.3);
+    background: #ffffff;
 
-    animation: pop 0.18s ease;
+    border-radius: 20px;
+
+    box-shadow:
+        0 25px 80px rgba(15, 23, 42, .25);
+
+    animation: pop .18s ease;
+}
+
+.modal-icon {
+    width: 48px;
+    height: 48px;
+
+    margin: 0 auto 13px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+
+    background: rgba(37, 99, 235, .10);
+
+    color: #2563eb;
+
+    font-size: 18px;
 }
 
 .modal-content h2 {
-    margin-bottom: 10px;
+    margin-bottom: 8px;
+
     font-size: 20px;
+
+    font-weight: 800;
+
+    color: #111827;
 }
 
 .modal-content p {
-    font-size: 14px;
-    color: #6b7280;
-    margin-bottom: 18px;
+    margin-bottom: 20px;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+
+    color: #64748b;
 }
 
-/* modal actions */
+
+/* =========================================================
+   MODAL BUTTONS
+========================================================= */
+
 .modal-actions {
     display: flex;
-    gap: 10px;
+
+    gap: 9px;
 }
 
-.modal-actions button {
+.modal-actions .btn-secondary,
+.modal-actions .btn-primary {
     flex: 1;
-}
 
-/* ===== BOTTOM BAR FIX ===== */
-
-.bottom-bar {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    min-height: 46px;
 
     display: flex;
-    gap: 10px;
 
-    padding: 12px;
-    background: rgba(255,255,255,0.95);
-    backdrop-filter: blur(10px);
+    align-items: center;
 
-    border-top: 1px solid #e5e7eb;
+    justify-content: center;
 
-    z-index: 10;
+    gap: 7px;
+
+    padding: 11px 16px;
+
+    border-radius: 10px;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    font-weight: 650;
+
+    cursor: pointer;
 }
 
-/* MOBILE FIX */
-@media (max-width: 480px) {
+
+/* Annuler */
+
+.modal-actions .btn-secondary {
+    border: 1px solid #d1d5db;
+
+    background: #ffffff;
+
+    color: #374151;
+}
+
+.modal-actions .btn-secondary:hover {
+    background: #f3f4f6;
+}
+
+
+/* Oui envoyer */
+
+.modal-actions .btn-primary {
+    border: none;
+
+    background: #2563eb;
+
+    color: #ffffff;
+
+    box-shadow:
+        0 5px 14px rgba(37, 99, 235, .18);
+}
+
+.modal-actions .btn-primary:hover {
+    background: #1d4ed8;
+}
+
+
+/* =========================================================
+   ANIMATIONS
+========================================================= */
+
+@keyframes fadeIn {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(5px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0);
+    }
+}
+
+@keyframes pop {
+
+    from {
+        opacity: 0;
+
+        transform:
+            scale(.95);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            scale(1);
+    }
+}
+
+
+/* =========================================================
+   TABLET / DESKTOP
+========================================================= */
+
+@media (min-width: 600px) {
+
+    .page {
+        padding:
+            25px
+            20px
+            130px;
+    }
+
+    .report-card {
+        padding: 22px;
+    }
+
+    .client-card {
+        padding: 19px;
+    }
+
+    /*
+     * Les boutons restent aux extrémités,
+     * comme dans ta version précédente.
+     */
 
     .bottom-bar {
-        flex-direction: column;
+        padding:
+            14px
+            40px;
     }
+
+    .bottom-bar .btn-back {
+        min-width: 150px;
+    }
+
+    .bottom-bar .btn-next {
+        min-width: 150px;
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 599px) {
+
+    .page {
+        padding:
+            14px
+            12px
+            125px;
+    }
+
+    .client-card {
+        padding: 14px;
+    }
+
+    .client-icon {
+        width: 40px;
+        height: 40px;
+
+        font-size: 16px;
+    }
+
+    .client-name {
+        font-size: 16px;
+    }
+
+    .report-card {
+        padding: 15px;
+    }
+
+    .report-title {
+        font-size: 18px;
+    }
+
+    /* Barre du bas */
+
+    .bottom-bar {
+        padding:
+            12px;
+        gap: 9px;
+    }
+
+    .bottom-bar .btn-back,
+    .bottom-bar .btn-next {
+        flex: 1;
+
+        width: 50%;
+
+        min-width: 0;
+
+        padding:
+            12px
+            10px;
+
+        font-size: 14px;
+    }
+
+    /* Modal */
 
     .modal-actions {
         flex-direction: column;
     }
 
-}
-
-/* buttons */
-.btn-primary {
-    flex: 2;
-    padding: 14px;
-
-    border: none;
-    border-radius: 14px;
-
-    background: linear-gradient(90deg, #2563eb, #7c3aed);
-    color: white;
-
-    font-weight: 800;
-    cursor: pointer;
-}
-
-.btn-secondary {
-    flex: 1;
-    padding: 14px;
-
-    border-radius: 14px;
-    border: 1px solid #e5e7eb;
-
-    background: white;
-    color: #6b7280;
-
-    font-weight: 700;
-    cursor: pointer;
-}
-
-/* animation */
-@keyframes pop {
-    from { transform: scale(0.95); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
+    .modal-actions .btn-primary,
+    .modal-actions .btn-secondary {
+        width: 100%;
+    }
 }
 
 
+/* =========================================================
+   PETIT MOBILE
+========================================================= */
 
+@media (max-width: 380px) {
 
+    .bottom-bar .btn-back,
+    .bottom-bar .btn-next {
+        font-size: 13px;
 
+        gap: 6px;
 
+        padding:
+            11px
+            7px;
+    }
 
+    .report-card {
+        padding: 13px;
+    }
 
-
-
-
-
-.page {
-    display: flex;
-    justify-content: center;
-    padding: 20px;
-    padding-bottom: 120px;
+    .client-card {
+        padding: 13px;
+    }
 }
-
-.container {
-    width: 100%;
-    max-width: 720px;
-}
-
-/* spacing entre sections */
-.step-header {
-    margin-bottom: 10px;
-}
-
-.status-badge {
-    margin: 10px auto 20px;
-}
-
-/* évite que bottom bar cache contenu */
-.page-spacer {
-    height: 80px;
-}
-
-
-
-
-
-
-
-
-
-
-
-/* ===== BLOCS SECTION ===== */
-
-.section-block {
-    display: flex;
-    flex-direction: column;
-
-    gap: 10px;
-
-    padding: 10px 0;
-}
-
-/* TITRE SECTION */
-.section-label {
-    font-size: 12px;
-    font-weight: 700;
-    text-transform: uppercase;
-
-    letter-spacing: 0.6px;
-
-    color: #9ca3af;
-}
-
-/* PLUS D’AIR ENTRE CONTENU */
-.section-block + .section-block {
-    margin-top: 8px;
-}
-
-/* DESCRIPTION plus respirante */
-.description {
-    margin-top: 6px;
-    line-height: 1.6;
-}
-
-/* LOCATION spacing */
-.location-box {
-    margin-top: 6px;
-    padding: 14px;
-}
-
-/* coords discrètes */
-.coords {
-    margin-top: 6px;
-    font-size: 11px;
-    color: #9ca3af;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

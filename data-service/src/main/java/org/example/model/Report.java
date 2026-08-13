@@ -12,6 +12,7 @@ public class Report {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    private Integer clientId;
     private Long userId;
     private String title;
     private String description;

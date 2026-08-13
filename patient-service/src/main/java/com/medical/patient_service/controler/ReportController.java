@@ -3,6 +3,7 @@ package com.medical.patient_service.controler;
 
 import com.medical.patient_service.model.Category;
 import com.medical.patient_service.model.Gravity;
+import com.medical.patient_service.model.ProfessionalClient;
 import com.medical.patient_service.service.DTO.CreateReportRequest;
 import com.medical.patient_service.service.DTO.PageResponse;
 import com.medical.patient_service.service.DTO.ReportResponse;
@@ -45,6 +46,15 @@ public class ReportController {
         return userService.getReportsByUser(userId);
 
     }
+
+    @GetMapping("/client/{clientId}")
+    public ProfessionalClient getClientById(@PathVariable Integer clientId){
+
+        return  userService.getClientById(clientId);
+
+    }
+
+
 
 
 
