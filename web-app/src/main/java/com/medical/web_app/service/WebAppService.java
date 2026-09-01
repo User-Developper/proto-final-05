@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -119,6 +120,19 @@ public class WebAppService {
 
     }
 
+    public String uploadReportImage(
+            Integer reportId,
+            MultipartFile image) {
+
+        if (image == null || image.isEmpty()) {
+            return null;
+        }
+
+        return patientserviceFeignClient.uploadReportImage(
+                reportId,
+                image
+        );
+    }
 
 
 //    public ReportResponse submitReportStep1(ReportForm form) {

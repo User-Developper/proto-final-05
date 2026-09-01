@@ -10,6 +10,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -68,6 +69,23 @@ public interface PatientserviceFeignClient {
 //    User user getUser();
 
 
+//    @PostMapping(
+//            value = "/reports/{reportId}/images",
+//            consumes = "multipart/form-data"
+//    )
+//    void uploadReportImages(
+//            @PathVariable("reportId") Integer reportId,
+//            @RequestPart("images") List<MultipartFile> images
+//    );
+
+    @PostMapping(
+            value = "/reports/{reportId}/images",
+            consumes = "multipart/form-data"
+    )
+    String uploadReportImage(
+            @PathVariable("reportId") Integer reportId,
+            @RequestPart("file") MultipartFile file
+    );
 
 
 }

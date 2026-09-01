@@ -32,7 +32,9 @@ spring:
 
 
 
-
+app:
+    storage:
+      directory: ../storage/reports
 
 
 

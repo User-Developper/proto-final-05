@@ -2,16 +2,21 @@ package org.example.controler;
 
 
 
+import org.example.DTO.CreateReportImageRequest;
 import org.example.DTO.CreateReportRequest;
 import org.example.DTO.ReportResponse;
 import org.example.DTO.ReportSummary;
 import org.example.model.ProfessionalClient;
 import org.example.model.Report;
+import org.example.model.ReportImage;
 import org.example.model.User;
 import org.example.repository.ProfessionalClientRepository;
+import org.example.repository.ReportImageRepository;
 import org.example.repository.ReportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.example.DTO.CreateReportImageRequest;
+import org.example.model.ReportImage;
 
 import java.security.Principal;
 import java.util.List;
@@ -27,6 +32,9 @@ public class ReportController {
 
     @Autowired
     ProfessionalClientRepository professionalClientRepository;
+
+    @Autowired
+    ReportImageRepository reportImageRepository;
 //
 //    @PostMapping()
 //    public Report submitReportStep1(@RequestBody Report report){
@@ -91,6 +99,38 @@ public class ReportController {
         return reportRepository.findByUserId(userId);
     }
 
+
+    @PostMapping("/{reportId}/images")
+    public ReportImage addImage(
+            @PathVariable Integer reportId,
+            @RequestBody CreateReportImageRequest request) {
+
+        Report report = reportRepository.findById(reportId)
+                .orElseThrow(() ->
+                        new RuntimeException(
+                                "Report introuvable : " + reportId
+                        )
+                );
+
+        ReportImage image = new ReportImage();
+
+        image.setReport(report);
+        image.setFileName(request.getFileName());
+        image.setContentType(request.getContentType());
+        image.setStorageName(request.getStorageName());
+        image.setFileSize(request.getFileSize());
+        image.setStoragePath(request.getStoragePath());
+
+        if (request.getCreatedAt() != null) {
+            image.setCreatedAt(
+                    java.time.LocalDateTime.parse(request.getCreatedAt())
+            );
+        } else {
+            image.setCreatedAt(java.time.LocalDateTime.now());
+        }
+
+        return reportImageRepository.save(image);
+    }
 
 
 }

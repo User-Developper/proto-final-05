@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 
-public interface ReportRepository extends JpaRepository<Report, Long>, JpaSpecificationExecutor<Report> {
+public interface ReportRepository extends JpaRepository<Report, Integer>, JpaSpecificationExecutor<Report> {
 
     List<Report> findByUserId(Long userId);
 

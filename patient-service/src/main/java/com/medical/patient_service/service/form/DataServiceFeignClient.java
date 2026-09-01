@@ -8,6 +8,8 @@ import com.medical.patient_service.service.DTO.ReportResponse;
 import com.medical.patient_service.service.DTO.ReportSummary;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
+import com.medical.patient_service.service.DTO.CreateReportImageRequest;
+import com.medical.patient_service.service.DTO.ReportImageResponse;
 
 import java.util.List;
 import java.util.Optional;
@@ -58,4 +60,15 @@ public interface DataServiceFeignClient {
     ProfessionalClient getClientById(@PathVariable Integer clientId);
 
 
+
+    @PostMapping("/reports/{reportId}/images")
+    ReportImageResponse addReportImage(
+            @PathVariable("reportId") Integer reportId,
+            @RequestBody CreateReportImageRequest request
+    );
+
+    @GetMapping("/reports/{reportId}/images")
+    List<ReportImageResponse> getReportImages(
+            @PathVariable("reportId") Integer reportId
+    );
 }

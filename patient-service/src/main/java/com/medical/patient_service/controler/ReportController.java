@@ -9,6 +9,7 @@ import com.medical.patient_service.service.DTO.PageResponse;
 import com.medical.patient_service.service.DTO.ReportResponse;
 //import com.medical.patient_service.service.ReportService;
 import com.medical.patient_service.service.DTO.ReportSummary;
+import com.medical.patient_service.service.ImageStorageService;
 import com.medical.patient_service.service.UserService;
 import com.medical.patient_service.service.form.DataServiceFeignClient;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -33,6 +35,9 @@ public class ReportController {
 
     @Autowired
     DataServiceFeignClient dataServiceFeignClient;
+
+    @Autowired
+    private ImageStorageService imageStorageService;
 
     @PostMapping()
     public ReportResponse submitReportStep1(@RequestBody CreateReportRequest request){
@@ -53,6 +58,30 @@ public class ReportController {
         return  userService.getClientById(clientId);
 
     }
+
+    @PostMapping(
+            value = "/{reportId}/images",
+            consumes = "multipart/form-data"
+    )
+    public List<String> uploadImages(
+            @PathVariable Integer reportId,
+            @RequestPart("file") List<MultipartFile> files) {
+
+        return files.stream()
+                .map(file -> imageStorageService.store(file, reportId))
+                .toList();
+    }
+
+//    @PostMapping("/{reportId}/images")
+//    public String uploadImage(
+//            @PathVariable Integer reportId,
+//            @RequestParam("file") MultipartFile file) {
+//
+//        String storageName = imageStorageService.store(file, reportId);
+//
+//        return storageName;
+//    }
+
 
 
 

@@ -1,23 +1,26 @@
-package com.medical.web_app.controller;
 
+        package com.medical.web_app.controller;
 
-import com.medical.web_app.model.Category;
-import com.medical.web_app.model.Gravity;
 import com.medical.web_app.model.ProfessionalClient;
 import com.medical.web_app.model.User;
 import com.medical.web_app.service.WebAppService;
 import com.medical.web_app.service.dto.CreateReportTemp;
-import com.medical.web_app.service.dto.PageResponse;
 import com.medical.web_app.service.dto.ReportResponse;
 import com.medical.web_app.service.form.ReportForm;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Path;
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 @Controller
@@ -25,12 +28,9 @@ public class ReportController {
 
     private final WebAppService webAppService;
 
-
     public ReportController(WebAppService webAppService) {
         this.webAppService = webAppService;
-
     }
-
 
 
     @GetMapping("/report")
@@ -46,25 +46,34 @@ public class ReportController {
         return "report";
     }
 
+
     @GetMapping("/create-report")
-    public String createReport(Model model){
+    public String createReport(Model model) {
 
         model.addAttribute("reportForm", new ReportForm());
 
         return "create-report";
-
-
     }
 
 
     @PostMapping("/create-report")
-    public String submitReportStep1(@ModelAttribute ReportForm form, Principal principal,
-                                    HttpSession session) {
+    public String submitReportStep1(
+            @ModelAttribute ReportForm form,
+
+            @RequestParam(value = "images", required = false)
+            List<MultipartFile> images,
+
+            Principal principal,
+            HttpSession session) {
 
         String username = principal.getName();
 
-        User user = webAppService.getUser(username).orElse(null);
-        Long userId = user.getId();
+        User user = webAppService.getUser(username)
+                .orElse(null);
+
+        if (user == null) {
+            return "redirect:/signin";
+        }
 
         CreateReportTemp report = new CreateReportTemp();
 
@@ -76,28 +85,80 @@ public class ReportController {
 
         session.setAttribute("report", report);
 
+
+        /*
+         * =====================================================
+         * CONSERVATION TEMPORAIRE DES IMAGES
+         * =====================================================
+         */
+
+        List<byte[]> reportImageBytes = new ArrayList<>();
+        List<String> reportImageTypes = new ArrayList<>();
+        List<String> reportImageNames = new ArrayList<>();
+
+        if (images != null && !images.isEmpty()) {
+
+            for (MultipartFile image : images) {
+
+                if (image != null && !image.isEmpty()) {
+
+                    try {
+
+                        reportImageBytes.add(image.getBytes());
+
+                        reportImageTypes.add(
+                                image.getContentType()
+                        );
+
+                        reportImageNames.add(
+                                image.getOriginalFilename()
+                        );
+
+                    } catch (IOException e) {
+
+                        System.out.println(
+                                "ERREUR LECTURE IMAGE = "
+                                        + image.getOriginalFilename()
+                        );
+
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+
+        session.setAttribute(
+                "reportImageBytes",
+                reportImageBytes
+        );
+
+        session.setAttribute(
+                "reportImageTypes",
+                reportImageTypes
+        );
+
+        session.setAttribute(
+                "reportImageNames",
+                reportImageNames
+        );
+
+
+        System.out.println(
+                "NOMBRE D'IMAGES TEMPORAIRES = "
+                        + reportImageBytes.size()
+        );
+
         System.out.println("STEP 1 OK");
 
-
-
         return "redirect:/create-report-step-0";
-
-
     }
 
-//    @GetMapping("/create-report-step-0")
-//    public String submitReportStep2(Model model, HttpSession session){
-//
-//
-//        return "create-report-step-0";
-//
-//
-//    }
 
     @GetMapping("/create-report-step-0")
-    public String submitReportStep2(Model model,
-                                    HttpSession session,
-                                    Principal principal) {
+    public String submitReportStep2(
+            Model model,
+            HttpSession session,
+            Principal principal) {
 
         String username = principal.getName();
 
@@ -108,21 +169,37 @@ public class ReportController {
             return "redirect:/signin";
         }
 
+        CreateReportTemp report =
+                (CreateReportTemp) session.getAttribute("report");
+
+        if (report == null) {
+            return "redirect:/create-report";
+        }
+
         model.addAttribute("user", user);
-        model.addAttribute("activeClient", user.getActiveClient());
+        model.addAttribute(
+                "activeClient",
+                user.getActiveClient()
+        );
 
         return "create-report-step-0";
     }
 
+
     @PostMapping("/create-report-step-0")
-    public String submitStep2(@RequestParam Double latitude,
-                              @RequestParam Double longitude,
-                              @RequestParam String location,
-                              @RequestParam Integer clientId,
-                              HttpSession session) {
+    public String submitStep2(
+            @RequestParam Double latitude,
+            @RequestParam Double longitude,
+            @RequestParam String location,
+            @RequestParam Integer clientId,
+            HttpSession session) {
 
         CreateReportTemp report =
                 (CreateReportTemp) session.getAttribute("report");
+
+        if (report == null) {
+            return "redirect:/create-report";
+        }
 
         report.setLatitude(latitude);
         report.setLongitude(longitude);
@@ -132,30 +209,20 @@ public class ReportController {
         session.setAttribute("report", report);
 
         System.out.println("STEP 2 OK");
-        System.out.println("SESSION = " + session.getAttribute("report"));
+
+        System.out.println(
+                "SESSION = "
+                        + session.getAttribute("report")
+        );
 
         return "redirect:/create-report-step-1";
     }
 
+
     @GetMapping("/create-report-step-1")
-    public String submitReportStep3(Model model, HttpSession session){
-
-        CreateReportTemp report =
-                (CreateReportTemp) session.getAttribute("report");
-
-        model.addAttribute("report", report);
-
-        ProfessionalClient client = webAppService.getClientById(report.getClientId());
-
-        model.addAttribute("client", client);
-
-        return "create-report-step-1";
-
-
-    }
-
-    @PostMapping("/create-report-step-1")
-    public String finalSubmit(HttpSession session, RedirectAttributes redirectAttributes) {
+    public String submitReportStep3(
+            Model model,
+            HttpSession session) {
 
         CreateReportTemp report =
                 (CreateReportTemp) session.getAttribute("report");
@@ -164,78 +231,245 @@ public class ReportController {
             return "redirect:/create-report";
         }
 
-
-        webAppService.submitFinal(report);
-
-        session.removeAttribute("report");
-
-        redirectAttributes.addFlashAttribute(
-                "success",
-                "Votre signalement a bien été enregistré."
+        model.addAttribute(
+                "report",
+                report
         );
 
-        System.out.println("REPORT FINAL SUBMITTED");
+        ProfessionalClient client =
+                webAppService.getClientById(
+                        report.getClientId()
+                );
 
-        return "redirect:/report-success";
+        model.addAttribute(
+                "client",
+                client
+        );
+
+
+        /*
+         * =====================================================
+         * IMAGES DU SIGNALEMENT
+         * =====================================================
+         */
+
+        List<byte[]> imageBytes =
+                (List<byte[]>) session.getAttribute(
+                        "reportImageBytes"
+                );
+
+        List<String> imageTypes =
+                (List<String>) session.getAttribute(
+                        "reportImageTypes"
+                );
+
+        List<String> reportImages =
+                new ArrayList<>();
+
+        if (imageBytes != null && imageTypes != null) {
+
+            int count = Math.min(
+                    imageBytes.size(),
+                    imageTypes.size()
+            );
+
+            for (int i = 0; i < count; i++) {
+
+                byte[] bytes = imageBytes.get(i);
+
+                String type = imageTypes.get(i);
+
+                if (bytes != null && type != null) {
+
+                    String base64 =
+                            Base64.getEncoder()
+                                    .encodeToString(bytes);
+
+                    reportImages.add(
+                            "data:" + type
+                                    + ";base64,"
+                                    + base64
+                    );
+                }
+            }
+        }
+
+        model.addAttribute(
+                "reportImages",
+                reportImages
+        );
+
+
+        System.out.println(
+                "IMAGES AFFICHABLES ETAPE 3 = "
+                        + reportImages.size()
+        );
+
+
+        return "create-report-step-1";
     }
 
-    @GetMapping("/report-success")
-    public String reportSuccess() {
 
-        return "report-success";
+    /*
+     * =========================================================
+     * ÉTAPE 3
+     *
+     * Création du report puis enregistrement
+     * des images dans le storage.
+     * =========================================================
+     */
 
-    }
+    @PostMapping("/create-report-step-1")
+    public String finalSubmit(
+            HttpSession session,
+            RedirectAttributes redirectAttributes) {
 
-//    @GetMapping("/report-list")
-//    public String reportList(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "6") int size, @RequestParam(required = false) Category category,
-//                             @RequestParam(required = false) Gravity gravity,
-//                             @RequestParam(required = false) String q,Model model) {
-//
-//        System.out.println("CATEGORY = " + category);
-//        System.out.println("GRAVITY = " + gravity);
-//        System.out.println("Q = " + q);
-//
-//        PageResponse<ReportResponse> reports =
-//                webAppService.getAllReports(page, size, category, gravity, q);
-//
-//        model.addAttribute("reports", reports);
-//        model.addAttribute("currentPage", reports.getNumber());
-//        model.addAttribute("totalPages", reports.getTotalPages());
-//
-//        model.addAttribute("selectedCategory", category);
-//        model.addAttribute("selectedGravity", gravity);
-//        model.addAttribute("search", q);
-//
-//        return "report-list";
-//    }
+        CreateReportTemp report =
+                (CreateReportTemp) session.getAttribute(
+                        "report"
+                );
 
-//    @GetMapping("/api")
-//    public PageResponse<ReportResponse> getReports(
-//            @RequestParam(defaultValue = "0") int page,
-//            @RequestParam(defaultValue = "6") int size,
-//            @RequestParam(required = false) Category category,
-//            @RequestParam(required = false) Gravity gravity,
-//            @RequestParam(required = false) String q
-//    ) {
-//        return webAppService.getAllReports(page, size, category, gravity, q);
-//    }
-
-    @GetMapping("/report-list")
-    public String reportList() {
-        return "report-list";
-    }
-
-//    @GetMapping("/api/reports")
-//    public PageResponse<ReportResponse> getReports(
-//            @RequestParam(defaultValue = "0") int page,
-//            @RequestParam(defaultValue = "6") int size,
-//            @RequestParam(required = false) Category category,
-//            @RequestParam(required = false) Gravity gravity,
-//            @RequestParam(required = false) String q
-//    ) {
-//        return webAppService.getAllReports(page, size, category, gravity, q);
-//    }
+        if (report == null) {
+            return "redirect:/create-report";
+        }
 
 
+        /*
+         * =====================================================
+         * RÉCUPÉRATION DES IMAGES TEMPORAIRES
+         * =====================================================
+         */
 
-}
+        List<byte[]> imageBytes =
+                (List<byte[]>) session.getAttribute(
+                        "reportImageBytes"
+                );
+
+        List<String> imageTypes =
+                (List<String>) session.getAttribute(
+                        "reportImageTypes"
+                );
+
+        List<String> imageNames =
+                (List<String>) session.getAttribute(
+                        "reportImageNames"
+                );
+
+
+        int imageCount = 0;
+
+        if (imageBytes != null) {
+            imageCount = imageBytes.size();
+        }
+
+        System.out.println(
+                "NOMBRE D'IMAGES AVANT ENVOI = "
+                        + imageCount
+        );
+
+
+        /*
+         * =====================================================
+         * 1. CRÉATION DU REPORT
+         * =====================================================
+         */
+
+        ReportResponse response =
+                webAppService.submitFinal(report);
+
+        Integer reportId =
+                response.getId();
+
+        System.out.println(
+                "REPORT CREE AVEC ID = "
+                        + reportId
+        );
+
+
+        /*
+         * =====================================================
+         * 2. ENREGISTREMENT DES IMAGES
+         * =====================================================
+         */
+
+        if (imageBytes != null
+                && imageTypes != null
+                && !imageBytes.isEmpty()) {
+
+            int count = Math.min(
+                    imageBytes.size(),
+                    imageTypes.size()
+            );
+
+            for (int i = 0; i < count; i++) {
+
+                byte[] bytes =
+                        imageBytes.get(i);
+
+                String contentType =
+                        imageTypes.get(i);
+
+                String originalFilename =
+                        "image-" + (i + 1);
+
+                if (imageNames != null
+                        && imageNames.size() > i
+                        && imageNames.get(i) != null
+                        && !imageNames.get(i).isBlank()) {
+
+                    originalFilename =
+                            imageNames.get(i);
+                }
+
+
+                if (bytes == null
+                        || bytes.length == 0) {
+
+                    continue;
+                }
+
+
+                System.out.println(
+                        "ENVOI IMAGE = "
+                                + originalFilename
+                );
+
+                System.out.println(
+                        "TYPE = "
+                                + contentType
+                );
+
+                System.out.println(
+                        "TAILLE = "
+                                + bytes.length
+                );
+
+
+                MultipartFile multipartFile =
+                        new ByteArrayMultipartFile(
+                                "file",
+                                originalFilename,
+                                contentType,
+                                bytes
+                        );
+
+
+                String storageName =
+                        webAppService.uploadReportImage(
+                                reportId,
+                                multipartFile
+                        );
+
+
+                System.out.println(
+                        "IMAGE STOCKEE = "
+                                + storageName
+                );
+            }}
+
+
+
+        /*
+         * =====================================================
+         * 3. NETTOYAGE DE LA SESSION
+         * =================================================

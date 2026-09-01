@@ -148,6 +148,35 @@
             </div>
 
 
+            <!-- =========================
+        IMAGES DU SIGNALEMENT
+   ========================== -->
+
+            <section class="report-card images-card"
+                     th:if="${reportImages != null and !reportImages.isEmpty()}">
+
+                <div class="section-block">
+
+                    <div class="section-label">
+                        Photos du signalement
+                    </div>
+
+                    <div class="report-images">
+
+                        <div class="report-image"
+                             th:each="image : ${reportImages}">
+
+                            <img th:src="${image}"
+                                 alt="Photo du signalement">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
             <!-- CATEGORY + GRAVITY -->
 
             <div class="badges">

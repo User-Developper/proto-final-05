@@ -4,8 +4,10 @@ import com.medical.web_app.model.Category;
 import com.medical.web_app.model.Gravity;
 import com.medical.web_app.model.Status;
 import com.medical.web_app.model.User;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class ReportForm {
 
@@ -31,7 +33,6 @@ public class ReportForm {
 
 
     private User user;
-
 
 
 

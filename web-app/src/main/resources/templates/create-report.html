@@ -29,7 +29,10 @@
         </div>
     </div>
 
-    <form th:action="@{/create-report}" th:object="${reportForm}" method="post">
+    <form th:action="@{/create-report}"
+          th:object="${reportForm}"
+          method="post"
+          enctype="multipart/form-data">
 
         <!-- CATEGORY -->
         <div class="section">
@@ -71,13 +74,18 @@
         <!-- TITLE -->
         <div class="section">
             <h2>Titre</h2>
-            <input type="text" th:field="*{title}" placeholder="Ex: Odeur suspecte près du parc">
+            <input type="text"
+                   th:field="*{title}"
+                   placeholder="Ex: Odeur suspecte près du parc">
         </div>
 
         <!-- DESCRIPTION -->
         <div class="section">
             <h2>Description</h2>
-            <textarea th:field="*{description}" rows="5" placeholder="Décris la situation en détail..."></textarea>
+            <textarea
+                    th:field="*{description}"
+                    rows="5"
+                    placeholder="Décris la situation en détail..."></textarea>
         </div>
 
         <!-- GRAVITY -->
@@ -108,11 +116,52 @@
         </div>
 
         <!-- LOCATION -->
-<!--        <div class="section">-->
-<!--            <h2>Localisation</h2>-->
-<!--            <input type="text" th:field="*{location}" placeholder="Adresse ou lieu">-->
-<!--            <button type="button" class="location-btn">📍 Utiliser ma position actuelle</button>-->
-<!--        </div>-->
+        <!--        <div class="section">-->
+        <!--            <h2>Localisation</h2>-->
+        <!--            <input type="text" th:field="*{location}" placeholder="Adresse ou lieu">-->
+        <!--            <button type="button" class="location-btn">📍 Utiliser ma position actuelle</button>-->
+        <!--        </div>-->
+
+        <!-- IMAGES -->
+        <div class="section image-section">
+
+            <h2>Photos du signalement</h2>
+
+            <p class="image-help">
+                Ajoutez une ou plusieurs photos pour illustrer le signalement.
+            </p>
+
+            <label for="reportImages" class="image-upload">
+
+                <span class="image-upload-icon">
+                    <i class="fa-solid fa-camera"></i>
+                </span>
+
+                <span class="image-upload-content">
+                    <strong>Ajouter des photos</strong>
+                    <small>JPG, JPEG, PNG — plusieurs photos possibles</small>
+                </span>
+
+                <span class="image-upload-arrow">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </span>
+
+            </label>
+
+            <input
+                    type="file"
+                    id="reportImages"
+                    name="images"
+                    accept="image/jpeg,image/png,image/webp"
+                    multiple
+                    hidden
+            >
+
+            <div id="imagePreview" class="image-preview"></div>
+
+            <p id="imageCount" class="image-count"></p>
+
+        </div>
 
         <input type="hidden" th:field="*{latitude}">
         <input type="hidden" th:field="*{longitude}">
@@ -127,10 +176,10 @@
 </div>
 
 <script th:src="@{/js/geolocation.js}"></script>
-
-
+<script th:src="@{/js/report-images.js}"></script>
 
 <div th:replace="~{fragments/footer :: footer}"></div>
+
 </body>
 
 </html>
