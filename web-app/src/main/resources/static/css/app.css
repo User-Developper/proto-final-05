@@ -1,6 +1,7 @@
-/* ========================================
+
+/* =========================================================
    RESET
-======================================== */
+========================================================= */
 
 * {
     margin: 0;
@@ -8,66 +9,70 @@
     box-sizing: border-box;
 }
 
+
 body {
     font-family: "Segoe UI", system-ui, sans-serif;
     background: #f1f5f9;
     color: #0f172a;
 }
 
-/* ========================================
+
+/* =========================================================
    DESIGN TOKENS
-======================================== */
-
-
+========================================================= */
 
 :root {
 
-    /* Identité environnement */
-    --primary: #15803d;          /* vert environnement */
+    --primary: #15803d;
     --primary-dark: #166534;
     --primary-light: #dcfce7;
 
-    --secondary: #0284c7;        /* eau / carte */
+    --secondary: #0284c7;
 
     --success: #16a34a;
     --warning: #f59e0b;
     --danger: #dc2626;
 
-    /* Background */
     --bg: #f8fafc;
     --card: #ffffff;
 
-    /* Texte */
     --text: #172033;
     --muted: #64748b;
 
-    /* Bordures */
     --border: #e2e8f0;
 }
 
-/* ========================================
-   HEADER APP
-======================================== */
+
+/* =========================================================
+   HEADER
+========================================================= */
 
 .app-header {
 
     position: sticky;
     top: 0;
 
+    width: 100%;
     height: 64px;
 
-    background: white;
+    padding: 0 16px;
+
+    background: rgba(255, 255, 255, 0.96);
+
+    border-bottom: 1px solid var(--border);
 
     display: flex;
     align-items: center;
 
-    padding: 0 16px;
-
-    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(14px);
 
     z-index: 1000;
-
 }
+
+
+/* =========================================================
+   LOGO
+========================================================= */
 
 .app-logo {
 
@@ -77,211 +82,824 @@ body {
 
     transform: translateX(-50%);
 
+    color: #111827;
+
     font-size: 20px;
+
     font-weight: 800;
+
+    letter-spacing: -0.6px;
+
+    text-decoration: none;
+
+    transition: color 0.2s ease;
+}
+
+
+.app-logo:hover {
+    color: var(--primary);
+}
+
+
+/* =========================================================
+   BURGER
+========================================================= */
+
+.burger-btn {
+
+    width: 42px;
+    height: 42px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: #f8fafc;
+
+    color: #374151;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.burger-btn:hover {
+    background: #f1f5f9;
+}
+
+
+.burger-btn:active {
+    transform: scale(0.94);
+}
+
+
+/* =========================================================
+   DESKTOP ACCOUNT
+========================================================= */
+
+.desktop-account {
+
+    margin-left: auto;
+
+    position: relative;
+}
+
+
+.account-container {
+
+    position: relative;
+}
+
+
+/* =========================================================
+   ACCOUNT BUTTON
+========================================================= */
+
+.account-btn {
+
+    min-height: 42px;
+
+    padding: 0 14px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 12px;
+
+    background: #ffffff;
+
+    color: #1f2937;
+
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.account-btn:hover,
+.account-btn.active {
+
+    background: #f8fafc;
+
+    border-color: #cbd5e1;
+
+    box-shadow:
+        0 4px 14px rgba(15, 23, 42, 0.06);
+}
+
+
+.account-btn > i:first-child {
+
+    color: #64748b;
+
+}
+
+
+/* =========================================================
+   CHEVRON
+========================================================= */
+
+.account-chevron {
+
+    color: #94a3b8;
+
+    font-size: 10px;
+
+    transition: transform 0.2s ease;
+}
+
+
+.account-btn.active .account-chevron {
+
+    transform: rotate(180deg);
+
+}
+
+
+/* =========================================================
+   ACCOUNT AVATAR
+========================================================= */
+
+.account-avatar {
+
+    width: 26px;
+    height: 26px;
+
+    border-radius: 50%;
+
+    background: #f0fdf4;
 
     color: var(--primary);
 
-    letter-spacing: -0.5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-}
-.burger-btn,
-.profile-btn {
-
-    width:42px;
-    height:42px;
-
-    border-radius:12px;
-
-    border:none;
-
-    background:#f8fafc;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    text-decoration:none;
-
-    color:#374151;
-
-    cursor:pointer;
-
+    font-size: 12px;
 }
 
 
-.burger-btn {
-    margin-right:auto;
+.account-name {
+
+    max-width: 150px;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
 }
 
 
-.profile-btn {
-    margin-left:auto;
+/* =========================================================
+   ACCOUNT MENU
+========================================================= */
+
+.account-menu {
+
+    position: absolute;
+
+    top: calc(100% + 10px);
+
+    right: 0;
+
+    width: 320px;
+
+    padding: 8px;
+
+    background: #ffffff;
+
+    border: 1px solid var(--border);
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 20px 45px rgba(15, 23, 42, 0.14);
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transform:
+        translateY(-6px)
+        scale(0.98);
+
+    transform-origin: top right;
+
+    transition:
+        opacity 0.18s ease,
+        visibility 0.18s ease,
+        transform 0.18s ease;
+
+    z-index: 3000;
 }
 
-/* ========================================
+
+.account-menu.show {
+
+    opacity: 1;
+
+    visibility: visible;
+
+    transform:
+        translateY(0)
+        scale(1);
+}
+
+
+/* =========================================================
+   ACCOUNT MENU HEADER
+========================================================= */
+
+.account-menu-header {
+
+    padding: 12px 12px 10px;
+}
+
+
+.account-menu-title {
+
+    display: block;
+
+    color: #111827;
+
+    font-size: 15px;
+
+    font-weight: 700;
+}
+
+
+.account-menu-subtitle {
+
+    display: block;
+
+    margin-top: 3px;
+
+    color: #64748b;
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   ACCOUNT OPTIONS
+========================================================= */
+
+.account-option {
+
+    min-height: 64px;
+
+    padding: 10px 11px;
+
+    border-radius: 13px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    text-decoration: none;
+
+    color: #1f2937;
+
+    transition:
+        background 0.18s ease,
+        transform 0.18s ease;
+}
+
+
+.account-option:hover {
+
+    background: #f8fafc;
+
+    transform: translateX(2px);
+
+}
+
+
+/* =========================================================
+   ACCOUNT OPTION ICON
+========================================================= */
+
+.account-option-icon {
+
+    flex: 0 0 40px;
+
+    width: 40px;
+    height: 40px;
+
+    border-radius: 11px;
+
+    background: #f1f5f9;
+
+    color: #475569;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 15px;
+}
+
+
+.account-option-icon.professional {
+
+    background: #f0fdf4;
+
+    color: var(--primary);
+
+}
+
+
+/* =========================================================
+   ACCOUNT OPTION CONTENT
+========================================================= */
+
+.account-option-content {
+
+    flex: 1;
+
+    min-width: 0;
+}
+
+
+.account-option-content strong {
+
+    display: block;
+
+    color: #1f2937;
+
+    font-size: 13px;
+
+    font-weight: 700;
+}
+
+
+.account-option-content small {
+
+    display: block;
+
+    margin-top: 3px;
+
+    color: #64748b;
+
+    font-size: 11px;
+
+    line-height: 1.4;
+}
+
+
+/* =========================================================
+   ACCOUNT OPTION ARROW
+========================================================= */
+
+.account-option-arrow {
+
+    color: #cbd5e1;
+
+    font-size: 11px;
+
+    transition: 0.18s ease;
+}
+
+
+.account-option:hover .account-option-arrow {
+
+    color: #94a3b8;
+
+    transform: translateX(2px);
+}
+
+
+/* =========================================================
+   DIVIDER
+========================================================= */
+
+.account-menu-divider {
+
+    height: 1px;
+
+    margin: 6px 10px;
+
+    background: #eef2f7;
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+.logout-option {
+
+    color: var(--danger);
+}
+
+
+.logout-option .account-option-icon {
+
+    background: #fef2f2;
+
+    color: var(--danger);
+}
+
+
+.logout-option .account-option-content strong {
+
+    color: var(--danger);
+}
+
+
+/* =========================================================
+   MOBILE ACCOUNT
+========================================================= */
+
+.mobile-account {
+
+    display: none;
+
+    margin-left: auto;
+
+}
+
+
+.mobile-account-btn {
+
+    width: 42px;
+    height: 42px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: #f8fafc;
+
+    color: #374151;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.mobile-account-btn:hover,
+.mobile-account-btn.active {
+
+    background: #f1f5f9;
+
+}
+
+
+.mobile-account-btn:active {
+
+    transform: scale(0.94);
+
+}
+
+
+/* =========================================================
    SIDEBAR
-======================================== */
+========================================================= */
 
 .sidebar {
 
     position: fixed;
 
-    top:0;
-    left:-320px;
+    top: 0;
+    left: -320px;
 
-    width:290px;
-    height:100vh;
+    width: 290px;
+    height: 100vh;
 
-    background:white;
+    background: #ffffff;
 
-    transition:.3s ease;
+    transition: left 0.3s ease;
 
-    z-index:2000;
+    z-index: 2000;
 
     box-shadow:
-    8px 0 30px rgba(0,0,0,.12);
-
+        8px 0 30px rgba(0, 0, 0, 0.12);
 }
+
 
 .sidebar.open {
     left: 0;
 }
 
-.sidebar-header .user {
 
-    background:#f0fdf4;
-
-    padding:12px;
-
-    border-radius:16px;
-
-}
-
-
-.sidebar-nav a {
-
-    margin:6px 12px;
-
-    border-radius:14px;
-
-}
-
-
-.sidebar-nav a:hover {
-
-    background:var(--primary-light);
-
-    color:var(--primary);
-
-}
+/* =========================================================
+   SIDEBAR HEADER
+========================================================= */
 
 .sidebar-header {
+
     height: 70px;
+
+    padding: 0 16px;
 
     display: flex;
     align-items: center;
     justify-content: space-between;
 
-    padding: 0 16px;
-
     border-bottom: 1px solid #eef2f7;
 }
 
-.sidebar-nav a {
+
+.sidebar-header .user {
+
+    background: #f8fafc;
+
+    padding: 10px;
+
+    border-radius: 14px;
+}
+
+
+/* =========================================================
+   USER
+========================================================= */
+
+.user {
+
     display: flex;
+
     align-items: center;
+
     gap: 12px;
+}
 
-    padding: 14px 16px;
 
-    text-decoration: none;
+.avatar {
+
+    font-size: 28px;
+
+    color: var(--primary);
+}
+
+
+.user-info strong {
+
+    display: block;
 
     color: #111827;
 
-    transition: 0.2s;
+    font-size: 14px;
 }
 
+
+.user-info a {
+
+    display: block;
+
+    margin: 0;
+
+    padding: 0;
+
+    color: #64748b;
+
+    font-size: 12px;
+
+    text-decoration: none;
+}
+
+
+.user-info a:hover {
+
+    color: var(--primary);
+
+}
+
+
+/* =========================================================
+   CLOSE BUTTON
+========================================================= */
+
+.close-btn {
+
+    width: 38px;
+    height: 38px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #f8fafc;
+
+    color: #475569;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    transition: background 0.2s ease;
+}
+
+
+.close-btn:hover {
+
+    background: #f1f5f9;
+
+}
+
+
+/* =========================================================
+   SIDEBAR NAV
+========================================================= */
+
+.sidebar-nav a {
+
+    margin: 6px 12px;
+
+    padding: 14px 16px;
+
+    border-radius: 14px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    color: #111827;
+
+    text-decoration: none;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+
+.sidebar-nav a:hover {
+
+    background: var(--primary-light);
+
+    color: var(--primary);
+
+}
+
+
+.sidebar-nav a i {
+
+    width: 20px;
+
+    color: #64748b;
+}
+
+
+.sidebar-nav a:hover i {
+
+    color: var(--primary);
+
+}
 
 
 .sidebar-nav .danger {
+
     color: var(--danger);
+
 }
 
-/* ========================================
-   OVERLAY SIDEBAR
-======================================== */
+
+.sidebar-nav .danger i {
+
+    color: var(--danger);
+
+}
+
+
+/* =========================================================
+   SIDEBAR OVERLAY
+========================================================= */
 
 .sidebar-overlay {
+
     position: fixed;
+
     inset: 0;
 
-    background: rgba(0,0,0,0.4);
+    background: rgba(15, 23, 42, 0.4);
 
     opacity: 0;
+
     pointer-events: none;
 
-    transition: 0.2s ease;
+    transition: opacity 0.2s ease;
 
     z-index: 1500;
 }
 
+
 .sidebar-overlay.show {
+
     opacity: 1;
+
     pointer-events: all;
+
 }
 
-/* ========================================
-   MOBILE NAV (BOTTOM BAR)
-======================================== */
+
+/* =========================================================
+   MOBILE NAV
+========================================================= */
 
 .mobile-nav {
+
     position: fixed;
+
     bottom: 0;
     left: 0;
     right: 0;
 
     height: 68px;
 
-    background: rgba(255,255,255,0.92);
+    background: rgba(255, 255, 255, 0.94);
+
     backdrop-filter: blur(14px);
 
     border-top: 1px solid #e5e7eb;
 
     display: flex;
+
     justify-content: space-around;
+
     align-items: center;
 
     z-index: 1000;
 }
 
+
 .nav-item {
+
+    width: 100%;
+    height: 100%;
+
     display: flex;
+
     flex-direction: column;
+
     align-items: center;
 
-    text-decoration: none;
+    justify-content: center;
+
+    gap: 4px;
 
     color: var(--muted);
 
     font-size: 11px;
 
-    gap: 4px;
-
-    width: 100%;
+    text-decoration: none;
 }
+
 
 .nav-item i {
+
     font-size: 18px;
+
 }
+
 
 .nav-item.active {
+
     color: var(--primary);
+
 }
 
-/* bouton action centrale */
+
+/* =========================================================
+   BOUTON CENTRAL
+========================================================= */
+
 .nav-center {
+
     position: relative;
+
     top: -18px;
 
     width: 52px;
@@ -290,62 +908,41 @@ body {
     border-radius: 18px;
 
     background: var(--primary);
-    color: white !important;
+
+    color: #ffffff !important;
 
     display: flex;
+
     align-items: center;
+
     justify-content: center;
-
-   box-shadow:
-   0 10px 25px rgba(22,163,74,.35);
-}
-
-.nav-center {
-
-    background:#16a34a;
 
     box-shadow:
-    0 10px 25px rgba(22,163,74,.35);
+        0 10px 25px rgba(22, 163, 74, 0.30);
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease;
+}
+
+
+.nav-center:hover {
+
+    background: var(--primary-dark);
 
 }
 
-/* ========================================
-   FLOATING ACTION BUTTON (OPTIONAL)
-======================================== */
 
-.fab {
-    position: fixed;
-    bottom: 90px;
-    right: 16px;
+.nav-center:active {
 
-    width: 56px;
-    height: 56px;
+    transform: scale(0.92);
 
-    border-radius: 18px;
-
-    background: var(--primary);
-    color: white;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    box-shadow: 0 10px 30px rgba(37,99,235,0.35);
-
-    z-index: 1100;
 }
 
-/* ========================================
-   BUTTONS GLOBAL
-======================================== */
 
-button {
-    font-family: inherit;
-}
-
-/* ========================================
-   DESKTOP BEHAVIOR
-======================================== */
+/* =========================================================
+   DESKTOP
+========================================================= */
 
 @media (min-width: 768px) {
 
@@ -353,64 +950,99 @@ button {
         display: none;
     }
 
-    .fab {
-        display: flex;
+    .desktop-account {
+        display: block;
     }
+
+    .mobile-account {
+        display: none;
+    }
+
 }
 
 
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 767px) {
+
+    .app-header {
+
+        height: 60px;
+
+        padding: 0 14px;
+
+    }
 
 
+    .desktop-account {
 
-.nav-center:active {
-    transform: scale(0.92);
+        display: none;
+    }
+
+
+    .mobile-account {
+
+        display: block;
+    }
+
+
+    .app-logo {
+
+        font-size: 19px;
+
+    }
+
+
+    .burger-btn,
+    .mobile-account-btn {
+
+        width: 40px;
+        height: 40px;
+
+        border-radius: 11px;
+
+    }
+
+
+    .mobile-account-menu {
+
+        position: fixed;
+
+        top: 68px;
+
+        right: 12px;
+
+        width: min(
+            320px,
+            calc(100vw - 24px)
+        );
+
+    }
+
 }
 
 
+/* =========================================================
+   PETITS ÉCRANS
+========================================================= */
+
+@media (max-width: 380px) {
+
+    .mobile-account-menu {
+
+        width: calc(100vw - 20px);
+
+        right: 10px;
+
+    }
 
 
+    .account-option-content small {
 
+        font-size: 10px;
 
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.user {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.avatar {
-    font-size: 28px;
-    color: var(--primary);
-}
-
-.user-info strong {
-    font-size: 14px;
-}
-
-.user-info small {
-    font-size: 12px;
-    color: var(--muted);
-}
-
-.close-btn {
-    border: none;
-    background: transparent;
-    font-size: 18px;
-    cursor: pointer;
 }

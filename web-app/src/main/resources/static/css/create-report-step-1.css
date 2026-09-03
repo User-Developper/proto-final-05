@@ -1,3 +1,4 @@
+
 /* =========================================================
    RESET
 ========================================================= */
@@ -43,11 +44,9 @@ body {
     width: 100%;
 
     padding:
-        20px
+        22px
         16px
         130px;
-
-    animation: fadeIn .3s ease;
 }
 
 .container {
@@ -59,20 +58,20 @@ body {
 
 
 /* =========================================================
-   HEADER
+   STEP HEADER
 ========================================================= */
 
 .step-header {
     text-align: center;
 
-    margin-bottom: 16px;
+    margin-bottom: 18px;
 }
 
 .step-icon {
     width: 46px;
     height: 46px;
 
-    margin: 0 auto 10px;
+    margin: 0 auto 11px;
 
     display: flex;
     align-items: center;
@@ -80,15 +79,39 @@ body {
 
     border-radius: 14px;
 
-    background: rgba(37, 99, 235, .10);
+    background: rgba(37, 99, 235, .09);
 
-    color: #1d4ed8;
+    color: #374151;
 
-    font-size: 20px;
+    font-size: 19px;
+}
+
+.step-heading {
+    max-width: 600px;
+
+    margin: 0 auto;
+}
+
+.eyebrow {
+    display: block;
+
+    margin-bottom: 5px;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    text-transform: uppercase;
+
+    letter-spacing: .8px;
+
+    color: #94a3b8;
 }
 
 .step-header h1 {
-    font-size: 23px;
+    font-size: 24px;
+
+    line-height: 1.25;
 
     font-weight: 800;
 
@@ -98,36 +121,38 @@ body {
 }
 
 .step-header p {
-    margin-top: 5px;
+    margin-top: 6px;
 
     font-size: 13px;
 
-    color: #6b7280;
+    line-height: 1.5;
+
+    color: #64748b;
 }
 
 
 /* =========================================================
-   PROGRESS BAR
+   PROGRESS
 ========================================================= */
 
 .progress-bar {
     width: 100%;
-    height: 6px;
+    height: 5px;
 
-    margin-top: 14px;
+    margin-top: 16px;
 
-    background: #e5e7eb;
+    overflow: hidden;
 
     border-radius: 999px;
 
-    overflow: hidden;
+    background: #e5e7eb;
 }
 
 .progress {
     width: 100%;
     height: 100%;
 
-    border-radius: 999px;
+    border-radius: inherit;
 
     background:
         linear-gradient(
@@ -144,9 +169,10 @@ body {
 
 .status-wrapper {
     display: flex;
+
     justify-content: center;
 
-    margin-bottom: 16px;
+    margin-bottom: 18px;
 }
 
 .status-badge {
@@ -157,13 +183,13 @@ body {
 
     gap: 7px;
 
-    padding: 8px 13px;
+    padding: 7px 12px;
+
+    border: 1px solid rgba(22, 163, 74, .14);
 
     border-radius: 999px;
 
-    background: rgba(22, 163, 74, .09);
-
-    border: 1px solid rgba(22, 163, 74, .15);
+    background: rgba(22, 163, 74, .08);
 
     color: #15803d;
 
@@ -184,28 +210,25 @@ body {
 
     align-items: flex-start;
 
-    gap: 13px;
+    gap: 14px;
 
     width: 100%;
 
-    padding: 16px;
+    margin-bottom: 16px;
 
-    margin-bottom: 14px;
+    padding: 17px;
+
+    overflow: hidden;
 
     background: #ffffff;
 
-    border: 1px solid #dbe5ef;
+    border: 1px solid #dfe6ee;
 
     border-radius: 18px;
 
     box-shadow:
         0 8px 25px rgba(15, 23, 42, .05);
-
-    overflow: hidden;
 }
-
-
-/* Ligne bleue gauche */
 
 .client-card::before {
     content: "";
@@ -216,7 +239,7 @@ body {
     bottom: 0;
     left: 0;
 
-    width: 4px;
+    width: 3px;
 
     background: #2563eb;
 }
@@ -237,13 +260,13 @@ body {
     align-items: center;
     justify-content: center;
 
-    border-radius: 13px;
+    border-radius: 12px;
 
-    background: rgba(37, 99, 235, .10);
+    background: #f1f5f9;
 
-    color: #2563eb;
+    color: #475569;
 
-    font-size: 18px;
+    font-size: 17px;
 }
 
 
@@ -263,6 +286,8 @@ body {
     margin-bottom: 6px;
 
     font-size: 10px;
+
+    line-height: 1.2;
 
     font-weight: 800;
 
@@ -287,14 +312,20 @@ body {
     overflow-wrap: anywhere;
 }
 
+.client-details {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 5px;
+}
+
 .client-detail {
     display: flex;
 
     align-items: flex-start;
 
     gap: 7px;
-
-    margin-top: 5px;
 
     font-size: 12px;
 
@@ -314,7 +345,7 @@ body {
 
     text-align: center;
 
-    color: #2563eb;
+    color: #64748b;
 }
 
 
@@ -325,11 +356,11 @@ body {
 .report-card {
     width: 100%;
 
-    padding: 17px;
+    padding: 18px;
 
     background: #ffffff;
 
-    border: 1px solid #e2e8f0;
+    border: 1px solid #e1e7ee;
 
     border-radius: 20px;
 
@@ -349,23 +380,25 @@ body {
 
     justify-content: space-between;
 
-    gap: 12px;
+    gap: 15px;
 
-    padding-bottom: 14px;
+    padding-bottom: 16px;
 
-    border-bottom: 1px solid #eef2f7;
+    border-bottom: 1px solid #edf1f5;
 }
 
-.report-header > div:first-child {
+.report-heading {
     min-width: 0;
 }
 
 .report-title {
-    font-size: 19px;
+    font-size: 20px;
 
     line-height: 1.3;
 
     font-weight: 800;
+
+    letter-spacing: -.2px;
 
     color: #111827;
 
@@ -390,9 +423,9 @@ body {
 
     border-radius: 10px;
 
-    background: rgba(37, 99, 235, .09);
+    background: #f1f5f9;
 
-    color: #2563eb;
+    color: #475569;
 
     font-size: 13px;
 }
@@ -409,7 +442,7 @@ body {
 
     gap: 7px;
 
-    padding: 14px 0;
+    padding: 15px 0;
 }
 
 .badge {
@@ -418,7 +451,9 @@ body {
     align-items: center;
     justify-content: center;
 
-    padding: 6px 11px;
+    min-height: 28px;
+
+    padding: 5px 11px;
 
     border-radius: 999px;
 
@@ -433,7 +468,7 @@ body {
 ========================================================= */
 
 .badge.category {
-    background: rgba(37, 99, 235, .10);
+    background: rgba(37, 99, 235, .09);
 
     color: #1d4ed8;
 }
@@ -444,42 +479,42 @@ body {
 ========================================================= */
 
 .badge.low {
-    background: rgba(22, 163, 74, .10);
+    background: rgba(22, 163, 74, .09);
 
     color: #15803d;
 }
 
 .badge.medium {
-    background: rgba(202, 138, 4, .11);
+    background: rgba(202, 138, 4, .10);
 
     color: #a16207;
 }
 
 .badge.high {
-    background: rgba(234, 88, 12, .10);
+    background: rgba(234, 88, 12, .09);
 
     color: #c2410c;
 }
 
 .badge.critical {
-    background: rgba(220, 38, 38, .10);
+    background: rgba(220, 38, 38, .09);
 
     color: #b91c1c;
 }
 
 
 /* =========================================================
-   SECTIONS
+   SECTION BLOCK
 ========================================================= */
 
 .section-block {
-    padding-top: 14px;
+    padding-top: 16px;
 
-    border-top: 1px solid #eef2f7;
+    border-top: 1px solid #edf1f5;
 }
 
 .section-block + .section-block {
-    margin-top: 14px;
+    margin-top: 16px;
 }
 
 
@@ -490,13 +525,13 @@ body {
 .description-box {
     width: 100%;
 
-    padding: 13px;
+    padding: 14px;
+
+    border: 1px solid #e4eaf0;
 
     border-radius: 14px;
 
     background: #f8fafc;
-
-    border: 1px solid #e7edf4;
 }
 
 .description {
@@ -519,7 +554,9 @@ body {
 .location-box {
     width: 100%;
 
-    padding: 13px;
+    padding: 14px;
+
+    border: 1px solid #e2e8f0;
 
     border-radius: 15px;
 
@@ -529,8 +566,6 @@ body {
             #f8fafc,
             #ffffff
         );
-
-    border: 1px solid #e3eaf2;
 }
 
 .location-main {
@@ -544,8 +579,8 @@ body {
 .location-icon {
     flex-shrink: 0;
 
-    width: 34px;
-    height: 34px;
+    width: 35px;
+    height: 35px;
 
     display: flex;
 
@@ -554,14 +589,14 @@ body {
 
     border-radius: 10px;
 
-    background: rgba(37, 99, 235, .09);
+    background: #f1f5f9;
 
-    color: #2563eb;
+    color: #475569;
 
     font-size: 13px;
 }
 
-.location-main > div:last-child {
+.location-content {
     min-width: 0;
 
     flex: 1;
@@ -583,7 +618,7 @@ body {
 
 
 /* =========================================================
-   COORDONNEES
+   COORDINATES
 ========================================================= */
 
 .coords {
@@ -593,11 +628,11 @@ body {
 
     align-items: center;
 
-    gap: 4px;
+    gap: 7px;
 
-    margin-top: 10px;
+    margin-top: 11px;
 
-    padding-top: 9px;
+    padding-top: 10px;
 
     border-top: 1px solid #e8edf3;
 
@@ -606,21 +641,112 @@ body {
     color: #94a3b8;
 }
 
-.coords strong {
+.coordinate {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 5px;
+}
+
+.coordinate strong {
     color: #64748b;
 
     font-weight: 600;
 }
 
 .coord-separator {
-    margin: 0 2px;
-
     color: #cbd5e1;
 }
 
 
 /* =========================================================
-   ESPACE POUR LA BARRE DU BAS
+   PHOTOS
+========================================================= */
+
+.photos-section {
+    margin-top: 16px;
+}
+
+.photos-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 12px;
+
+    margin-bottom: 11px;
+}
+
+.photos-title {
+    font-size: 15px;
+
+    line-height: 1.3;
+
+    font-weight: 750;
+
+    color: #1f2937;
+}
+
+.photos-count {
+    flex-shrink: 0;
+
+    padding: 5px 9px;
+
+    border-radius: 999px;
+
+    background: #f1f5f9;
+
+    color: #64748b;
+
+    font-size: 10px;
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   IMAGE GRID
+========================================================= */
+
+.report-images {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 10px;
+}
+
+.report-image {
+    position: relative;
+
+    width: 100%;
+
+    aspect-ratio: 1 / 1;
+
+    overflow: hidden;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 14px;
+
+    background: #f3f4f6;
+}
+
+.report-image img {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+
+/* =========================================================
+   ESPACE BAS DE PAGE
 ========================================================= */
 
 .page-spacer {
@@ -630,7 +756,6 @@ body {
 
 /* =========================================================
    BOTTOM BAR
-   EXACTEMENT POUR TON HTML
 ========================================================= */
 
 .bottom-bar {
@@ -652,14 +777,14 @@ body {
 
     gap: 12px;
 
-    padding: 14px 40px;
+    padding: 13px 40px;
 
     background: rgba(255, 255, 255, .96);
 
     border-top: 1px solid #e5e7eb;
 
     box-shadow:
-        0 -4px 20px rgba(0, 0, 0, .08);
+        0 -4px 20px rgba(15, 23, 42, .08);
 
     backdrop-filter: blur(12px);
 
@@ -672,19 +797,18 @@ body {
 ========================================================= */
 
 .bottom-bar .btn-back {
-    flex: 0 0 auto;
-
     display: inline-flex;
 
     align-items: center;
-
     justify-content: center;
 
-    gap: 10px;
+    gap: 9px;
 
     min-height: 48px;
 
-    padding: 13px 22px;
+    min-width: 150px;
+
+    padding: 12px 20px;
 
     border: 1px solid #d1d5db;
 
@@ -696,9 +820,9 @@ body {
 
     font-family: inherit;
 
-    font-size: 15px;
+    font-size: 14px;
 
-    font-weight: 600;
+    font-weight: 650;
 
     cursor: pointer;
 
@@ -709,7 +833,7 @@ body {
 }
 
 .bottom-bar .btn-back:hover {
-    background: #f3f4f6;
+    background: #f8fafc;
 
     border-color: #9ca3af;
 }
@@ -724,19 +848,18 @@ body {
 ========================================================= */
 
 .bottom-bar .btn-next {
-    flex: 0 0 auto;
-
     display: inline-flex;
 
     align-items: center;
-
     justify-content: center;
 
-    gap: 10px;
+    gap: 9px;
 
     min-height: 48px;
 
-    padding: 13px 26px;
+    min-width: 150px;
+
+    padding: 12px 22px;
 
     border: none;
 
@@ -748,9 +871,9 @@ body {
 
     font-family: inherit;
 
-    font-size: 15px;
+    font-size: 14px;
 
-    font-weight: 600;
+    font-weight: 650;
 
     cursor: pointer;
 
@@ -774,9 +897,6 @@ body {
 
 .bottom-bar .btn-next:active {
     transform: translateY(0);
-
-    box-shadow:
-        0 4px 10px rgba(37, 99, 235, .18);
 }
 
 
@@ -794,7 +914,6 @@ body {
     display: flex;
 
     align-items: center;
-
     justify-content: center;
 
     padding: 18px;
@@ -820,7 +939,7 @@ body {
 
     max-width: 420px;
 
-    padding: 24px 20px;
+    padding: 25px 21px;
 
     text-align: center;
 
@@ -838,7 +957,7 @@ body {
     width: 48px;
     height: 48px;
 
-    margin: 0 auto 13px;
+    margin: 0 auto 12px;
 
     display: flex;
 
@@ -847,11 +966,27 @@ body {
 
     border-radius: 14px;
 
-    background: rgba(37, 99, 235, .10);
+    background: #f1f5f9;
 
-    color: #2563eb;
+    color: #475569;
 
     font-size: 18px;
+}
+
+.modal-label {
+    display: block;
+
+    margin-bottom: 5px;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    text-transform: uppercase;
+
+    letter-spacing: .7px;
+
+    color: #94a3b8;
 }
 
 .modal-content h2 {
@@ -859,17 +994,21 @@ body {
 
     font-size: 20px;
 
+    line-height: 1.3;
+
     font-weight: 800;
 
     color: #111827;
 }
 
 .modal-content p {
-    margin-bottom: 20px;
+    max-width: 350px;
+
+    margin: 0 auto 20px;
 
     font-size: 13px;
 
-    line-height: 1.5;
+    line-height: 1.55;
 
     color: #64748b;
 }
@@ -894,7 +1033,6 @@ body {
     display: flex;
 
     align-items: center;
-
     justify-content: center;
 
     gap: 7px;
@@ -924,11 +1062,11 @@ body {
 }
 
 .modal-actions .btn-secondary:hover {
-    background: #f3f4f6;
+    background: #f8fafc;
 }
 
 
-/* Oui envoyer */
+/* Confirmer */
 
 .modal-actions .btn-primary {
     border: none;
@@ -950,79 +1088,57 @@ body {
    ANIMATIONS
 ========================================================= */
 
-@keyframes fadeIn {
-
-    from {
-        opacity: 0;
-
-        transform:
-            translateY(5px);
-    }
-
-    to {
-        opacity: 1;
-
-        transform:
-            translateY(0);
-    }
-}
-
 @keyframes pop {
 
     from {
         opacity: 0;
 
-        transform:
-            scale(.95);
+        transform: scale(.95);
     }
 
     to {
         opacity: 1;
 
-        transform:
-            scale(1);
+        transform: scale(1);
     }
 }
 
 
 /* =========================================================
-   TABLET / DESKTOP
+   TABLET
 ========================================================= */
 
 @media (min-width: 600px) {
 
     .page {
         padding:
-            25px
+            28px
             20px
             130px;
-    }
-
-    .report-card {
-        padding: 22px;
     }
 
     .client-card {
         padding: 19px;
     }
 
-    /*
-     * Les boutons restent aux extrémités,
-     * comme dans ta version précédente.
-     */
-
-    .bottom-bar {
-        padding:
-            14px
-            40px;
+    .report-card {
+        padding: 22px;
     }
 
-    .bottom-bar .btn-back {
-        min-width: 150px;
+    .report-images {
+        grid-template-columns: repeat(3, 1fr);
     }
+}
 
-    .bottom-bar .btn-next {
-        min-width: 150px;
+
+/* =========================================================
+   DESKTOP
+========================================================= */
+
+@media (min-width: 900px) {
+
+    .report-images {
+        grid-template-columns: repeat(4, 1fr);
     }
 }
 
@@ -1035,9 +1151,13 @@ body {
 
     .page {
         padding:
-            14px
+            15px
             12px
             125px;
+    }
+
+    .step-header h1 {
+        font-size: 22px;
     }
 
     .client-card {
@@ -1063,11 +1183,15 @@ body {
         font-size: 18px;
     }
 
-    /* Barre du bas */
+    .photos-header {
+        align-items: flex-start;
+    }
+
+    /* Barre inférieure */
 
     .bottom-bar {
-        padding:
-            12px;
+        padding: 11px 12px;
+
         gap: 9px;
     }
 
@@ -1105,6 +1229,18 @@ body {
 
 @media (max-width: 380px) {
 
+    .step-header h1 {
+        font-size: 20px;
+    }
+
+    .report-card {
+        padding: 13px;
+    }
+
+    .client-card {
+        padding: 13px;
+    }
+
     .bottom-bar .btn-back,
     .bottom-bar .btn-next {
         font-size: 13px;
@@ -1115,127 +1251,5 @@ body {
             11px
             7px;
     }
-
-    .report-card {
-        padding: 13px;
-    }
-
-    .client-card {
-        padding: 13px;
-    }
 }
 
-/* =========================================================
-   PHOTOS DU SIGNALEMENT - RECAP STEP 3
-========================================================= */
-
-.images-card {
-    margin-top: 14px;
-}
-
-.report-images {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    margin-top: 10px;
-}
-
-.report-image {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    overflow: hidden;
-    border-radius: 14px;
-    background: #f3f4f6;
-    border: 1px solid #e2e8f0;
-}
-
-.report-image img {
-    width: 100%;
-    height: 100%;
-    display: block;
-    object-fit: cover;
-}
-
-
-/* ===== TABLET / DESKTOP ===== */
-
-@media (min-width: 600px) {
-
-    .report-images {
-        grid-template-columns: repeat(3, 1fr);
-    }
-
-}
-
-
-/* ===== GRAND DESKTOP ===== */
-
-@media (min-width: 900px) {
-
-    .report-images {
-        grid-template-columns: repeat(4, 1fr);
-    }
-
-}
-
-/* =========================================================
-   PHOTOS DU SIGNALEMENT - STEP 3
-========================================================= */
-
-.images-card {
-    margin-top: 14px;
-}
-
-.report-images {
-    display: grid;
-
-    grid-template-columns: repeat(2, 1fr);
-
-    gap: 10px;
-
-    margin-top: 10px;
-}
-
-.report-image {
-    position: relative;
-
-    width: 100%;
-
-    aspect-ratio: 1 / 1;
-
-    overflow: hidden;
-
-    border-radius: 14px;
-
-    background: #f3f4f6;
-
-    border: 1px solid #e2e8f0;
-}
-
-.report-image img {
-    width: 100%;
-    height: 100%;
-
-    display: block;
-
-    object-fit: cover;
-}
-
-
-@media (min-width: 600px) {
-
-    .report-images {
-        grid-template-columns: repeat(3, 1fr);
-    }
-
-}
-
-
-@media (min-width: 900px) {
-
-    .report-images {
-        grid-template-columns: repeat(4, 1fr);
-    }
-
-}

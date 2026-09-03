@@ -1,18 +1,23 @@
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
-    <title>Confirmation signalement</title>
+    <title>Confirmation du signalement</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" th:href="@{/css/create-report-step-1.css}">
-    <link rel="stylesheet" th:href="@{/css/app.css}">
+    <link rel="stylesheet"
+          th:href="@{/css/create-report-step-1.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/app.css}">
 
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
+
 <body>
 
 <div th:replace="~{fragments/header :: header}"></div>
@@ -22,56 +27,61 @@
 
     <div class="container">
 
-        <!-- =========================
-             HEADER
-        ========================== -->
+        <!-- =====================================================
+             EN-TÊTE
+        ====================================================== -->
 
-        <div class="step-header">
+        <header class="step-header">
 
             <div class="step-icon">
                 <i class="fa-solid fa-clipboard-check"></i>
             </div>
 
-            <h1>Confirmation</h1>
+            <div class="step-heading">
 
-            <p>
-                Étape 3 / 3 — Vérifiez votre signalement
-            </p>
+                <span class="eyebrow">
+                    Étape 3 sur 3
+                </span>
+
+                <h1>
+                    Vérification du signalement
+                </h1>
+
+                <p>
+                    Vérifiez les informations avant l'envoi définitif.
+                </p>
+
+            </div>
 
             <div class="progress-bar">
                 <div class="progress"></div>
             </div>
 
-        </div>
+        </header>
 
 
-        <!-- =========================
-             STATUS
-        ========================== -->
+        <!-- =====================================================
+             STATUT
+        ====================================================== -->
 
         <div class="status-wrapper">
 
             <div class="status-badge">
-
                 <i class="fa-solid fa-circle-check"></i>
-
                 Prêt à être envoyé
-
             </div>
 
         </div>
 
 
-        <!-- =========================
+        <!-- =====================================================
              CLIENT
-        ========================== -->
+        ====================================================== -->
 
         <section class="client-card">
 
             <div class="client-icon">
-
                 <i class="fa-solid fa-building"></i>
-
             </div>
 
             <div class="client-content">
@@ -80,33 +90,34 @@
                     Client concerné
                 </span>
 
-                <h2
-                        class="client-name"
-                        th:text="${client.name}">
+                <h2 class="client-name"
+                    th:text="${client.name}">
                     Nom du client
                 </h2>
 
-                <div
-                        class="client-detail"
-                        th:if="${client.address != null and !client.address.isEmpty()}">
+                <div class="client-details">
 
-                    <i class="fa-solid fa-location-dot"></i>
+                    <div class="client-detail"
+                         th:if="${client.address != null and !client.address.isEmpty()}">
 
-                    <span th:text="${client.address}">
-                        Adresse du client
-                    </span>
+                        <i class="fa-solid fa-location-dot"></i>
 
-                </div>
+                        <span th:text="${client.address}">
+                            Adresse du client
+                        </span>
 
-                <div
-                        class="client-detail"
-                        th:if="${client.city != null and !client.city.isEmpty()}">
+                    </div>
 
-                    <i class="fa-solid fa-city"></i>
+                    <div class="client-detail"
+                         th:if="${client.city != null and !client.city.isEmpty()}">
 
-                    <span th:text="${client.city}">
-                        Ville
-                    </span>
+                        <i class="fa-solid fa-city"></i>
+
+                        <span th:text="${client.city}">
+                            Ville
+                        </span>
+
+                    </div>
 
                 </div>
 
@@ -115,31 +126,31 @@
         </section>
 
 
-        <!-- =========================
-             REPORT
-        ========================== -->
+        <!-- =====================================================
+             SIGNALement
+        ====================================================== -->
 
         <section class="report-card">
 
-            <!-- TITLE -->
+            <!-- En-tête du signalement -->
 
             <div class="report-header">
 
-                <div>
+                <div class="report-heading">
 
                     <span class="section-label">
                         Signalement
                     </span>
 
-                    <h2
-                            class="report-title"
-                            th:text="${report.title}">
+                    <h2 class="report-title"
+                        th:text="${report.title}">
                         Titre du signalement
                     </h2>
 
                 </div>
 
-                <div class="ready-icon">
+                <div class="ready-icon"
+                     aria-label="Signalement prêt">
 
                     <i class="fa-solid fa-check"></i>
 
@@ -148,59 +159,32 @@
             </div>
 
 
-            <!-- =========================
-        IMAGES DU SIGNALEMENT
-   ========================== -->
-
-            <section class="report-card images-card"
-                     th:if="${reportImages != null and !reportImages.isEmpty()}">
-
-                <div class="section-block">
-
-                    <div class="section-label">
-                        Photos du signalement
-                    </div>
-
-                    <div class="report-images">
-
-                        <div class="report-image"
-                             th:each="image : ${reportImages}">
-
-                            <img th:src="${image}"
-                                 alt="Photo du signalement">
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-            <!-- CATEGORY + GRAVITY -->
+            <!-- =================================================
+                 CATÉGORIE ET GRAVITÉ
+            ================================================== -->
 
             <div class="badges">
 
-                <span
-                        class="badge category"
-                        th:text="${report.category}">
+                <span class="badge category"
+                      th:text="${report.category}">
                     Catégorie
                 </span>
 
-                <span
-                        class="badge"
-                        th:classappend="${report.gravity.name() == 'BASIC'} ? ' low' :
-                            (${report.gravity.name() == 'MEDIUM'} ? ' medium' :
-                            (${report.gravity.name() == 'HIGH'} ? ' high' :
-                            ' critical'))"
-                        th:text="${report.gravity}">
+                <span class="badge"
+                      th:classappend="${report.gravity.name() == 'BASIC'} ? ' low' :
+                          (${report.gravity.name() == 'MEDIUM'} ? ' medium' :
+                          (${report.gravity.name() == 'HIGH'} ? ' high' :
+                          ' critical'))"
+                      th:text="${report.gravity}">
                     Gravité
                 </span>
 
             </div>
 
 
-            <!-- DESCRIPTION -->
+            <!-- =================================================
+                 DESCRIPTION
+            ================================================== -->
 
             <div class="section-block">
 
@@ -210,9 +194,8 @@
 
                 <div class="description-box">
 
-                    <p
-                            class="description"
-                            th:text="${report.description}">
+                    <p class="description"
+                       th:text="${report.description}">
                         Description du signalement
                     </p>
 
@@ -221,12 +204,14 @@
             </div>
 
 
-            <!-- LOCATION -->
+            <!-- =================================================
+                 LOCALISATION
+            ================================================== -->
 
             <div class="section-block">
 
                 <div class="section-label">
-                    Localisation du signalement
+                    Localisation
                 </div>
 
                 <div class="location-box">
@@ -234,16 +219,13 @@
                     <div class="location-main">
 
                         <div class="location-icon">
-
                             <i class="fa-solid fa-location-dot"></i>
-
                         </div>
 
-                        <div>
+                        <div class="location-content">
 
-                            <span
-                                    class="location-address"
-                                    th:text="${report.location}">
+                            <span class="location-address"
+                                  th:text="${report.location}">
                                 Adresse sélectionnée
                             </span>
 
@@ -253,25 +235,76 @@
 
                     <div class="coords">
 
-                        <span>
-                            Latitude :
-                        </span>
+                        <div class="coordinate">
 
-                        <strong th:text="${report.latitude}">
-                            0
-                        </strong>
+                            <span>
+                                Latitude
+                            </span>
+
+                            <strong th:text="${report.latitude}">
+                                0
+                            </strong>
+
+                        </div>
 
                         <span class="coord-separator">
                             •
                         </span>
 
-                        <span>
-                            Longitude :
-                        </span>
+                        <div class="coordinate">
 
-                        <strong th:text="${report.longitude}">
-                            0
-                        </strong>
+                            <span>
+                                Longitude
+                            </span>
+
+                            <strong th:text="${report.longitude}">
+                                0
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 PHOTOS
+            ================================================== -->
+
+            <div class="section-block photos-section"
+                 th:if="${reportImages != null and !reportImages.isEmpty()}">
+
+                <div class="photos-header">
+
+                    <div>
+
+                        <div class="section-label">
+                            Pièces jointes
+                        </div>
+
+                        <h3 class="photos-title">
+                            Photos du signalement
+                        </h3>
+
+                    </div>
+
+                    <span class="photos-count"
+                          th:text="${#lists.size(reportImages)} + ' photo(s)'">
+                        1 photo
+                    </span>
+
+                </div>
+
+                <div class="report-images">
+
+                    <div class="report-image"
+                         th:each="image : ${reportImages}">
+
+                        <img th:src="${image}"
+                             alt="Photo du signalement">
 
                     </div>
 
@@ -282,9 +315,9 @@
         </section>
 
 
-        <!-- =========================
-             BOTTOM SPACER
-        ========================== -->
+        <!-- =====================================================
+             ESPACE POUR LA BARRE FIXE
+        ====================================================== -->
 
         <div class="page-spacer"></div>
 
@@ -293,9 +326,9 @@
 </main>
 
 
-<!-- =========================
-     BOTTOM BAR
-========================== -->
+<!-- =========================================================
+     BARRE D'ACTIONS
+========================================================== -->
 
 <div class="bottom-bar">
 
@@ -306,7 +339,7 @@
 
         <i class="fa-solid fa-arrow-left"></i>
 
-        Modifier
+        <span>Modifier</span>
 
     </button>
 
@@ -316,7 +349,7 @@
             id="openModal"
             class="btn-next">
 
-        Envoyer
+        <span>Envoyer</span>
 
         <i class="fa-solid fa-paper-plane"></i>
 
@@ -325,9 +358,9 @@
 </div>
 
 
-<!-- =========================
-     INVISIBLE FORM
-========================== -->
+<!-- =========================================================
+     FORMULAIRE INVISIBLE
+========================================================== -->
 
 <form
         id="submitForm"
@@ -338,9 +371,9 @@
 </form>
 
 
-<!-- =========================
-     CONFIRMATION MODAL
-========================== -->
+<!-- =========================================================
+     MODAL DE CONFIRMATION
+========================================================== -->
 
 <div
         id="confirmModal"
@@ -349,17 +382,20 @@
     <div class="modal-content">
 
         <div class="modal-icon">
-
             <i class="fa-solid fa-paper-plane"></i>
-
         </div>
+
+        <span class="modal-label">
+            Confirmation
+        </span>
 
         <h2>
             Confirmer l’envoi ?
         </h2>
 
         <p>
-            Votre signalement sera envoyé et ne pourra plus être modifié.
+            Votre signalement sera envoyé définitivement.
+            Après validation, il ne pourra plus être modifié.
         </p>
 
         <div class="modal-actions">
@@ -402,3 +438,4 @@
 </body>
 
 </html>
+

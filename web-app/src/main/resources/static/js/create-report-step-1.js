@@ -9,50 +9,56 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let isSubmitting = false;
 
+
+    // =====================================================
     // OUVRIR MODAL
+    // =====================================================
+
     openBtn.addEventListener("click", () => {
+
         modal.classList.remove("hidden");
+
     });
 
+
+    // =====================================================
     // ANNULER
+    // =====================================================
+
     cancelBtn.addEventListener("click", () => {
+
         modal.classList.add("hidden");
+
     });
 
-    // CONFIRMER ENVOI
-    confirmBtn.addEventListener("click", async () => {
 
-        if (isSubmitting) return;
+    // =====================================================
+    // CONFIRMER ENVOI
+    // =====================================================
+
+    confirmBtn.addEventListener("click", () => {
+
+        if (isSubmitting) {
+            return;
+        }
+
         isSubmitting = true;
 
+        // Fermer la fenêtre de confirmation
         modal.classList.add("hidden");
 
-        // lock bouton pour éviter double click
+        // Bloquer le bouton pour éviter un double clic
         openBtn.disabled = true;
+
         openBtn.textContent = "Envoi...";
 
-        try {
-            const res = await fetch(form.action, {
-                method: "POST",
-                body: new FormData(form)
-            });
 
-            if (!res.ok) throw new Error("Erreur serveur");
+        // =================================================
+        // ENVOI DU FORMULAIRE
+        // =================================================
 
-            // redirect direct
-            window.location.href = "/report-success";
+        form.submit();
 
-        } catch (e) {
-
-            console.error(e);
-
-            alert("Erreur lors de l'envoi");
-
-            isSubmitting = false;
-
-            openBtn.disabled = false;
-            openBtn.textContent = "Envoyer 🚀";
-        }
     });
 
 });

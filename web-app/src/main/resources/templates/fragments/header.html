@@ -1,31 +1,485 @@
-<th:block th:fragment="header" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<th:block th:fragment="header"
+          xmlns:sec="http://www.w3.org/1999/xhtml">
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
 
     <header class="app-header">
 
-        <button class="burger-btn" onclick="toggleSidebar()">
+        <!-- Bouton menu -->
+        <button class="burger-btn"
+                type="button"
+                onclick="toggleSidebar()"
+                aria-label="Ouvrir le menu">
+
             <i class="fa-solid fa-bars"></i>
+
         </button>
 
-        <div class="app-logo">
+
+        <!-- Logo -->
+        <a th:href="@{/}"
+           class="app-logo">
+
             Alert
+
+        </a>
+
+
+        <!-- =================================================
+             DESKTOP : COMPTE
+        ================================================== -->
+
+        <div class="desktop-account">
+
+            <!-- VISITEUR -->
+            <div sec:authorize="isAnonymous()"
+                 class="account-container">
+
+                <button class="account-btn"
+                        type="button"
+                        aria-label="Ouvrir le menu de connexion">
+
+                    <i class="fa-solid fa-user"></i>
+
+                    <span>Connexion</span>
+
+                    <i class="fa-solid fa-chevron-down account-chevron"></i>
+
+                </button>
+
+
+                <!-- MENU CONNEXION -->
+
+                <div class="account-menu">
+
+                    <div class="account-menu-header">
+
+                        <span class="account-menu-title">
+                            Se connecter
+                        </span>
+
+                        <span class="account-menu-subtitle">
+                            Choisissez votre espace
+                        </span>
+
+                    </div>
+
+
+                    <!-- Utilisateur -->
+
+                    <a th:href="@{/signin}"
+                       class="account-option">
+
+                        <span class="account-option-icon">
+                            <i class="fa-solid fa-user"></i>
+                        </span>
+
+                        <span class="account-option-content">
+
+                            <strong>
+                                Utilisateur
+                            </strong>
+
+                            <small>
+                                Accéder à mon espace
+                            </small>
+
+                        </span>
+
+                        <i class="fa-solid fa-chevron-right account-option-arrow"></i>
+
+                    </a>
+
+
+                    <!-- Professionnel -->
+
+                    <a th:href="@{/pro/signin}"
+                       class="account-option">
+
+                        <span class="account-option-icon professional">
+                            <i class="fa-solid fa-building"></i>
+                        </span>
+
+                        <span class="account-option-content">
+
+                            <strong>
+                                Professionnel
+                            </strong>
+
+                            <small>
+                                Accéder à l'espace professionnel
+                            </small>
+
+                        </span>
+
+                        <i class="fa-solid fa-chevron-right account-option-arrow"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- UTILISATEUR CONNECTÉ -->
+
+            <div sec:authorize="isAuthenticated()"
+                 class="account-container">
+
+                <button class="account-btn"
+                        type="button"
+                        aria-label="Ouvrir le menu du compte">
+
+                    <span class="account-avatar">
+                        <i class="fa-solid fa-user"></i>
+                    </span>
+
+                    <span class="account-name"
+                          sec:authentication="principal.username">
+                        Mon compte
+                    </span>
+
+                    <i class="fa-solid fa-chevron-down account-chevron"></i>
+
+                </button>
+
+
+                <!-- MENU COMPTE -->
+
+                <div class="account-menu">
+
+                    <div class="account-menu-header">
+
+                        <span class="account-menu-title"
+                              sec:authentication="principal.username">
+                            Mon compte
+                        </span>
+
+                        <span class="account-menu-subtitle">
+                            Espace personnel
+                        </span>
+
+                    </div>
+
+
+                    <!-- Profil -->
+
+                    <a th:href="@{/profile}"
+                       class="account-option">
+
+                        <span class="account-option-icon">
+                            <i class="fa-solid fa-user"></i>
+                        </span>
+
+                        <span class="account-option-content">
+
+                            <strong>
+                                Mon profil
+                            </strong>
+
+                            <small>
+                                Gérer mon compte
+                            </small>
+
+                        </span>
+
+                        <i class="fa-solid fa-chevron-right account-option-arrow"></i>
+
+                    </a>
+
+
+                    <!-- Signalements -->
+
+                    <a th:href="@{/report-list}"
+                       class="account-option">
+
+                        <span class="account-option-icon">
+                            <i class="fa-solid fa-list"></i>
+                        </span>
+
+                        <span class="account-option-content">
+
+                            <strong>
+                                Mes signalements
+                            </strong>
+
+                            <small>
+                                Consulter mes signalements
+                            </small>
+
+                        </span>
+
+                        <i class="fa-solid fa-chevron-right account-option-arrow"></i>
+
+                    </a>
+
+
+                    <!-- Séparateur -->
+
+                    <div class="account-menu-divider"></div>
+
+
+                    <!-- Déconnexion -->
+
+                    <a th:href="@{/logout}"
+                       class="account-option logout-option">
+
+                        <span class="account-option-icon">
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                        </span>
+
+                        <span class="account-option-content">
+
+                            <strong>
+                                Déconnexion
+                            </strong>
+
+                        </span>
+
+                    </a>
+
+                </div>
+
+            </div>
+
         </div>
 
-        <a th:href="@{/profile}" class="profile-btn">
-            <i class="fa-solid fa-user"></i>
-        </a>
+
+        <!-- =================================================
+             MOBILE : COMPTE
+        ================================================== -->
+
+
+        <!-- VISITEUR MOBILE -->
+
+        <div sec:authorize="isAnonymous()"
+             class="mobile-account account-container">
+
+            <button class="mobile-account-btn"
+                    type="button"
+                    aria-label="Ouvrir le menu de connexion">
+
+                <i class="fa-solid fa-user"></i>
+
+            </button>
+
+
+            <!-- MENU MOBILE -->
+
+            <div class="account-menu mobile-account-menu">
+
+                <div class="account-menu-header">
+
+                    <span class="account-menu-title">
+                        Bienvenue
+                    </span>
+
+                    <span class="account-menu-subtitle">
+                        Choisissez votre espace
+                    </span>
+
+                </div>
+
+
+                <!-- Utilisateur -->
+
+                <a th:href="@{/signin}"
+                   class="account-option">
+
+                    <span class="account-option-icon">
+                        <i class="fa-solid fa-user"></i>
+                    </span>
+
+                    <span class="account-option-content">
+
+                        <strong>
+                            Utilisateur
+                        </strong>
+
+                        <small>
+                            Accéder à mon espace
+                        </small>
+
+                    </span>
+
+                    <i class="fa-solid fa-chevron-right account-option-arrow"></i>
+
+                </a>
+
+
+                <!-- Professionnel -->
+
+                <a th:href="@{/pro/signin}"
+                   class="account-option">
+
+                    <span class="account-option-icon professional">
+                        <i class="fa-solid fa-building"></i>
+                    </span>
+
+                    <span class="account-option-content">
+
+                        <strong>
+                            Professionnel
+                        </strong>
+
+                        <small>
+                            Accéder à l'espace professionnel
+                        </small>
+
+                    </span>
+
+                    <i class="fa-solid fa-chevron-right account-option-arrow"></i>
+
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- UTILISATEUR CONNECTÉ MOBILE -->
+
+        <div sec:authorize="isAuthenticated()"
+             class="mobile-account account-container">
+
+            <button class="mobile-account-btn"
+                    type="button"
+                    aria-label="Ouvrir le menu du compte">
+
+                <i class="fa-solid fa-user"></i>
+
+            </button>
+
+
+            <!-- MENU COMPTE MOBILE -->
+
+            <div class="account-menu mobile-account-menu">
+
+                <div class="account-menu-header">
+
+                    <span class="account-menu-title"
+                          sec:authentication="principal.username">
+
+                        Mon compte
+
+                    </span>
+
+                    <span class="account-menu-subtitle">
+                        Espace personnel
+                    </span>
+
+                </div>
+
+
+                <!-- Profil -->
+
+                <a th:href="@{/profile}"
+                   class="account-option">
+
+                    <span class="account-option-icon">
+                        <i class="fa-solid fa-user"></i>
+                    </span>
+
+                    <span class="account-option-content">
+
+                        <strong>
+                            Mon profil
+                        </strong>
+
+                        <small>
+                            Gérer mon compte
+                        </small>
+
+                    </span>
+
+                    <i class="fa-solid fa-chevron-right account-option-arrow"></i>
+
+                </a>
+
+
+                <!-- Signalements -->
+
+                <a th:href="@{/report-list}"
+                   class="account-option">
+
+                    <span class="account-option-icon">
+                        <i class="fa-solid fa-list"></i>
+                    </span>
+
+                    <span class="account-option-content">
+
+                        <strong>
+                            Mes signalements
+                        </strong>
+
+                        <small>
+                            Consulter mes signalements
+                        </small>
+
+                    </span>
+
+                    <i class="fa-solid fa-chevron-right account-option-arrow"></i>
+
+                </a>
+
+
+                <!-- Séparateur -->
+
+                <div class="account-menu-divider"></div>
+
+
+                <!-- Déconnexion -->
+
+                <a th:href="@{/logout}"
+                   class="account-option logout-option">
+
+                    <span class="account-option-icon">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                    </span>
+
+                    <span class="account-option-content">
+
+                        <strong>
+                            Déconnexion
+                        </strong>
+
+                    </span>
+
+                </a>
+
+            </div>
+
+        </div>
 
     </header>
 
-    <div id="sidebar" class="sidebar">
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <div id="sidebar"
+         class="sidebar">
+
+        <!-- SIDEBAR HEADER -->
 
         <div class="sidebar-header">
 
             <div class="user">
+
                 <div class="avatar">
+
                     <i class="fa-solid fa-circle-user"></i>
+
                 </div>
 
+
                 <div class="user-info">
+
+                    <!-- Utilisateur connecté -->
 
                     <div sec:authorize="isAuthenticated()">
 
@@ -39,9 +493,14 @@
 
                     </div>
 
+
+                    <!-- Visiteur -->
+
                     <div sec:authorize="isAnonymous()">
 
-                        <strong>Visiteur</strong>
+                        <strong>
+                            Visiteur
+                        </strong>
 
                         <a th:href="@{/signin}">
                             Se connecter
@@ -50,61 +509,188 @@
                     </div>
 
                 </div>
+
             </div>
 
-            <button class="close-btn" onclick="toggleSidebar()">✕</button>
+
+            <!-- Fermer -->
+
+            <button class="close-btn"
+                    type="button"
+                    onclick="toggleSidebar()"
+                    aria-label="Fermer le menu">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
 
         </div>
+
+
+        <!-- =================================================
+             SIDEBAR NAVIGATION
+        ================================================== -->
 
         <nav class="sidebar-nav">
 
             <a th:href="@{/}">
+
                 <i class="fa-solid fa-house"></i>
-                Accueil
+
+                <span>
+                    Accueil
+                </span>
+
             </a>
 
 
             <a th:href="@{/create-report}">
+
                 <i class="fa-solid fa-triangle-exclamation"></i>
-                Signaler un problème
+
+                <span>
+                    Signaler un problème
+                </span>
+
             </a>
 
 
             <a th:href="@{/report-list}">
+
                 <i class="fa-solid fa-list"></i>
-                Mes signalements
+
+                <span>
+                    Mes signalements
+                </span>
+
             </a>
 
 
             <a th:href="@{/map}">
+
                 <i class="fa-solid fa-map"></i>
-                Carte
+
+                <span>
+                    Carte
+                </span>
+
             </a>
 
 
             <a th:href="@{/profile}">
+
                 <i class="fa-solid fa-user"></i>
-                Profil
+
+                <span>
+                    Profil
+                </span>
+
             </a>
 
 
-            <a th:href="@{/logout}" class="danger">
+            <a th:href="@{/logout}"
+               class="danger">
 
                 <i class="fa-solid fa-right-from-bracket"></i>
-                Déconnexion
+
+                <span>
+                    Déconnexion
+                </span>
 
             </a>
 
         </nav>
 
-<!--        <div class="sidebar-footer">-->
-<!--            <small>Alert v1.0</small>-->
-<!--        </div>-->
-
     </div>
+
+
+    <!-- =====================================================
+         OVERLAY
+    ====================================================== -->
 
     <div id="sidebar-overlay"
          class="sidebar-overlay"
-         onclick="toggleSidebar()"></div>
+         onclick="toggleSidebar()">
+    </div>
 
 </th:block>
+
+
+<!-- =========================================================
+     MOBILE NAVIGATION
+========================================================= -->
+
+<th:block th:fragment="mobile-nav">
+
+    <nav class="mobile-nav">
+
+        <!-- Accueil -->
+
+        <a th:href="@{/}"
+           class="nav-item">
+
+            <i class="fa-solid fa-house"></i>
+
+            <span>
+                Accueil
+            </span>
+
+        </a>
+
+
+        <!-- Carte -->
+
+        <a th:href="@{/map}"
+           class="nav-item">
+
+            <i class="fa-solid fa-map-location-dot"></i>
+
+            <span>
+                Carte
+            </span>
+
+        </a>
+
+
+        <!-- Action principale -->
+
+        <a th:href="@{/create-report}"
+           class="nav-item nav-center"
+           aria-label="Signaler un problème">
+
+            <i class="fa-solid fa-plus"></i>
+
+        </a>
+
+
+        <!-- Alertes -->
+
+        <a th:href="@{/report-list}"
+           class="nav-item">
+
+            <i class="fa-solid fa-list"></i>
+
+            <span>
+                Alertes
+            </span>
+
+        </a>
+
+
+        <!-- Profil -->
+
+        <a th:href="@{/profile}"
+           class="nav-item">
+
+            <i class="fa-solid fa-user"></i>
+
+            <span>
+                Profil
+            </span>
+
+        </a>
+
+    </nav>
+
+</th:block>
+
