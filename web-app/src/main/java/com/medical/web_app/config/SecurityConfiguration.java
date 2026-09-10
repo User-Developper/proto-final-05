@@ -46,6 +46,7 @@ public class SecurityConfiguration {
                                 "/",
                                 "/signup",
                                 "/report",
+                                "report-images/**",
                                 "/css/**",
                                 "/images/**",
                                 "/js/**"

@@ -110,6 +110,13 @@ public class UserService {
 
     }
 
+    public User getUserById(Long userId) {
+
+        return dataServiceFeignClient.getUserById(userId);
+    }
+
+
+
 
     public Report getReportById(Integer reportId) {
 

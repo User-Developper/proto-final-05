@@ -125,6 +125,32 @@ public class WebAppService {
 
     }
 
+    public User getUserById(Long userId) {
+
+        return patientserviceFeignClient.getUserById(userId);
+    }
+
+
+    public List<ReportImageResponse> getReportImages(
+            Integer reportId) {
+
+        return patientserviceFeignClient.getReportImages(
+                reportId
+        );
+    }
+
+    public byte[] getReportImage(
+            Integer reportId,
+            String storageName) {
+
+        return patientserviceFeignClient.getReportImage(
+                reportId,
+                storageName
+        );
+    }
+
+
+
     public String uploadReportImage(
             Integer reportId,
             MultipartFile image) {

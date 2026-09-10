@@ -1,94 +1,142 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="fr">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>Signalement envoyé</title>
 
-    <link rel="stylesheet" th:href="@{/css/report-success.css}">
-    <link rel="stylesheet" th:href="@{/css/app.css}">
+    <link rel="stylesheet"
+          th:href="@{/css/app.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/report-success.css}">
 
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
 </head>
 
 <body>
 
 <!-- HEADER -->
+
 <div th:replace="~{fragments/header :: header}"></div>
+
 
 <main class="success-page">
 
-    <div class="success-card">
+    <div class="success-container">
 
-        <!-- ICON -->
-        <div class="success-icon">
-            <i class="fa-solid fa-check"></i>
-        </div>
+        <!-- SUCCÈS -->
 
-        <!-- TITLE -->
-        <h1>Signalement envoyé</h1>
+        <section class="success-card">
 
-        <!-- MESSAGE -->
-        <p class="success-message">
-            Merci pour votre contribution.
-            Votre signalement a été enregistré avec succès
-            et sera prochainement analysé.
-        </p>
+            <div class="success-icon">
 
-        <!-- INFO -->
-        <div class="info-box">
+                <i class="fa-solid fa-check"></i>
 
-            <div class="info-row">
-                <span class="label">
-                    Statut
-                </span>
-
-                <span class="value status">
-                    En attente d'analyse
-                </span>
             </div>
 
-            <div class="info-row">
-                <span class="label">
-                    Date
-                </span>
 
-                <span class="value"
-                      th:text="${#temporals.format(#temporals.createNow(),'dd/MM/yyyy')}">
-                    10/06/2026
-                </span>
+            <h1>
+                Signalement envoyé
+            </h1>
+
+
+            <p class="success-message">
+                Votre signalement a été enregistré avec succès
+                et sera prochainement analysé.
+            </p>
+
+
+            <!-- INFORMATIONS -->
+
+            <div class="info-box">
+
+                <div class="info-row">
+
+                    <span class="info-label">
+                        Statut
+                    </span>
+
+                    <span class="info-value">
+                        En attente d'analyse
+                    </span>
+
+                </div>
+
+
+                <div class="info-row">
+
+                    <span class="info-label">
+                        Date
+                    </span>
+
+                    <span
+                            class="info-value"
+                            th:text="${#temporals.format(#temporals.createNow(),'dd/MM/yyyy')}">
+                        10/06/2026
+                    </span>
+
+                </div>
+
             </div>
 
-        </div>
 
-        <!-- ACTIONS -->
-        <div class="actions">
+            <!-- ACTIONS -->
 
-            <a th:href="@{/}"
-               class="btn-primary">
-                <i class="fa-solid fa-house"></i>
-                Retour à l'accueil
-            </a>
+            <div class="actions">
 
-            <a th:href="@{/create-report}"
-               class="btn-secondary">
-                <i class="fa-solid fa-plus"></i>
-                Nouveau signalement
-            </a>
+                <a
+                        th:href="@{/}"
+                        class="btn-primary">
 
-        </div>
+                    <i class="fa-solid fa-house"></i>
+
+                    <span>
+                        Retour à l'accueil
+                    </span>
+
+                </a>
+
+
+                <a
+                        th:href="@{/create-report}"
+                        class="btn-secondary">
+
+                    <i class="fa-solid fa-plus"></i>
+
+                    <span>
+                        Nouveau signalement
+                    </span>
+
+                </a>
+
+            </div>
+
+        </section>
 
     </div>
 
 </main>
 
+
 <!-- FOOTER -->
+
 <div th:replace="~{fragments/footer :: footer}"></div>
 
-<script th:src="@{/js/app.js}" defer></script>
+
+<script
+        th:src="@{/js/app.js}"
+        defer>
+</script>
 
 </body>
+
 </html>

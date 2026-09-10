@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="fr"
       xmlns:th="http://www.thymeleaf.org">
 
@@ -10,122 +9,93 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <title th:text="${report.title} + ' — Signalement'">
+    <title th:text="${report.title}">
         Signalement
     </title>
 
-    <th:block th:replace="~{fragments/head :: head}"></th:block>
-
-    <!-- CSS GLOBAL -->
     <link rel="stylesheet"
           th:href="@{/css/app.css}">
 
-    <!-- CSS PAGE -->
     <link rel="stylesheet"
           th:href="@{/css/report.css}">
 
-    <!-- JS GLOBAL -->
-    <script th:src="@{/js/app.js}"
-            defer>
-    </script>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
 </head>
 
 <body>
 
-<!-- =========================================================
-     HEADER
-========================================================= -->
+<div th:replace="fragments/header :: header"></div>
 
-<div th:replace="~{fragments/header :: header}">
-</div>
-
-
-<!-- =========================================================
-     PAGE
-========================================================= -->
 
 <main class="report-page">
 
     <div class="report-container">
 
-        <!-- =================================================
-             RETOUR
-        ================================================== -->
 
-        <div class="report-top">
+        <!-- RETOUR -->
 
-            <a th:href="@{/report-list}"
-               class="back-link">
+        <a th:href="@{/report-list}"
+           class="back-link">
 
-                <i class="fa-solid fa-arrow-left"></i>
+            <i class="fa-solid fa-arrow-left"></i>
 
-                <span>Retour aux signalements</span>
+            Retour aux signalements
 
-            </a>
-
-        </div>
+        </a>
 
 
-        <!-- =================================================
-             CONTENU DU SIGNALEMENT
-        ================================================== -->
+        <!-- CONTENU DU SIGNALEMENT -->
 
-        <article class="report-detail">
+        <article class="report-content">
 
 
-            <!-- =================================================
-                 EN-TÊTE
-            ================================================== -->
+            <!-- EN-TÊTE -->
 
             <header class="report-header">
 
-                <div class="report-category">
 
-                    <i class="fa-solid fa-triangle-exclamation"></i>
+                <!-- AVATAR UTILISATEUR -->
 
-                    <span th:text="${report.category}">
-                        Catégorie
-                    </span>
+                <div class="report-user-avatar">
+
+                    <i class="fa-solid fa-user"></i>
 
                 </div>
 
 
-                <h1 class="report-title"
-                    th:text="${report.title}">
+                <!-- TITRE -->
 
+                <h1 th:text="${report.title}">
                     Titre du signalement
-
                 </h1>
 
 
+                <!-- CATÉGORIE + DATE -->
+
                 <div class="report-meta">
 
-                    <span th:text="'Signalement #' + ${report.id}">
-                        Signalement #000
+
+                    <!-- CATÉGORIE -->
+
+                    <span class="report-category"
+                          th:if="${report.category != null}"
+                          th:text="${report.category}">
+                        Catégorie
                     </span>
 
-                    <span class="meta-separator">
-                        ·
-                    </span>
 
-                    <span>
-                        Date du signalement
-                    </span>
+                    <!-- DATE -->
 
-                </div>
+                    <span class="report-date"
+                          th:if="${report.date != null}">
 
+                        <i class="fa-regular fa-calendar"></i>
 
-                <div class="report-gravity">
-
-                    <span class="gravity-label">
-                        Gravité
-                    </span>
-
-                    <span class="gravity-badge"
-                          th:text="${report.gravity}">
-
-                        Gravité
+                        <span th:text="${#temporals.format(report.date, 'dd/MM/yyyy')}">
+                            01/01/2026
+                        </span>
 
                     </span>
 
@@ -134,312 +104,148 @@
             </header>
 
 
-            <!-- =================================================
-                 IMAGE PRINCIPALE
-            ================================================== -->
+            <!-- IMAGES -->
 
-            <section class="report-image-section">
+            <section class="report-images"
+                     th:if="${reportImages != null and !reportImages.isEmpty()}">
 
-                <!--
-                    Lorsque les images seront disponibles,
-                    elles seront affichées ici.
-                -->
 
-                <div class="report-image-placeholder">
+                <!-- IMAGE PRINCIPALE -->
 
-                    <div class="placeholder-icon">
+                <div class="main-image">
 
-                        <i class="fa-regular fa-image"></i>
+                    <img th:src="@{'/report-images/' + ${report.id} + '/' + ${reportImages[0].storageName}}"
+                         th:alt="${reportImages[0].fileName}">
+
+                </div>
+
+
+                <!-- GALERIE -->
+
+                <div class="image-gallery"
+                     th:if="${reportImages.size() > 1}">
+
+                    <div class="gallery-image"
+                         th:each="image, stat : ${reportImages}"
+                         th:if="${stat.index > 0}">
+
+                        <img th:src="@{'/report-images/' + ${report.id} + '/' + ${image.storageName}}"
+                             th:alt="${image.fileName}">
 
                     </div>
-
-                    <span>
-                        Aucune photo disponible
-                    </span>
 
                 </div>
 
             </section>
 
 
-            <!-- =================================================
-                 DESCRIPTION
-            ================================================== -->
+            <!-- DESCRIPTION -->
 
-            <section class="report-description">
+            <section class="report-description"
+                     th:if="${report.description != null and !report.description.isBlank()}">
+
+                <h2>
+                    Description
+                </h2>
+
+                <p th:text="${report.description}">
+                    Description du signalement
+                </p>
+
+            </section>
+
+
+            <!-- LOCALISATION -->
+
+            <section class="report-location"
+                     th:if="${report.location != null and !report.location.isBlank()}">
 
                 <div class="section-heading">
 
-                    <span class="section-eyebrow">
-                        DESCRIPTION
-                    </span>
 
-                    <h2>
-                        Détails du signalement
-                    </h2>
+                    <div class="location-information">
 
-                </div>
-
-
-                <div class="description-content">
-
-                    <p th:text="${report.description}">
-
-                        Description du signalement.
-
-                    </p>
-
-                </div>
-
-            </section>
-
-
-            <!-- =================================================
-                 LOCALISATION
-            ================================================== -->
-
-            <section class="report-location">
-
-                <div class="location-content">
-
-                    <div class="location-icon">
-
-                        <i class="fa-solid fa-location-dot"></i>
-
-                    </div>
-
-
-                    <div class="location-text">
-
-                        <span class="location-label">
+                        <span class="section-label">
                             LOCALISATION
                         </span>
 
-                        <strong th:text="${report.location}">
-                            Localisation du signalement
-                        </strong>
+                        <h2 th:text="${report.location}">
+                            Localisation
+                        </h2>
 
                     </div>
 
+
+                    <!-- CARTE -->
+
+                    <a th:if="${report.latitude != null and report.longitude != null}"
+                       th:href="@{'https://www.google.com/maps/search/?api=1&query=' + ${report.latitude} + ',' + ${report.longitude}}"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       class="map-button">
+
+                        <i class="fa-solid fa-location-dot"></i>
+
+                        Voir sur la carte
+
+                    </a>
+
                 </div>
 
+            </section>
 
-                <a th:href="@{/map}"
-                   class="map-button">
+
+            <!-- AUCUNE IMAGE -->
+
+            <section class="report-no-image"
+                     th:if="${reportImages == null or reportImages.isEmpty()}">
+
+                <div class="no-image-content">
+
+                    <i class="fa-regular fa-image"></i>
 
                     <span>
-                        Voir sur la carte
+                        Aucune image disponible
                     </span>
-
-                    <i class="fa-solid fa-arrow-right"></i>
-
-                </a>
-
-            </section>
-
-
-            <!-- =================================================
-                 INFORMATIONS
-            ================================================== -->
-
-            <section class="report-information">
-
-                <div class="section-heading">
-
-                    <span class="section-eyebrow">
-                        INFORMATIONS
-                    </span>
-
-                    <h2>
-                        Signalement
-                    </h2>
-
-                </div>
-
-
-                <div class="information-grid">
-
-                    <div class="information-item">
-
-                        <span>
-                            Identifiant
-                        </span>
-
-                        <strong th:text="'#' + ${report.id}">
-                            #000
-                        </strong>
-
-                    </div>
-
-
-                    <div class="information-item">
-
-                        <span>
-                            Catégorie
-                        </span>
-
-                        <strong th:text="${report.category}">
-                            Catégorie
-                        </strong>
-
-                    </div>
-
-
-                    <div class="information-item">
-
-                        <span>
-                            Gravité
-                        </span>
-
-                        <strong th:text="${report.gravity}">
-                            Gravité
-                        </strong>
-
-                    </div>
-
-
-                    <div class="information-item">
-
-                        <span>
-                            Auteur
-                        </span>
-
-                        <strong th:text="${report.userId}">
-                            Utilisateur
-                        </strong>
-
-                    </div>
-
-
-                    <div class="information-item">
-
-                        <span>
-                            Latitude
-                        </span>
-
-                        <strong th:text="${report.latitude}">
-                            0.000000
-                        </strong>
-
-                    </div>
-
-
-                    <div class="information-item">
-
-                        <span>
-                            Longitude
-                        </span>
-
-                        <strong th:text="${report.longitude}">
-                            0.000000
-                        </strong>
-
-                    </div>
 
                 </div>
 
             </section>
 
 
-            <!-- =================================================
-                 ACTIONS
-            ================================================== -->
+            <!-- ACTIONS -->
 
-            <section class="report-actions-section">
-
-                <div class="section-heading">
-
-                    <span class="section-eyebrow">
-                        ACTIONS
-                    </span>
-
-                    <h2>
-                        Gérer le signalement
-                    </h2>
-
-                </div>
+            <section class="report-actions">
 
 
-                <div class="report-actions">
+                <button type="button"
+                        class="report-action">
 
-                    <button type="button"
-                            class="report-action action-edit">
+                    <i class="fa-solid fa-pen"></i>
 
-                        <span class="action-icon">
+                    Modifier
 
-                            <i class="fa-solid fa-pen"></i>
-
-                        </span>
-
-                        <span class="action-content">
-
-                            <strong>
-                                Modifier
-                            </strong>
-
-                            <small>
-                                Modifier les informations
-                            </small>
-
-                        </span>
-
-                        <i class="fa-solid fa-chevron-right"></i>
-
-                    </button>
+                </button>
 
 
-                    <button type="button"
-                            class="report-action action-delete">
+                <button type="button"
+                        class="report-action">
 
-                        <span class="action-icon">
+                    <i class="fa-solid fa-trash"></i>
 
-                            <i class="fa-solid fa-trash"></i>
+                    Supprimer
 
-                        </span>
-
-                        <span class="action-content">
-
-                            <strong>
-                                Supprimer
-                            </strong>
-
-                            <small>
-                                Supprimer ce signalement
-                            </small>
-
-                        </span>
-
-                        <i class="fa-solid fa-chevron-right"></i>
-
-                    </button>
+                </button>
 
 
-                    <button type="button"
-                            class="report-action action-archive">
+                <button type="button"
+                        class="report-action">
 
-                        <span class="action-icon">
+                    <i class="fa-solid fa-box-archive"></i>
 
-                            <i class="fa-solid fa-box-archive"></i>
+                    Archiver
 
-                        </span>
-
-                        <span class="action-content">
-
-                            <strong>
-                                Archiver
-                            </strong>
-
-                            <small>
-                                Archiver ce signalement
-                            </small>
-
-                        </span>
-
-                        <i class="fa-solid fa-chevron-right"></i>
-
-                    </button>
-
-                </div>
+                </button>
 
             </section>
 
@@ -451,21 +257,10 @@
 </main>
 
 
-<!-- =========================================================
-     MOBILE NAVIGATION
-========================================================= -->
-
-<div th:replace="~{fragments/mobile-nav :: mobile-nav}">
-</div>
+<div th:replace="fragments/footer :: footer"></div>
 
 
-<!-- =========================================================
-     FOOTER
-========================================================= -->
-
-<div th:replace="~{fragments/footer :: footer}">
-</div>
-
+<script th:src="@{/js/app.js}"></script>
 
 </body>
 

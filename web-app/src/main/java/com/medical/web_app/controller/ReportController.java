@@ -4,15 +4,16 @@ import com.medical.web_app.model.ProfessionalClient;
 import com.medical.web_app.model.User;
 import com.medical.web_app.service.WebAppService;
 import com.medical.web_app.service.dto.CreateReportTemp;
+import com.medical.web_app.service.dto.ReportImageResponse;
 import com.medical.web_app.service.dto.ReportResponse;
 import com.medical.web_app.service.form.ReportForm;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -39,17 +40,11 @@ public class ReportController {
     @GetMapping("/report")
     public String reportPage(
             @RequestParam Integer id,
-            Model model,
-            Principal principal) {
+            Model model) {
 
-        String username = principal.getName();
-
-        User user = webAppService.getUser(username)
-                .orElse(null);
-
-        if (user == null) {
-            return "redirect:/signin";
-        }
+        // -----------------------------------------------------
+        // RÉCUPÉRATION DU REPORT
+        // -----------------------------------------------------
 
         ReportResponse report =
                 webAppService.getReportById(id);
@@ -58,8 +53,53 @@ public class ReportController {
             return "redirect:/report-list";
         }
 
-        model.addAttribute("user", user);
-        model.addAttribute("report", report);
+
+        // -----------------------------------------------------
+        // RÉCUPÉRATION DE L'AUTEUR
+        // -----------------------------------------------------
+
+        User author = null;
+
+        if (report.getUserId() != null) {
+
+            author =
+                    webAppService.getUserById(
+                            report.getUserId()
+                    );
+        }
+
+
+        // -----------------------------------------------------
+        // RÉCUPÉRATION DES IMAGES
+        // -----------------------------------------------------
+
+        List<ReportImageResponse> reportImages =
+                webAppService.getReportImages(id);
+
+        if (reportImages == null) {
+            reportImages = new ArrayList<>();
+        }
+
+
+        // -----------------------------------------------------
+        // MODEL
+        // -----------------------------------------------------
+
+        model.addAttribute(
+                "report",
+                report
+        );
+
+        model.addAttribute(
+                "author",
+                author
+        );
+
+        model.addAttribute(
+                "reportImages",
+                reportImages
+        );
+
 
         return "report";
     }
@@ -650,4 +690,49 @@ public class ReportController {
         return "report-list";
     }
 
+    @GetMapping("/report-images/{reportId}/{storageName}")
+    public ResponseEntity<byte[]> getReportImage(
+            @PathVariable Integer reportId,
+            @PathVariable String storageName) {
+
+        byte[] image =
+                webAppService.getReportImage(
+                        reportId,
+                        storageName
+                );
+
+        if (image == null || image.length == 0) {
+            return ResponseEntity.notFound().build();
+        }
+
+        MediaType mediaType =
+                MediaType.APPLICATION_OCTET_STREAM;
+
+        if (storageName.toLowerCase().endsWith(".jpg")
+                || storageName.toLowerCase().endsWith(".jpeg")) {
+
+            mediaType = MediaType.IMAGE_JPEG;
+
+        } else if (storageName.toLowerCase().endsWith(".png")) {
+
+            mediaType = MediaType.IMAGE_PNG;
+
+        } else if (storageName.toLowerCase().endsWith(".gif")) {
+
+            mediaType = MediaType.IMAGE_GIF;
+
+        } else if (storageName.toLowerCase().endsWith(".webp")) {
+
+            mediaType =
+                    MediaType.parseMediaType("image/webp");
+        }
+
+        return ResponseEntity.ok()
+                .header(
+                        HttpHeaders.CONTENT_DISPOSITION,
+                        "inline; filename=\"" + storageName + "\""
+                )
+                .contentType(mediaType)
+                .body(image);
+    }
 }

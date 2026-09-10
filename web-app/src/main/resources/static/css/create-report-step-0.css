@@ -1,412 +1,611 @@
 /* =========================================================
-   RESET
-========================================================= */
+   VARIABLES
+   ========================================================= */
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+:root {
 
-    font-family:
-        system-ui,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Roboto,
-        Arial,
-        sans-serif;
+    --primary: #1E5A78;
+    --primary-dark: #16465F;
+    --primary-light: #EAF3F7;
+
+    --text: #17232B;
+    --text-secondary: #667781;
+
+    --icon: #687A83;
+
+    --background: #F6F9FA;
+
+    --white: #FFFFFF;
+
+    --border: #C5D8E1;
+    --border-light: #DCE5E9;
+    --border-hover: #B8CBD2;
+
 }
 
 
 /* =========================================================
-   BODY
-========================================================= */
+   RESET
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+
+html {
+    scroll-behavior: smooth;
+}
+
 
 body {
-    background:
-        linear-gradient(
-            180deg,
-            #eef3f8 0%,
-            #f8fafc 100%
-        );
 
-    color: #111827;
+    margin: 0;
 
-    min-height: 100vh;
+    padding: 0;
+
+    background: var(--background);
+
+    color: var(--text);
+
+    font-family: "Inter", sans-serif;
+
+    font-size: 15px;
+
+    line-height: 1.5;
+
 }
 
 
 /* =========================================================
    PAGE
-========================================================= */
+   ========================================================= */
 
-.page {
+.create-report-page {
+
     width: 100%;
+
+    min-height: 100vh;
+
+    padding: 24px 16px 110px;
+
+}
+
+
+.container {
+
+    width: 100%;
+
     max-width: 900px;
 
     margin: 0 auto;
 
-    padding: 18px 16px;
-
-    /*
-     * Important :
-     * on réserve suffisamment d'espace pour
-     * la bottom-bar fixe.
-     */
-    padding-bottom: 150px;
 }
 
 
 /* =========================================================
-   HEADER
-========================================================= */
+   PROCESSUS
+   ========================================================= */
 
 .step-header {
-    text-align: center;
 
-    margin-bottom: 18px;
+    width: 100%;
+
+    margin-bottom: 34px;
+
 }
 
-.step-header h1 {
+
+.steps {
+
     display: flex;
 
+    align-items: flex-start;
+
     justify-content: center;
+
+    width: 100%;
+
+}
+
+
+.step-column {
+
+    display: flex;
+
+    flex-direction: column;
+
     align-items: center;
 
-    gap: 9px;
+    flex-shrink: 0;
 
-    font-size: 23px;
-    font-weight: 750;
-
-    color: #172033;
 }
 
-.step-header h1 i {
-    color: #1e3a8a;
-    font-size: 20px;
+
+.step-circle {
+
+    width: 44px;
+
+    height: 44px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #E1E7EA;
+
+    color: #71818A;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    border: 2px solid #E1E7EA;
+
 }
 
-.step-header p {
-    margin-top: 5px;
+
+.step-column.completed .step-circle,
+.step-column.active .step-circle {
+
+    background: var(--primary);
+
+    border-color: var(--primary);
+
+    color: var(--white);
+
+}
+
+
+.step-label {
+
+    margin-top: 8px;
+
+    color: var(--text);
 
     font-size: 13px;
 
-    color: #64748b;
+    font-weight: 600;
+
+    white-space: nowrap;
+
+}
+
+
+.step-line {
+
+    width: 65px;
+
+    height: 2px;
+
+    margin-top: 21px;
+
+    background: #D7E0E4;
+
+    flex-shrink: 0;
+
+}
+
+
+.step-line.active {
+
+    background: var(--primary);
+
 }
 
 
 /* =========================================================
-   PROGRESS BAR
-========================================================= */
+   SECTIONS
+   ========================================================= */
 
-.progress-bar {
-    height: 6px;
+.section {
 
-    margin-top: 13px;
+    padding: 0 0 28px;
 
-    background: #dfe6ee;
+    margin-bottom: 28px;
 
-    border-radius: 999px;
+    border-bottom: 1px solid var(--border-light);
 
-    overflow: hidden;
 }
 
-.progress {
-    height: 100%;
 
-    width: 66%;
+.section h2 {
 
-    background:
-        linear-gradient(
-            90deg,
-            #1e3a8a,
-            #2563eb
-        );
+    margin: 0 0 16px;
 
-    border-radius: 999px;
+    color: var(--text);
+
+    font-size: 18px;
+
+    font-weight: 700;
+
+    line-height: 1.3;
+
 }
 
 
 /* =========================================================
-   ACTIVE CLIENT CARD
-========================================================= */
+   CLIENT
+   ========================================================= */
 
-.client-info-card {
+.client-card {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 16px;
+
+    width: 100%;
+
+    padding: 16px;
+
+    background: var(--white);
+
+    border: 1px solid var(--border);
+
+    border-radius: 14px;
+
+}
+
+
+.client-card-main {
+
     display: flex;
 
     align-items: center;
 
     gap: 13px;
 
-    margin-bottom: 14px;
+    min-width: 0;
 
-    padding: 13px 15px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #f8fbff 0%,
-            #eef5ff 100%
-        );
-
-    border: 1px solid #d7e3f4;
-
-    border-left: 4px solid #1e3a8a;
-
-    border-radius: 14px;
-
-    box-shadow:
-        0 5px 16px rgba(30, 58, 138, 0.07);
 }
 
 
-/* Icon */
+.client-avatar {
 
-.client-info-icon {
-    flex-shrink: 0;
+    width: 46px;
 
-    width: 42px;
-    height: 42px;
+    height: 46px;
 
     display: flex;
 
     align-items: center;
+
     justify-content: center;
 
-    border-radius: 11px;
+    flex-shrink: 0;
 
-    background: #e1ebfa;
+    background: var(--primary-light);
 
-    color: #1e3a8a;
+    color: var(--primary);
 
-    font-size: 17px;
+    border-radius: 12px;
+
+    font-size: 18px;
+
 }
 
 
-/* Content */
-
-.client-info-content {
-    min-width: 0;
+.client-details {
 
     display: flex;
 
     flex-direction: column;
 
-    gap: 2px;
+    min-width: 0;
+
 }
 
-.client-info-label {
-    font-size: 11px;
+
+.client-name {
+
+    display: block;
+
+    overflow: hidden;
+
+    color: var(--text);
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+}
+
+
+.client-city {
+
+    margin-top: 2px;
+
+    color: var(--text-secondary);
+
+    font-size: 13px;
+
+}
+
+
+.client-status {
+
+    flex-shrink: 0;
+
+    padding: 6px 10px;
+
+    background: var(--primary-light);
+
+    color: var(--primary-dark);
+
+    border-radius: 20px;
+
+    font-size: 12px;
 
     font-weight: 600;
 
-    text-transform: uppercase;
-
-    letter-spacing: .05em;
-
-    color: #64748b;
 }
 
-.client-info-name {
-    font-size: 15px;
 
-    font-weight: 750;
+.client-warning {
 
-    color: #172554;
+    display: flex;
 
-    line-height: 1.25;
+    align-items: flex-start;
+
+    gap: 12px;
+
+    padding: 15px;
+
+    background: var(--white);
+
+    border: 1px solid var(--border);
+
+    border-radius: 14px;
+
+    color: var(--text);
+
 }
 
-.client-info-location {
-    font-size: 12px;
 
-    color: #64748b;
+.client-warning > i {
+
+    margin-top: 2px;
+
+    color: var(--icon);
+
+    font-size: 18px;
+
+}
+
+
+.client-warning strong {
+
+    display: block;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+}
+
+
+.client-warning p {
+
+    margin: 4px 0 0;
+
+    color: var(--text-secondary);
+
+    font-size: 13px;
+
 }
 
 
 /* =========================================================
-   CLIENT WARNING
-========================================================= */
+   RECHERCHE
+   ========================================================= */
 
-.client-warning {
+.location-section {
+
+    border-bottom: 0;
+
+}
+
+
+.search-box {
+
+    position: relative;
+
+    width: 100%;
+
+}
+
+
+.search-icon {
+
+    position: absolute;
+
+    top: 50%;
+
+    left: 16px;
+
+    z-index: 2;
+
     display: flex;
 
     align-items: center;
 
-    gap: 12px;
+    justify-content: center;
 
-    margin-bottom: 14px;
+    color: var(--icon);
 
-    padding: 13px 15px;
+    transform: translateY(-50%);
 
-    background: #fff8eb;
-
-    border: 1px solid #f2dfb5;
-
-    border-radius: 14px;
-
-    color: #7c5a18;
 }
 
-.client-warning > i {
-    font-size: 19px;
-}
-
-.client-warning strong {
-    display: block;
-
-    font-size: 13px;
-
-    margin-bottom: 2px;
-}
-
-.client-warning p {
-    font-size: 12px;
-
-    color: #92763c;
-}
-
-
-/* =========================================================
-   SEARCH
-========================================================= */
-
-.search-box {
-    position: relative;
-
-    margin-bottom: 14px;
-}
 
 .search-box input {
+
     width: 100%;
 
-    padding: 13px 16px;
+    height: 52px;
 
-    border-radius: 13px;
+    padding: 0 16px 0 46px;
 
-    border: 1px solid #dce3eb;
+    background: var(--white);
 
-    background: #ffffff;
+    border: 1px solid var(--border);
 
-    font-size: 14px;
-
-    color: #111827;
+    border-radius: 12px;
 
     outline: none;
 
+    color: var(--text);
+
+    font-family: inherit;
+
+    font-size: 15px;
+
     transition:
-        border-color .2s ease,
-        box-shadow .2s ease;
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+
 }
+
 
 .search-box input::placeholder {
-    color: #94a3b8;
+
+    color: #87969D;
+
 }
 
-.search-box input:focus {
-    border-color: #315ca8;
 
-    box-shadow:
-        0 0 0 4px rgba(37, 99, 235, 0.10);
+.search-box input:focus {
+
+    border-color: var(--primary);
+
+    box-shadow: 0 0 0 3px rgba(30, 90, 120, 0.10);
+
 }
 
 
 /* =========================================================
-   AUTOCOMPLETE
-========================================================= */
+   SUGGESTIONS
+   ========================================================= */
 
 .suggestions {
+
     position: absolute;
 
-    top: 52px;
+    top: calc(100% + 5px);
 
     left: 0;
+
     right: 0;
 
-    background: white;
+    z-index: 1000;
 
-    border-radius: 13px;
+    display: none;
 
     overflow: hidden;
 
-    box-shadow:
-        0 15px 35px rgba(15, 23, 42, 0.12);
+    background: var(--white);
 
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--border);
 
-    z-index: 1000;
+    border-radius: 12px;
+
+    box-shadow: 0 8px 25px rgba(23, 35, 43, 0.10);
+
 }
 
+
+.suggestions.active {
+
+    display: block;
+
+}
+
+
 .suggestion-item {
-    padding: 12px 14px;
 
-    font-size: 13px;
+    display: flex;
 
-    color: #334155;
+    align-items: center;
+
+    gap: 11px;
+
+    padding: 12px 15px;
+
+    color: var(--text);
+
+    font-size: 14px;
 
     cursor: pointer;
 
-    border-bottom: 1px solid #f1f5f9;
-
-    transition:
-        background .15s ease,
-        padding-left .15s ease;
 }
 
-.suggestion-item:last-child {
-    border-bottom: none;
-}
 
 .suggestion-item:hover {
-    background: #f1f5f9;
 
-    padding-left: 18px;
+    background: var(--primary-light);
+
+}
+
+
+.suggestion-item i {
+
+    flex-shrink: 0;
+
+    color: var(--primary);
+
 }
 
 
 /* =========================================================
-   MAP
-========================================================= */
+   CARTE
+   ========================================================= */
 
 .map-card {
+
     position: relative;
 
-    /*
-     * Au lieu de 58vh, on limite la hauteur.
-     * Cela évite que la carte prenne tout l'espace
-     * et passe derrière la bottom-bar.
-     */
-    height: min(55vh, 520px);
+    width: 100%;
 
-    min-height: 360px;
-
-    border-radius: 18px;
+    margin-top: 16px;
 
     overflow: hidden;
 
-    border: 1px solid #dbe3ec;
+    background: var(--white);
 
-    background: white;
+    border: 1px solid var(--border);
 
-    box-shadow:
-        0 12px 30px rgba(15, 23, 42, 0.08),
-        0 2px 6px rgba(15, 23, 42, 0.04);
+    border-radius: 14px;
+
 }
+
 
 #map {
+
     width: 100%;
-    height: 100%;
+
+    height: 320px;
+
 }
 
 
-/* =========================================================
-   CLIENT ZONE LABEL
-========================================================= */
-
 .map-client-zone {
+
     position: absolute;
 
     top: 12px;
+
     left: 12px;
 
     z-index: 500;
@@ -417,40 +616,43 @@ body {
 
     gap: 7px;
 
-    padding: 8px 11px;
+    padding: 7px 10px;
 
-    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.96);
 
-    background: rgba(255, 255, 255, 0.94);
+    border: 1px solid var(--border);
 
-    backdrop-filter: blur(8px);
+    border-radius: 8px;
 
-    border: 1px solid rgba(219, 227, 236, 0.95);
+    color: var(--primary-dark);
 
-    color: #1e3a8a;
+    font-size: 12px;
 
-    font-size: 11px;
+    font-weight: 600;
 
-    font-weight: 700;
+    box-shadow: 0 2px 8px rgba(23, 35, 43, 0.08);
 
-    box-shadow:
-        0 5px 14px rgba(15, 23, 42, 0.10);
 }
 
+
 .map-client-zone i {
-    font-size: 12px;
+
+    color: var(--primary);
+
 }
 
 
 /* =========================================================
-   GPS BUTTON
-========================================================= */
+   BOUTON GPS
+   ========================================================= */
 
 .gps-btn {
+
     position: absolute;
 
-    bottom: 14px;
-    right: 14px;
+    right: 12px;
+
+    bottom: 12px;
 
     z-index: 500;
 
@@ -458,219 +660,223 @@ body {
 
     align-items: center;
 
-    gap: 7px;
+    gap: 8px;
 
-    background: rgba(255, 255, 255, 0.96);
+    min-height: 42px;
 
-    border: 1px solid #d7e2f0;
+    padding: 0 13px;
 
-    color: #1e3a8a;
+    background: var(--white);
 
-    padding: 10px 13px;
+    border: 1px solid var(--border);
 
-    border-radius: 12px;
+    border-radius: 9px;
 
-    font-size: 12px;
+    color: var(--primary-dark);
 
-    font-weight: 650;
+    font-family: inherit;
+
+    font-size: 13px;
+
+    font-weight: 600;
 
     cursor: pointer;
 
-    box-shadow:
-        0 7px 18px rgba(15, 23, 42, 0.12);
+    box-shadow: 0 2px 8px rgba(23, 35, 43, 0.10);
 
     transition:
-        background .2s ease,
-        border-color .2s ease,
-        transform .2s ease;
+        background 0.2s ease,
+        border-color 0.2s ease;
+
 }
+
 
 .gps-btn:hover {
-    background: #ffffff;
 
-    border-color: #315ca8;
+    background: var(--primary-light);
 
-    transform: translateY(-1px);
+    border-color: var(--border-hover);
+
 }
 
-.gps-btn:active {
-    transform: translateY(0);
-}
 
-.gps-btn:disabled {
-    opacity: .65;
+.gps-btn i {
 
-    cursor: wait;
+    color: var(--primary);
 
-    transform: none;
 }
 
 
 /* =========================================================
-   ADDRESS
-========================================================= */
+   ADRESSE
+   ========================================================= */
 
 .address-card {
-    margin-top: 14px;
 
-    background: white;
-
-    padding: 14px 16px;
-
-    border-radius: 15px;
-
-    border: 1px solid #e0e7ef;
-
-    box-shadow:
-        0 4px 12px rgba(15, 23, 42, 0.04);
-}
-
-.address-header {
     display: flex;
 
     align-items: flex-start;
 
-    gap: 11px;
+    gap: 13px;
+
+    width: 100%;
+
+    margin-top: 14px;
+
+    padding: 15px;
+
+    background: var(--white);
+
+    border: 1px solid var(--border);
+
+    border-radius: 14px;
+
 }
 
-.address-icon {
-    flex-shrink: 0;
 
-    width: 34px;
-    height: 34px;
+.address-icon {
+
+    width: 42px;
+
+    height: 42px;
 
     display: flex;
 
     align-items: center;
+
     justify-content: center;
 
-    border-radius: 9px;
+    flex-shrink: 0;
 
-    background: #eef4fc;
+    background: var(--primary-light);
 
-    color: #1e3a8a;
+    border-radius: 10px;
 
-    font-size: 14px;
+    color: var(--primary);
+
+    font-size: 17px;
+
 }
 
-.address-card .label {
+
+.address-content {
+
+    min-width: 0;
+
+}
+
+
+.address-label {
+
     display: block;
 
-    font-size: 11px;
+    color: var(--text-secondary);
 
-    font-weight: 650;
+    font-size: 12px;
 
-    text-transform: uppercase;
+    font-weight: 600;
 
-    letter-spacing: .04em;
-
-    color: #64748b;
 }
 
-.address-card p {
-    margin-top: 4px;
 
-    font-size: 13px;
+.address-content p {
+
+    margin: 3px 0 0;
+
+    color: var(--text);
+
+    font-size: 14px;
 
     font-weight: 500;
 
-    color: #1e293b;
-
-    line-height: 1.45;
-
     word-break: break-word;
+
 }
 
 
 /* =========================================================
-   BOTTOM BAR
-========================================================= */
+   LEAFLET
+   ========================================================= */
 
-.bottom-bar {
+.leaflet-control-zoom {
+
+    border: 0 !important;
+
+    box-shadow: 0 2px 8px rgba(23, 35, 43, 0.12) !important;
+
+}
+
+
+.leaflet-control-zoom a {
+
+    width: 34px !important;
+
+    height: 34px !important;
+
+    line-height: 34px !important;
+
+    color: var(--primary-dark) !important;
+
+    background: var(--white) !important;
+
+    border-color: var(--border-light) !important;
+
+}
+
+
+.leaflet-control-zoom a:hover {
+
+    background: var(--primary-light) !important;
+
+}
+
+
+.leaflet-control-attribution {
+
+    font-size: 9px;
+
+}
+
+
+/* =========================================================
+   ACTIONS
+   ========================================================= */
+
+.sticky-actions {
+
     position: fixed;
 
-    left: 0;
     right: 0;
+
     bottom: 0;
 
-    z-index: 2000;
+    left: 0;
 
-    padding: 12px 16px;
-
-    background:
-        rgba(255, 255, 255, 0.96);
-
-    backdrop-filter: blur(14px);
-
-    border-top: 1px solid #dfe6ee;
+    z-index: 1000;
 
     display: flex;
 
     gap: 10px;
 
-    align-items: center;
-
-    box-shadow:
-        0 -6px 24px rgba(15, 23, 42, 0.08);
-}
-
-
-/* =========================================================
-   BACK BUTTON
-========================================================= */
-
-.btn-back {
-    flex: 1;
-
-    padding: 12px 14px;
-
-    border-radius: 12px;
-
-    border: 1px solid #d9e1ea;
-
-    background: #ffffff;
-
-    color: #475569;
-
-    font-size: 13px;
-
-    font-weight: 650;
-
-    cursor: pointer;
-
-    transition:
-        background .2s ease,
-        border-color .2s ease;
-}
-
-.btn-back:hover {
-    background: #f1f5f9;
-
-    border-color: #cbd5e1;
-}
-
-
-/* =========================================================
-   NEXT BUTTON
-========================================================= */
-
-.btn-next {
-    flex: 2.5;
-
     padding: 12px 16px;
 
-    border: none;
+    background: rgba(255, 255, 255, 0.96);
 
-    border-radius: 12px;
+    border-top: 1px solid var(--border-light);
 
-    background:
-        linear-gradient(
-            135deg,
-            #1e3a8a,
-            #2563eb
-        );
+    box-shadow: 0 -4px 15px rgba(23, 35, 43, 0.06);
 
-    color: white;
+}
+
+
+.btn-back,
+.btn-primary {
+
+    min-height: 48px;
+
+    border-radius: 10px;
+
+    font-family: inherit;
 
     font-size: 14px;
 
@@ -678,156 +884,323 @@ body {
 
     cursor: pointer;
 
-    box-shadow:
-        0 8px 20px rgba(37, 99, 235, 0.20);
-
     transition:
-        background .2s ease,
-        transform .2s ease,
-        box-shadow .2s ease,
-        opacity .2s ease;
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        opacity 0.2s ease;
+
 }
 
-.btn-next:hover:not(:disabled) {
-    background:
-        linear-gradient(
-            135deg,
-            #172e70,
-            #1d4ed8
-        );
 
-    transform: translateY(-1px);
+.btn-back {
 
-    box-shadow:
-        0 10px 24px rgba(37, 99, 235, 0.25);
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    flex: 0 0 auto;
+
+    padding: 0 16px;
+
+    background: var(--white);
+
+    border: 1px solid var(--border);
+
+    color: var(--text-secondary);
+
 }
 
-.btn-next:active:not(:disabled) {
-    transform: scale(0.98);
+
+.btn-back:hover {
+
+    background: #F2F6F7;
+
+    border-color: var(--border-hover);
+
+    color: var(--text);
+
 }
 
-.btn-next:disabled {
-    background: #cbd5e1;
 
-    color: #f8fafc;
+.btn-primary {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 9px;
+
+    flex: 1;
+
+    padding: 0 20px;
+
+    background: var(--primary);
+
+    border: 1px solid var(--primary);
+
+    color: var(--white);
+
+}
+
+
+.btn-primary:hover:not(:disabled) {
+
+    background: var(--primary-dark);
+
+    border-color: var(--primary-dark);
+
+}
+
+
+.btn-primary:disabled {
+
+    opacity: 0.45;
 
     cursor: not-allowed;
 
-    box-shadow: none;
-
-    opacity: .9;
 }
 
 
 /* =========================================================
    TABLET
-========================================================= */
+   ========================================================= */
 
-@media (max-width: 768px) {
+@media (min-width: 600px) {
 
-    .page {
-        padding: 14px;
+    .create-report-page {
 
-        /*
-         * espace pour bottom-bar
-         */
-        padding-bottom: 145px;
+        padding: 34px 24px 120px;
+
     }
 
-    .map-card {
-        height: 52vh;
 
-        min-height: 340px;
+    .step-header {
+
+        margin-bottom: 40px;
+
+    }
+
+
+    .step-circle {
+
+        width: 46px;
+
+        height: 46px;
+
+    }
+
+
+    .step-line {
+
+        width: 90px;
+
+        margin-top: 22px;
+
+    }
+
+
+    .step-label {
+
+        font-size: 14px;
+
+    }
+
+
+    .section {
+
+        padding-bottom: 32px;
+
+        margin-bottom: 32px;
+
+    }
+
+
+    .section h2 {
+
+        font-size: 19px;
+
+        margin-bottom: 18px;
+
+    }
+
+
+    .client-card {
+
+        padding: 18px;
+
+    }
+
+
+    #map {
+
+        height: 400px;
+
+    }
+
+
+    .sticky-actions {
+
+        position: static;
+
+        justify-content: flex-end;
+
+        margin-top: 10px;
+
+        padding: 0;
+
+        background: transparent;
+
+        border-top: 0;
+
+        box-shadow: none;
+
+    }
+
+
+    .btn-primary {
+
+        flex: 0 0 190px;
+
     }
 
 }
 
 
 /* =========================================================
-   MOBILE
-========================================================= */
+   DESKTOP
+   ========================================================= */
 
-@media (max-width: 480px) {
+@media (min-width: 900px) {
 
-    .page {
-        padding: 12px;
+    .create-report-page {
 
-        padding-bottom: 175px;
+        padding-top: 40px;
+
     }
 
 
-    .step-header h1 {
-        font-size: 21px;
+    .step-circle {
+
+        width: 48px;
+
+        height: 48px;
+
     }
 
 
-    .step-header p {
+    .step-line {
+
+        width: 100px;
+
+        margin-top: 23px;
+
+    }
+
+
+    #map {
+
+        height: 440px;
+
+    }
+
+
+    .client-card {
+
+        padding: 20px;
+
+    }
+
+
+    .address-card {
+
+        padding: 17px;
+
+    }
+
+}
+
+
+/* =========================================================
+   PETITS ÉCRANS
+   ========================================================= */
+
+@media (max-width: 430px) {
+
+    .create-report-page {
+
+        padding-right: 12px;
+
+        padding-left: 12px;
+
+    }
+
+
+    .step-line {
+
+        width: 42px;
+
+    }
+
+
+    .step-label {
+
         font-size: 12px;
+
     }
 
 
-    /* Client */
+    .client-card {
 
-    .client-info-card {
-        padding: 11px 12px;
+        align-items: flex-start;
 
-        gap: 10px;
-    }
-
-    .client-info-icon {
-        width: 38px;
-        height: 38px;
-
-        font-size: 15px;
-    }
-
-    .client-info-name {
-        font-size: 14px;
     }
 
 
-    /* Map */
-
-    .map-card {
-        height: 45vh;
-
-        min-height: 300px;
-
-        border-radius: 15px;
-    }
-
-
-    /* GPS */
-
-    .gps-btn {
-        bottom: 10px;
-        right: 10px;
-
-        padding: 9px 11px;
+    .client-status {
 
         font-size: 11px;
+
+        padding: 5px 8px;
+
     }
 
 
-    /* Bottom */
+    #map {
 
-    .bottom-bar {
-        flex-direction: column;
+        height: 290px;
 
-        gap: 7px;
-
-        padding:
-            10px 12px
-            calc(10px + env(safe-area-inset-bottom));
     }
 
-    .btn-back,
-    .btn-next {
-        width: 100%;
 
-        flex: none;
+    .gps-btn {
 
-        padding: 11px;
+        right: 9px;
+
+        bottom: 9px;
+
+        padding: 0 10px;
+
+    }
+
+
+    .gps-btn span {
+
+        display: none;
+
+    }
+
+
+    .btn-back {
+
+        padding: 0 13px;
+
     }
 
 }

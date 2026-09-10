@@ -1,182 +1,425 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Nouveau signalement</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" th:href="@{/css/create-report.css}">
+<html lang="fr"
+      xmlns:th="http://www.thymeleaf.org">
 
-    <link rel="stylesheet" th:href="@{/css/app.css}">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Nouveau signalement</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/app.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/create-report.css}">
+
+
+
     <script th:src="@{/js/app.js}" defer></script>
 
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
 </head>
 
 <body>
 
 <div th:replace="~{fragments/header :: header}"></div>
 
-<body style="padding-bottom: 70px;">
+<main class="create-report-page">
 
-<div class="container">
+    <div class="container">
 
-    <!-- HEADER STEP -->
-    <div class="step-header">
-        <h1>Nouveau signalement</h1>
-        <p>Étape 1 / 3 — Informations du signalement</p>
-        <div class="progress-bar">
-            <div class="progress"></div>
+        <!-- PROCESSUS -->
+
+        <div class="step-header">
+
+            <div class="steps">
+
+                <div class="step-column active">
+
+                    <div class="step-circle">
+                        1
+                    </div>
+
+                    <div class="step-label">
+                        Informations
+                    </div>
+
+                </div>
+
+                <div class="step-line"></div>
+
+                <div class="step-column">
+
+                    <div class="step-circle">
+                        2
+                    </div>
+
+                </div>
+
+                <div class="step-line"></div>
+
+                <div class="step-column">
+
+                    <div class="step-circle">
+                        3
+                    </div>
+
+                </div>
+
+            </div>
+
         </div>
+
+
+        <form th:action="@{/create-report}"
+              th:object="${reportForm}"
+              method="post"
+              enctype="multipart/form-data">
+
+
+            <!-- CATEGORY -->
+
+            <section class="section">
+
+                <h2>Type de signalement</h2>
+
+                <div class="category-grid">
+
+                    <label class="category-card">
+
+                        <input type="radio"
+                               th:field="*{category}"
+                               value="AIR_POLLUTION">
+
+                        <span class="category-icon">
+                            <i class="fa-solid fa-smog"></i>
+                        </span>
+
+                        <span class="category-name">
+                            Air
+                        </span>
+
+                    </label>
+
+
+                    <label class="category-card">
+
+                        <input type="radio"
+                               th:field="*{category}"
+                               value="WATER_POLLUTION">
+
+                        <span class="category-icon">
+                            <i class="fa-solid fa-droplet"></i>
+                        </span>
+
+                        <span class="category-name">
+                            Eau
+                        </span>
+
+                    </label>
+
+
+                    <label class="category-card">
+
+                        <input type="radio"
+                               th:field="*{category}"
+                               value="VEGETATION">
+
+                        <span class="category-icon">
+                            <i class="fa-solid fa-tree"></i>
+                        </span>
+
+                        <span class="category-name">
+                            Végétation
+                        </span>
+
+                    </label>
+
+
+                    <label class="category-card">
+
+                        <input type="radio"
+                               th:field="*{category}"
+                               value="TOXIC_PRODUCTS">
+
+                        <span class="category-icon">
+                            <i class="fa-solid fa-skull-crossbones"></i>
+                        </span>
+
+                        <span class="category-name">
+                            Produits toxiques
+                        </span>
+
+                    </label>
+
+
+                    <label class="category-card">
+
+                        <input type="radio"
+                               th:field="*{category}"
+                               value="WASTE">
+
+                        <span class="category-icon">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </span>
+
+                        <span class="category-name">
+                            Déchets
+                        </span>
+
+                    </label>
+
+
+                    <label class="category-card">
+
+                        <input type="radio"
+                               th:field="*{category}"
+                               value="NOISE">
+
+                        <span class="category-icon">
+                            <i class="fa-solid fa-volume-high"></i>
+                        </span>
+
+                        <span class="category-name">
+                            Bruit
+                        </span>
+
+                    </label>
+
+                </div>
+
+            </section>
+
+
+            <!-- TITLE -->
+
+            <section class="section">
+
+                <h2>Titre</h2>
+
+                <input type="text"
+                       th:field="*{title}"
+                       placeholder="Ex : Odeur suspecte près du parc">
+
+            </section>
+
+
+            <!-- DESCRIPTION -->
+
+            <section class="section">
+
+                <h2>Description</h2>
+
+                <textarea
+                        th:field="*{description}"
+                        rows="5"
+                        placeholder="Décrivez la situation en détail"></textarea>
+
+            </section>
+
+
+            <!-- GRAVITY -->
+
+            <section class="section">
+
+                <h2>Gravité</h2>
+
+                <div class="gravity-grid">
+
+                    <label class="gravity basic">
+
+                        <input type="radio"
+                               th:field="*{gravity}"
+                               value="BASIC">
+
+                        <span class="gravity-icon">
+                            <i class="fa-solid fa-circle-info"></i>
+                        </span>
+
+                        <span class="gravity-name">
+                            Basique
+                        </span>
+
+                    </label>
+
+
+                    <label class="gravity medium">
+
+                        <input type="radio"
+                               th:field="*{gravity}"
+                               value="MEDIUM">
+
+                        <span class="gravity-icon">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </span>
+
+                        <span class="gravity-name">
+                            Moyen
+                        </span>
+
+                    </label>
+
+
+                    <label class="gravity high">
+
+                        <input type="radio"
+                               th:field="*{gravity}"
+                               value="HIGH">
+
+                        <span class="gravity-icon">
+                            <i class="fa-solid fa-bell"></i>
+                        </span>
+
+                        <span class="gravity-name">
+                            Élevé
+                        </span>
+
+                    </label>
+
+
+                    <label class="gravity critical">
+
+                        <input type="radio"
+                               th:field="*{gravity}"
+                               value="CRITICAL">
+
+                        <span class="gravity-icon">
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                        </span>
+
+                        <span class="gravity-name">
+                            Critique
+                        </span>
+
+                    </label>
+
+                </div>
+
+            </section>
+
+
+            <!-- LOCATION -->
+
+            <!--
+            <div class="section">
+
+                <h2>Localisation</h2>
+
+                <input type="text"
+                       th:field="*{location}"
+                       placeholder="Adresse ou lieu">
+
+                <button type="button"
+                        class="location-btn">
+
+                    <i class="fa-solid fa-location-crosshairs"></i>
+
+                    Utiliser ma position actuelle
+
+                </button>
+
+            </div>
+            -->
+
+
+            <!-- IMAGES -->
+
+            <section class="section image-section">
+
+                <h2>Photos du signalement</h2>
+
+                <p class="image-help">
+                    Ajoutez une ou plusieurs photos pour illustrer le signalement.
+                </p>
+
+                <label for="reportImages"
+                       class="image-upload">
+
+                    <span class="image-upload-icon">
+
+                        <i class="fa-solid fa-camera"></i>
+
+                    </span>
+
+                    <span class="image-upload-content">
+
+                        <strong>
+                            Ajouter des photos
+                        </strong>
+
+                        <small>
+                            JPG, JPEG, PNG — plusieurs photos possibles
+                        </small>
+
+                    </span>
+
+                    <span class="image-upload-arrow">
+
+                        <i class="fa-solid fa-chevron-right"></i>
+
+                    </span>
+
+                </label>
+
+                <input
+                        type="file"
+                        id="reportImages"
+                        name="images"
+                        accept="image/jpeg,image/png,image/webp"
+                        multiple
+                        hidden
+                >
+
+                <div id="imagePreview"
+                     class="image-preview">
+                </div>
+
+                <p id="imageCount"
+                   class="image-count">
+                </p>
+
+            </section>
+
+
+            <input type="hidden"
+                   th:field="*{latitude}">
+
+            <input type="hidden"
+                   th:field="*{longitude}">
+
+
+            <!-- SUBMIT -->
+
+            <div class="sticky-actions">
+
+                <button type="submit"
+                        class="btn-primary">
+
+                    Continuer
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </button>
+
+            </div>
+
+        </form>
+
     </div>
 
-    <form th:action="@{/create-report}"
-          th:object="${reportForm}"
-          method="post"
-          enctype="multipart/form-data">
+</main>
 
-        <!-- CATEGORY -->
-        <div class="section">
-            <h2>Type de signalement</h2>
-
-            <div class="category-grid">
-                <label class="category-card">
-                    <input type="radio" th:field="*{category}" value="AIR_POLLUTION">
-                    <span>🌫 Air</span>
-                </label>
-
-                <label class="category-card">
-                    <input type="radio" th:field="*{category}" value="WATER_POLLUTION">
-                    <span>💧 Eau</span>
-                </label>
-
-                <label class="category-card">
-                    <input type="radio" th:field="*{category}" value="VEGETATION">
-                    <span>🌿 Végétation</span>
-                </label>
-
-                <label class="category-card">
-                    <input type="radio" th:field="*{category}" value="TOXIC_PRODUCTS">
-                    <span>☠ Produits toxiques</span>
-                </label>
-
-                <label class="category-card">
-                    <input type="radio" th:field="*{category}" value="WASTE">
-                    <span>🗑 Déchets</span>
-                </label>
-
-                <label class="category-card">
-                    <input type="radio" th:field="*{category}" value="NOISE">
-                    <span>🔊 Bruit</span>
-                </label>
-            </div>
-        </div>
-
-        <!-- TITLE -->
-        <div class="section">
-            <h2>Titre</h2>
-            <input type="text"
-                   th:field="*{title}"
-                   placeholder="Ex: Odeur suspecte près du parc">
-        </div>
-
-        <!-- DESCRIPTION -->
-        <div class="section">
-            <h2>Description</h2>
-            <textarea
-                    th:field="*{description}"
-                    rows="5"
-                    placeholder="Décris la situation en détail..."></textarea>
-        </div>
-
-        <!-- GRAVITY -->
-        <div class="section">
-            <h2>Gravité</h2>
-
-            <div class="gravity-grid">
-                <label class="gravity basic">
-                    <input type="radio" th:field="*{gravity}" value="BASIC">
-                    <span>🟢 Basique</span>
-                </label>
-
-                <label class="gravity medium">
-                    <input type="radio" th:field="*{gravity}" value="MEDIUM">
-                    <span>🟡 Moyen</span>
-                </label>
-
-                <label class="gravity high">
-                    <input type="radio" th:field="*{gravity}" value="HIGH">
-                    <span>🟠 Élevé</span>
-                </label>
-
-                <label class="gravity critical">
-                    <input type="radio" th:field="*{gravity}" value="CRITICAL">
-                    <span>🔴 Critique</span>
-                </label>
-            </div>
-        </div>
-
-        <!-- LOCATION -->
-        <!--        <div class="section">-->
-        <!--            <h2>Localisation</h2>-->
-        <!--            <input type="text" th:field="*{location}" placeholder="Adresse ou lieu">-->
-        <!--            <button type="button" class="location-btn">📍 Utiliser ma position actuelle</button>-->
-        <!--        </div>-->
-
-        <!-- IMAGES -->
-        <div class="section image-section">
-
-            <h2>Photos du signalement</h2>
-
-            <p class="image-help">
-                Ajoutez une ou plusieurs photos pour illustrer le signalement.
-            </p>
-
-            <label for="reportImages" class="image-upload">
-
-                <span class="image-upload-icon">
-                    <i class="fa-solid fa-camera"></i>
-                </span>
-
-                <span class="image-upload-content">
-                    <strong>Ajouter des photos</strong>
-                    <small>JPG, JPEG, PNG — plusieurs photos possibles</small>
-                </span>
-
-                <span class="image-upload-arrow">
-                    <i class="fa-solid fa-chevron-right"></i>
-                </span>
-
-            </label>
-
-            <input
-                    type="file"
-                    id="reportImages"
-                    name="images"
-                    accept="image/jpeg,image/png,image/webp"
-                    multiple
-                    hidden
-            >
-
-            <div id="imagePreview" class="image-preview"></div>
-
-            <p id="imageCount" class="image-count"></p>
-
-        </div>
-
-        <input type="hidden" th:field="*{latitude}">
-        <input type="hidden" th:field="*{longitude}">
-
-        <!-- SUBMIT -->
-        <div class="sticky-actions">
-            <button type="submit" class="btn-primary">Continuer →</button>
-        </div>
-
-    </form>
-
-</div>
 
 <script th:src="@{/js/geolocation.js}"></script>
+
 <script th:src="@{/js/report-images.js}"></script>
+
 
 <div th:replace="~{fragments/footer :: footer}"></div>
 

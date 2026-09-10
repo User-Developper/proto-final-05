@@ -1,20 +1,43 @@
-
-        package com.medical.web_app.service.dto;
+package com.medical.web_app.service.dto;
 
 import com.medical.web_app.model.Category;
 import com.medical.web_app.model.Gravity;
 
+import java.time.LocalDate;
+
 public class ReportResponse {
 
         private Integer id;
+
         private Long userId;
+
+        private Integer clientId;
+
         private String title;
+
         private String description;
+
         private Category category;
+
         private Gravity gravity;
+
         private String location;
+
+        private LocalDate date;
+
         private Double latitude;
+
         private Double longitude;
+
+
+        public Integer getId() {
+                return id;
+        }
+
+        public void setId(Integer id) {
+                this.id = id;
+        }
+
 
         public Long getUserId() {
                 return userId;
@@ -24,12 +47,13 @@ public class ReportResponse {
                 this.userId = userId;
         }
 
-        public Integer getId() {
-                return id;
+
+        public Integer getClientId() {
+                return clientId;
         }
 
-        public void setId(Integer id) {
-                this.id = id;
+        public void setClientId(Integer clientId) {
+                this.clientId = clientId;
         }
 
 
@@ -78,6 +102,15 @@ public class ReportResponse {
         }
 
 
+        public LocalDate getDate() {
+                return date;
+        }
+
+        public void setDate(LocalDate date) {
+                this.date = date;
+        }
+
+
         public Double getLatitude() {
                 return latitude;
         }
@@ -95,4 +128,3 @@ public class ReportResponse {
                 this.longitude = longitude;
         }
 }
-

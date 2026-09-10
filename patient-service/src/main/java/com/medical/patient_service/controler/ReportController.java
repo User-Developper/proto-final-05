@@ -1,20 +1,20 @@
+package com.medical.patient_service.controler;
 
-        package com.medical.patient_service.controler;
-
-import com.medical.patient_service.model.Category;
-import com.medical.patient_service.model.Gravity;
 import com.medical.patient_service.model.ProfessionalClient;
 import com.medical.patient_service.model.Report;
 import com.medical.patient_service.service.DTO.CreateReportImageRequest;
 import com.medical.patient_service.service.DTO.CreateReportRequest;
-import com.medical.patient_service.service.DTO.PageResponse;
 import com.medical.patient_service.service.DTO.ReportImageResponse;
 import com.medical.patient_service.service.DTO.ReportResponse;
 import com.medical.patient_service.service.DTO.ReportSummary;
+import com.medical.patient_service.service.DTO.PageResponse;
 import com.medical.patient_service.service.ImageStorageService;
 import com.medical.patient_service.service.UserService;
 import com.medical.patient_service.service.form.DataServiceFeignClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -50,6 +50,7 @@ public class ReportController {
         return userService.getReportsByUser(userId);
     }
 
+
     @GetMapping("/{reportId}")
     public Report getReportById(
             @PathVariable Integer reportId) {
@@ -66,6 +67,14 @@ public class ReportController {
     }
 
 
+    @GetMapping("/{reportId}/images")
+    public List<ReportImageResponse> getReportImages(
+            @PathVariable Integer reportId) {
+
+        return dataServiceFeignClient.getReportImages(reportId);
+    }
+
+
     @PostMapping(
             value = "/{reportId}/images",
             consumes = "multipart/form-data"
@@ -77,19 +86,32 @@ public class ReportController {
         return files.stream()
                 .map(file -> {
 
-                    // 1. Enregistrer le fichier dans le storage
                     String storageName =
-                            imageStorageService.store(file, reportId);
+                            imageStorageService.store(
+                                    file,
+                                    reportId
+                            );
 
-                    // 2. Préparer les informations pour data-service
                     CreateReportImageRequest request =
                             new CreateReportImageRequest();
 
                     request.setReportId(reportId);
-                    request.setFileName(file.getOriginalFilename());
-                    request.setContentType(file.getContentType());
-                    request.setStorageName(storageName);
-                    request.setFileSize(file.getSize());
+
+                    request.setFileName(
+                            file.getOriginalFilename()
+                    );
+
+                    request.setContentType(
+                            file.getContentType()
+                    );
+
+                    request.setStorageName(
+                            storageName
+                    );
+
+                    request.setFileSize(
+                            file.getSize()
+                    );
 
                     request.setStoragePath(
                             imageStorageService.getStoragePath(
@@ -102,7 +124,6 @@ public class ReportController {
                             LocalDateTime.now().toString()
                     );
 
-                    // 3. Enregistrer les informations dans la BDD
                     return dataServiceFeignClient.addReportImage(
                             reportId,
                             request
@@ -110,5 +131,30 @@ public class ReportController {
                 })
                 .toList();
     }
-}
 
+
+    @GetMapping("/{reportId}/images/{storageName}")
+    public ResponseEntity<Resource> getReportImage(
+            @PathVariable Integer reportId,
+            @PathVariable String storageName) {
+
+        Resource resource =
+                imageStorageService.load(
+                        reportId,
+                        storageName
+                );
+
+        String contentType =
+                imageStorageService.getContentType(
+                        reportId,
+                        storageName
+                );
+
+        return ResponseEntity
+                .ok()
+                .contentType(
+                        MediaType.parseMediaType(contentType)
+                )
+                .body(resource);
+    }
+}

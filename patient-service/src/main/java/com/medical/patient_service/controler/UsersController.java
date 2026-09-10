@@ -39,6 +39,12 @@ public class UsersController {
         return dataServiceFeignClient.findUser(username);
     }
 
+    @GetMapping("/{userId}")
+    public User getUserById(
+            @PathVariable Long userId) {
+
+        return userService.getUserById(userId);
+    }
 //    @PutMapping()
 //    public User update(@RequestBody User user){
 //
