@@ -35,6 +35,12 @@ public interface DataServiceFeignClient {
     List<Report> getReportsByUser(@RequestParam("userId") Long userId);
 
 
+    @GetMapping("/reports/{reportId}")
+    Report getReportById(
+            @PathVariable("reportId") Integer reportId
+    );
+
+
 
 
     @GetMapping("/api/reports")

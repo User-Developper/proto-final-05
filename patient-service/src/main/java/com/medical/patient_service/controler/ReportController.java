@@ -4,6 +4,7 @@
 import com.medical.patient_service.model.Category;
 import com.medical.patient_service.model.Gravity;
 import com.medical.patient_service.model.ProfessionalClient;
+import com.medical.patient_service.model.Report;
 import com.medical.patient_service.service.DTO.CreateReportImageRequest;
 import com.medical.patient_service.service.DTO.CreateReportRequest;
 import com.medical.patient_service.service.DTO.PageResponse;
@@ -47,6 +48,13 @@ public class ReportController {
             @RequestParam Long userId) {
 
         return userService.getReportsByUser(userId);
+    }
+
+    @GetMapping("/{reportId}")
+    public Report getReportById(
+            @PathVariable Integer reportId) {
+
+        return userService.getReportById(reportId);
     }
 
 

@@ -89,3 +89,79 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 });
+
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const password = document.getElementById("password");
+    const passwordToggle = document.getElementById("passwordToggle");
+
+    const confirmPassword =
+        document.getElementById("confirmPassword");
+
+    const confirmPasswordToggle =
+        document.getElementById("confirmPasswordToggle");
+
+
+    function togglePassword(input, button) {
+
+        if (!input || !button) {
+            return;
+        }
+
+        const icon = button.querySelector("i");
+
+        if (input.type === "password") {
+
+            input.type = "text";
+
+            icon.classList.remove("fa-eye");
+            icon.classList.add("fa-eye-slash");
+
+            button.setAttribute(
+                "aria-label",
+                "Masquer le mot de passe"
+            );
+
+        } else {
+
+            input.type = "password";
+
+            icon.classList.remove("fa-eye-slash");
+            icon.classList.add("fa-eye");
+
+            button.setAttribute(
+                "aria-label",
+                "Afficher le mot de passe"
+            );
+        }
+    }
+
+
+    if (passwordToggle) {
+
+        passwordToggle.addEventListener("click", function () {
+
+            togglePassword(
+                password,
+                passwordToggle
+            );
+
+        });
+    }
+
+
+    if (confirmPasswordToggle) {
+
+        confirmPasswordToggle.addEventListener("click", function () {
+
+            togglePassword(
+                confirmPassword,
+                confirmPasswordToggle
+            );
+
+        });
+    }
+
+});
+

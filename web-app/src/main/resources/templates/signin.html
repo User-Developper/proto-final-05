@@ -1,97 +1,214 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="fr"
+      xmlns:th="http://www.thymeleaf.org">
+
 <head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
     <title>Connexion</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" th:href="@{/css/signin.css}">
+
+
+    <!-- FONT AWESOME -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+
+    <!-- CSS -->
+    <link rel="stylesheet"
+          th:href="@{/css/signin.css}">
 
 </head>
 
+
 <body>
 
-<div class="login-container">
+<div class="login-page">
 
-    <div class="login-card">
+    <main class="login-container">
 
-        <h1>Connexion</h1>
 
-        <form th:action="@{/signin}" method="post">
+        <!-- IDENTITÉ DE L'APPLICATION -->
+        <div class="login-brand">
 
-            <div>
-                <label>Username *</label>
-                <input type="text" name="username" id="username">
-                <small class="error" id="usernameError"></small>
+            <div class="brand-mark">
+                <span>●</span>
             </div>
 
-            <div>
-                <label>Password *</label>
-                <input type="password" name="password" id="password">
-                <small class="error" id="passwordError"></small>
+            <div class="brand-name">
+                Signalement
             </div>
 
-            <button type="submit">
-                Se connecter
-            </button>
+            <p class="brand-baseline">
+                Signaler. Suivre. Agir.
+            </p>
 
-        </form>
-
-        <div th:if="${param.error}" class="error-box">
-            ❌ Username ou mot de passe incorrect
         </div>
 
-        <div class="links"><a href="#" id="forgotPassword">Mot de passe oublié ?</a></div>
+
+        <!-- CARTE DE CONNEXION -->
+        <div class="login-card">
 
 
-        <div class="links">
-            <a th:href="@{/signup}">Pas encore inscrit ? Créez un compte</a>
+            <!-- FORMULAIRE -->
+            <form th:action="@{/signin}"
+                  method="post">
+
+
+                <!-- NOM D'UTILISATEUR -->
+                <div class="form-group">
+
+                    <label for="username">
+
+                        Nom d'utilisateur
+
+                        <span>*</span>
+
+                    </label>
+
+                    <input
+                            type="text"
+                            name="username"
+                            id="username"
+                            autocomplete="username"
+                    >
+
+                    <small
+                            class="error"
+                            id="usernameError">
+                    </small>
+
+                </div>
+
+
+                <!-- MOT DE PASSE -->
+                <div class="form-group">
+
+                    <label for="password">
+
+                        Mot de passe
+
+                        <span>*</span>
+
+                    </label>
+
+
+                    <div class="password-wrapper">
+
+                        <input
+                                type="password"
+                                name="password"
+                                id="password"
+                                autocomplete="current-password"
+                        >
+
+                        <button
+                                type="button"
+                                class="password-toggle"
+                                id="passwordToggle"
+                                aria-label="Afficher le mot de passe"
+                        >
+
+                            <i class="fa-regular fa-eye"></i>
+
+                        </button>
+
+                    </div>
+
+
+                    <small
+                            class="error"
+                            id="passwordError">
+                    </small>
+
+                </div>
+
+
+                <!-- BOUTON CONNEXION -->
+                <button
+                        type="submit"
+                        class="login-button"
+                >
+
+                    Se connecter
+
+                </button>
+
+
+            </form>
+
+
+            <!-- ERREUR SERVEUR -->
+            <div
+                    th:if="${param.error}"
+                    class="error-box"
+            >
+
+                <span class="error-icon">
+                    !
+                </span>
+
+                <span>
+                    Nom d'utilisateur ou mot de passe incorrect
+                </span>
+
+            </div>
+
+
+            <!-- MOT DE PASSE OUBLIÉ -->
+            <div class="forgot-password">
+
+                <a
+                        href="#"
+                        id="forgotPassword"
+                >
+
+                    Mot de passe oublié ?
+
+                </a>
+
+            </div>
+
+
+            <!-- INSCRIPTION -->
+            <div class="register-section">
+
+                <p>
+                    Pas encore de compte ?
+                </p>
+
+                <a th:href="@{/signup}">
+
+                    Créer un compte
+
+                </a>
+
+            </div>
+
+
         </div>
 
-    </div>
+
+        <!-- TEXTE BAS DE PAGE -->
+        <p class="login-footer">
+
+            Une plateforme pour signaler et suivre les problèmes
+            de votre environnement.
+
+        </p>
+
+
+    </main>
 
 </div>
 
+
+<!-- JAVASCRIPT -->
 <script th:src="@{/js/signin.js}"></script>
+
 </body>
 
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--<body>-->
-
-<!--<h1>Connexion Médecin</h1>-->
-
-<!--<form th:action="@{/signin}" method="post">-->
-
-<!--    <label>Username</label>-->
-<!--    <input type="text" name="username"/>-->
-
-<!--    <label>Password</label>-->
-<!--    <input type="password" name="password"/>-->
-
-<!--    <button type="submit">-->
-<!--        Se connecter-->
-<!--    </button>-->
-
-<!--</form>-->
-
-<!--<a th:href="@{/signup}">-->
-<!--    Créer un compte-->
-<!--</a>-->
-<!--<a th:href="@{/report}">-->
-<!--    Créer-->
-<!--</a>-->
-
-<!--</body>-->

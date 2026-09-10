@@ -32,6 +32,11 @@ public interface PatientserviceFeignClient {
     @GetMapping("/reports")
     List<ReportSummary> getReportsByUser(@RequestParam("userId") Long userId);
 
+    @GetMapping("/reports/{reportId}")
+    ReportResponse getReportById(
+            @PathVariable("reportId") Integer reportId
+    );
+
 
     @PostMapping("/user")
     User addUser(@RequestBody User user);

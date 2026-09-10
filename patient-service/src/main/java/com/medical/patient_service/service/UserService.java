@@ -110,6 +110,12 @@ public class UserService {
 
     }
 
+
+    public Report getReportById(Integer reportId) {
+
+        return dataServiceFeignClient.getReportById(reportId);
+    }
+
     private ReportSummary toSummary(Report report){
 
         ReportSummary dto = new ReportSummary();

@@ -1,305 +1,984 @@
-/* ===== RESET ===== */
+/* =========================================================
+   REPORT DETAIL
+========================================================= */
 
-* {
+:root {
+
+    --primary: #1E5A78;
+    --primary-dark: #16465F;
+    --primary-light: #EAF3F7;
+
+    --text: #17232B;
+    --text-secondary: #667781;
+
+    --background: #F6F9FA;
+
+    --white: #FFFFFF;
+
+    --border: #DCE5E9;
+    --border-light: #EEF3F5;
+
+    --success: #2F7D68;
+    --warning: #C47A28;
+    --danger: #C94A4A;
+
+    --shadow: 0 8px 30px rgba(23, 35, 43, 0.06);
+}
+
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+.report-page {
+
+    min-height: calc(100vh - 64px);
+
+    padding: 24px 16px 100px;
+
+    background: var(--background);
+}
+
+
+.report-container {
+
+    width: 100%;
+
+    max-width: 1080px;
+
+    margin: 0 auto;
+}
+
+
+/* =========================================================
+   RETOUR
+========================================================= */
+
+.report-top {
+
+    margin-bottom: 22px;
+}
+
+
+.back-link {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    color: var(--text-secondary);
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition: color 0.2s ease;
+}
+
+
+.back-link i {
+
+    font-size: 12px;
+}
+
+
+.back-link:hover {
+
+    color: var(--primary);
+}
+
+
+/* =========================================================
+   REPORT DETAIL
+========================================================= */
+
+.report-detail {
+
+    background: var(--white);
+
+    border-radius: 22px;
+
+    box-shadow: var(--shadow);
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.report-header {
+
+    padding: 24px 20px 22px;
+
+    border-bottom: 1px solid var(--border-light);
+}
+
+
+.report-category {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    margin-bottom: 10px;
+
+    color: var(--primary);
+
+    font-size: 11px;
+
+    font-weight: 750;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.6px;
+}
+
+
+.report-category i {
+
+    font-size: 11px;
+}
+
+
+.report-title {
+
     margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+
+    color: var(--text);
+
+    font-size: 27px;
+
+    line-height: 1.2;
+
+    font-weight: 800;
+
+    letter-spacing: -0.6px;
+
+    overflow-wrap: anywhere;
 }
 
-body {
-    font-family: "Segoe UI", sans-serif;
-    background: #f5f7fa;
-    color: #222;
-    line-height: 1.6;
-}
 
-/* ===== HEADER ===== */
-
-.header {
-    height: 80px;
-    background: white;
-    padding: 0 40px;
+.report-meta {
 
     display: flex;
+
     align-items: center;
-    justify-content: space-between;
 
-    border-bottom: 1px solid #e5e5e5;
-    box-shadow: 0 2px 8px rgba(0,0,0,.04);
+    flex-wrap: wrap;
 
-    position: sticky;
-    top: 0;
-    z-index: 100;
+    gap: 7px;
+
+    margin-top: 9px;
+
+    color: #8A9AA2;
+
+    font-size: 12px;
+
+    font-weight: 500;
 }
 
-.logo {
-    font-size: 1.3rem;
+
+.meta-separator {
+
+    color: #B8C5CA;
+}
+
+
+.report-gravity {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 12px;
+
+    margin-top: 18px;
+}
+
+
+.gravity-label {
+
+    color: var(--text-secondary);
+
+    font-size: 12px;
+
+    font-weight: 600;
+}
+
+
+.gravity-badge {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-height: 30px;
+
+    padding: 5px 12px;
+
+    border-radius: 999px;
+
+    background: #F2F5F6;
+
+    color: #53646D;
+
+    font-size: 11px;
+
     font-weight: 700;
 }
 
-.nav {
+
+.gravity-low {
+
+    background: #EAF6F1;
+
+    color: var(--success);
+}
+
+
+.gravity-medium,
+.gravity-moyenne {
+
+    background: #FFF5E8;
+
+    color: var(--warning);
+}
+
+
+.gravity-high,
+.gravity-haute,
+.gravity-critical,
+.gravity-critique {
+
+    background: #FCEEEE;
+
+    color: var(--danger);
+}
+
+
+/* =========================================================
+   IMAGE
+========================================================= */
+
+.report-image-section {
+
+    width: 100%;
+}
+
+
+.report-image-placeholder {
+
+    width: 100%;
+
+    aspect-ratio: 16 / 9;
+
+    background: #EDF2F4;
+
     display: flex;
-    gap: 30px;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    color: #8B9BA3;
+
+    text-align: center;
 }
 
-.nav a {
-    text-decoration: none;
-    color: #444;
-    font-weight: 500;
-    transition: .2s;
+
+.placeholder-icon {
+
+    width: 58px;
+
+    height: 58px;
+
+    border-radius: 16px;
+
+    background: #E3EAED;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 22px;
 }
 
-.nav a:hover {
-    color: #2ecc71;
-}
 
-.profile {
+.report-image-placeholder span {
+
+    font-size: 12px;
+
     font-weight: 600;
 }
 
-/* ===== HERO ===== */
 
-.hero {
-    min-height: 300px;
+/* =========================================================
+   DESCRIPTION
+========================================================= */
+
+.report-description {
+
+    padding: 26px 20px 28px;
+
+    border-bottom: 1px solid var(--border-light);
+}
+
+
+.section-heading {
+
+    margin-bottom: 16px;
+}
+
+
+.section-eyebrow {
+
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: var(--primary);
+
+    font-size: 10px;
+
+    font-weight: 750;
+
+    letter-spacing: 0.8px;
+
+    text-transform: uppercase;
+}
+
+
+.section-heading h2 {
+
+    margin: 0;
+
+    color: var(--text);
+
+    font-size: 17px;
+
+    line-height: 1.3;
+
+    font-weight: 750;
+}
+
+
+.description-content p {
+
+    margin: 0;
+
+    color: #4D5E66;
+
+    font-size: 14px;
+
+    line-height: 1.8;
+
+    white-space: pre-line;
+}
+
+
+/* =========================================================
+   LOCALISATION
+========================================================= */
+
+.report-location {
+
+    padding: 20px;
 
     display: flex;
+
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
 
-    text-align: center;
+    gap: 18px;
 
-    background:
-        linear-gradient(
-            rgba(0,0,0,.45),
-            rgba(0,0,0,.45)
-        ),
-        url()
-        center/cover;
-
-    color: white;
+    border-bottom: 1px solid var(--border-light);
 }
 
-.hero h1 {
-    font-size: 3rem;
-    margin-bottom: 15px;
+
+.location-content {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 12px;
 }
 
-.hero p {
-    font-size: 1.1rem;
-    opacity: .9;
-}
 
-/* ===== USER BAR ===== */
+.location-icon {
 
-.user-bar {
-    max-width: 1200px;
-    margin: 30px auto 0;
+    flex: 0 0 40px;
 
-    background: white;
+    width: 40px;
+
+    height: 40px;
+
     border-radius: 12px;
 
-    padding: 20px 30px;
+    background: var(--primary-light);
+
+    color: var(--primary);
 
     display: flex;
-    justify-content: space-between;
+
     align-items: center;
 
-    box-shadow: 0 3px 12px rgba(0,0,0,.08);
+    justify-content: center;
+
+    font-size: 15px;
 }
 
-.badge {
-    display: inline-block;
 
-    margin-top: 8px;
-    padding: 5px 10px;
+.location-text {
 
-    border-radius: 50px;
-
-    background: #e9fff1;
-    color: #1d8a4d;
-
-    font-size: .8rem;
-    font-weight: 600;
-}
-
-/* ===== TITLE ===== */
-
-.section-title {
-    text-align: center;
-    padding: 40px 20px 20px;
-}
-
-.section-title h2 {
-    font-size: 2rem;
-    margin-bottom: 15px;
-}
-
-.tag {
-    display: inline-block;
-
-    padding: 6px 14px;
-    margin: 5px;
-
-    border-radius: 30px;
-
-    font-size: .8rem;
-    font-weight: 600;
-}
-
-.green {
-    background: #dff8e6;
-    color: #208847;
-}
-
-.red {
-    background: #ffe2e2;
-    color: #c0392b;
-}
-
-.blue {
-    background: #e1edff;
-    color: #2c6be0;
-}
-
-/* ===== IMAGE ===== */
-
-.image-section {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-.image-section img {
-    width: 100%;
-    height: 500px;
-    object-fit: cover;
-
-    border-radius: 15px;
-
-    box-shadow: 0 8px 25px rgba(0,0,0,.12);
-}
-
-/* ===== CONTENT ===== */
-
-.content {
-    max-width: 1200px;
-    margin: 20px auto;
-
-    background: white;
-    border-radius: 15px;
-
-    padding: 30px;
-
-    box-shadow: 0 3px 12px rgba(0,0,0,.08);
-}
-
-.location {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #2ecc71;
-
-    margin-bottom: 20px;
-}
-
-.description {
-    font-size: 1rem;
-    color: #444;
-}
-
-/* ===== ACTIONS ===== */
-
-.actions {
-    max-width: 1200px;
-    margin: 20px auto;
+    min-width: 0;
 
     display: flex;
+
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+
+.location-label {
+
+    color: #8A9AA2;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    letter-spacing: 0.6px;
+}
+
+
+.location-text strong {
+
+    color: #33444C;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+
+    overflow-wrap: anywhere;
+}
+
+
+.map-button {
+
+    min-height: 46px;
+
+    padding: 0 16px;
+
+    border-radius: 12px;
+
+    background: var(--primary);
+
+    color: var(--white);
+
+    display: flex;
+
+    align-items: center;
+
     justify-content: center;
-    gap: 15px;
+
+    gap: 9px;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    text-decoration: none;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
 }
 
-.btn {
-    padding: 12px 25px;
 
-    border: none;
-    border-radius: 10px;
+.map-button:hover {
 
-    cursor: pointer;
-    font-size: .95rem;
-    font-weight: 600;
+    background: var(--primary-dark);
 
-    transition: .2s;
+    transform: translateY(-1px);
 }
 
-.btn:hover {
-    transform: translateY(-2px);
+
+.map-button i {
+
+    font-size: 11px;
 }
 
-.primary {
-    background: #2ecc71;
-    color: white;
+
+/* =========================================================
+   INFORMATIONS
+========================================================= */
+
+.report-information {
+
+    padding: 26px 20px;
+
+    border-bottom: 1px solid var(--border-light);
 }
 
-.primary:hover {
-    background: #27ae60;
-}
 
-/* ===== RELATED ===== */
-
-.cards {
-    max-width: 1200px;
-    margin: 20px auto 50px;
+.information-grid {
 
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
-    gap: 20px;
+
+    grid-template-columns: 1fr;
+
+    border-top: 1px solid var(--border-light);
 }
 
-.card {
-    background: white;
 
-    border-radius: 15px;
-    overflow: hidden;
+.information-item {
 
-    box-shadow: 0 4px 15px rgba(0,0,0,.08);
+    min-width: 0;
 
-    transition: .2s;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-}
-
-.card img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-}
-
-.card h4 {
-    padding: 15px;
-}
-
-/* ===== FOOTER ===== */
-
-.footer {
-    background: #111;
-    color: white;
-
-    padding: 25px 40px;
+    padding: 13px 0;
 
     display: flex;
-    justify-content: space-between;
+
     align-items: center;
 
-    margin-top: 40px;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    border-bottom: 1px solid var(--border-light);
 }
 
-.footer a {
-    color: white;
-    text-decoration: none;
+
+.information-item:last-child {
+
+    border-bottom: none;
 }
 
-.footer a:hover {
-    text-decoration: underline;
+
+.information-item span {
+
+    color: #8A9AA2;
+
+    font-size: 11px;
+
+    font-weight: 600;
+}
+
+
+.information-item strong {
+
+    color: #33444C;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    text-align: right;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
+.report-actions-section {
+
+    padding: 26px 20px;
+}
+
+
+.report-actions {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+
+.report-action {
+
+    width: 100%;
+
+    min-height: 58px;
+
+    padding: 9px 12px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: #F7F9FA;
+
+    color: var(--text);
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.report-action:hover {
+
+    background: #EEF3F5;
+
+    transform: translateY(-1px);
+}
+
+
+.action-icon {
+
+    flex: 0 0 36px;
+
+    width: 36px;
+
+    height: 36px;
+
+    border-radius: 10px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 13px;
+}
+
+
+.action-content {
+
+    min-width: 0;
+
+    flex: 1;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 2px;
+}
+
+
+.action-content strong {
+
+    color: #33444C;
+
+    font-size: 12px;
+
+    font-weight: 700;
+}
+
+
+.action-content small {
+
+    color: #8A9AA2;
+
+    font-size: 10px;
+
+    line-height: 1.4;
+}
+
+
+.report-action > i {
+
+    color: #9AA9AF;
+
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   ACTION COLORS
+========================================================= */
+
+.action-edit .action-icon {
+
+    background: var(--primary-light);
+
+    color: var(--primary);
+}
+
+
+.action-delete .action-icon {
+
+    background: #FCEEEE;
+
+    color: var(--danger);
+}
+
+
+.action-archive .action-icon {
+
+    background: #F2F4F5;
+
+    color: #64757D;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (min-width: 600px) {
+
+    .report-page {
+
+        padding: 30px 24px 70px;
+    }
+
+
+    .report-header {
+
+        padding: 30px 28px 26px;
+    }
+
+
+    .report-title {
+
+        font-size: 32px;
+    }
+
+
+    .report-meta {
+
+        font-size: 12px;
+    }
+
+
+    .report-description {
+
+        padding: 30px 28px;
+    }
+
+
+    .report-location {
+
+        padding: 24px 28px;
+
+        flex-direction: row;
+
+        align-items: center;
+
+        justify-content: space-between;
+    }
+
+
+    .map-button {
+
+        width: auto;
+
+        min-width: 170px;
+    }
+
+
+    .report-information {
+
+        padding: 30px 28px;
+    }
+
+
+    .information-grid {
+
+        grid-template-columns: 1fr 1fr;
+
+        column-gap: 30px;
+    }
+
+
+    .report-actions-section {
+
+        padding: 30px 28px;
+    }
+
+
+    .report-actions {
+
+        flex-direction: row;
+    }
+
+
+    .report-action {
+
+        flex: 1;
+    }
+
+}
+
+
+/* =========================================================
+   DESKTOP
+========================================================= */
+
+@media (min-width: 900px) {
+
+    .report-page {
+
+        padding: 38px 30px 70px;
+    }
+
+
+    .report-top {
+
+        margin-bottom: 24px;
+    }
+
+
+    .report-detail {
+
+        border-radius: 24px;
+    }
+
+
+    .report-header {
+
+        padding: 34px 38px 30px;
+
+        position: relative;
+    }
+
+
+    .report-title {
+
+        max-width: 850px;
+
+        font-size: 36px;
+    }
+
+
+    .report-gravity {
+
+        position: absolute;
+
+        right: 38px;
+
+        bottom: 30px;
+
+        margin-top: 0;
+
+        gap: 10px;
+    }
+
+
+    .report-image-placeholder {
+
+        aspect-ratio: 16 / 7;
+    }
+
+
+    .report-description {
+
+        padding: 34px 38px 38px;
+    }
+
+
+    .section-heading {
+
+        margin-bottom: 18px;
+    }
+
+
+    .section-heading h2 {
+
+        font-size: 18px;
+    }
+
+
+    .description-content {
+
+        max-width: 850px;
+    }
+
+
+    .description-content p {
+
+        font-size: 15px;
+
+        line-height: 1.85;
+    }
+
+
+    .report-location {
+
+        padding: 24px 38px;
+    }
+
+
+    .report-information {
+
+        padding: 34px 38px;
+    }
+
+
+    .report-actions-section {
+
+        padding: 34px 38px 38px;
+    }
+
+}
+
+
+/* =========================================================
+   LARGE DESKTOP
+========================================================= */
+
+@media (min-width: 1200px) {
+
+    .report-container {
+
+        max-width: 1120px;
+    }
+
+
+    .report-image-placeholder {
+
+        aspect-ratio: 16 / 6.5;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE NAVIGATION
+========================================================= */
+
+@media (max-width: 767px) {
+
+    .report-page {
+
+        padding-bottom: 100px;
+    }
+
 }

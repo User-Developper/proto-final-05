@@ -38,6 +38,7 @@ public class ReportController {
 
     @GetMapping("/report")
     public String reportPage(
+            @RequestParam Integer id,
             Model model,
             Principal principal) {
 
@@ -46,7 +47,19 @@ public class ReportController {
         User user = webAppService.getUser(username)
                 .orElse(null);
 
+        if (user == null) {
+            return "redirect:/signin";
+        }
+
+        ReportResponse report =
+                webAppService.getReportById(id);
+
+        if (report == null) {
+            return "redirect:/report-list";
+        }
+
         model.addAttribute("user", user);
+        model.addAttribute("report", report);
 
         return "report";
     }

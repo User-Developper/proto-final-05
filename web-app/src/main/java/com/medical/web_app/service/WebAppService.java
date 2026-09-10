@@ -114,6 +114,11 @@ public class WebAppService {
 
     }
 
+    public ReportResponse getReportById(Integer reportId) {
+
+        return patientserviceFeignClient.getReportById(reportId);
+    }
+
     public ProfessionalClient getClientById(Integer clientId){
 
         return patientserviceFeignClient.getClientById(clientId);

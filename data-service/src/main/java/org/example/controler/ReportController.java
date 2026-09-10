@@ -100,6 +100,19 @@ public class ReportController {
     }
 
 
+    @GetMapping("/{reportId}")
+    public Report getReportById(
+            @PathVariable Integer reportId) {
+
+        return reportRepository.findById(reportId)
+                .orElseThrow(() ->
+                        new RuntimeException(
+                                "Report introuvable : " + reportId
+                        )
+                );
+    }
+
+
     @PostMapping("/{reportId}/images")
     public ReportImage addImage(
             @PathVariable Integer reportId,
