@@ -1,8 +1,7 @@
 package com.medical.patient_service.model;
 
 public enum Gravity {
-    BASIC,
+    LOW,
     MEDIUM,
     HIGH,
-    CRITICAL
 }

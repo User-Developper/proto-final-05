@@ -20,6 +20,18 @@
     --border-light: #DCE5E9;
     --border-hover: #B8CBD2;
 
+    --gravity-low: #15803D;
+    --gravity-low-light: #F0FDF4;
+    --gravity-low-border: #BBE3C7;
+
+    --gravity-medium: #D4A72C;
+    --gravity-medium-light: #FFFBEB;
+    --gravity-medium-border: #E8D79B;
+
+    --gravity-high: #C94A4A;
+    --gravity-high-light: #FEF2F2;
+    --gravity-high-border: #E8B7B7;
+
     --radius: 12px;
     --container: 900px;
 }
@@ -161,7 +173,7 @@ body {
 .section h2 {
     margin: 0 0 18px;
 
-    color: #16465F;
+    color: var(--primary-dark);
 
     font-size: 18px;
     line-height: 1.4;
@@ -269,22 +281,22 @@ body {
    ========================================================= */
 
 .category-card:has(input:checked) {
-    background: #EAF3F7;
+    background: var(--primary-light);
 
-    border: 2px solid #1E5A78;
+    border: 2px solid var(--primary);
 
     box-shadow:
         0 0 0 2px rgba(30, 90, 120, 0.10);
 }
 
 .category-card:has(input:checked) .category-icon {
-    color: #1E5A78;
+    color: var(--primary);
 
     transform: scale(1.08);
 }
 
 .category-card:has(input:checked) .category-name {
-    color: #16465F;
+    color: var(--primary-dark);
 
     font-weight: 700;
 }
@@ -361,7 +373,7 @@ textarea:focus {
 .gravity {
     position: relative;
 
-    min-height: 105px;
+    min-height: 110px;
 
     display: flex;
     flex-direction: column;
@@ -370,7 +382,7 @@ textarea:focus {
 
     padding: 15px 10px;
 
-    background: transparent;
+    background: var(--white);
 
     border: 1px solid var(--border);
 
@@ -406,8 +418,6 @@ textarea:focus {
 .gravity-icon {
     margin-bottom: 10px;
 
-    color: var(--icon);
-
     font-size: 25px;
 
     transition:
@@ -416,8 +426,6 @@ textarea:focus {
 }
 
 .gravity-name {
-    color: var(--text);
-
     font-size: 14px;
     font-weight: 600;
 
@@ -430,27 +438,79 @@ textarea:focus {
 
 
 /* =========================================================
+   GRAVITY COLORS
+   ========================================================= */
+
+/* LOW / BASIQUE */
+
+.gravity-low .gravity-icon {
+    color: var(--gravity-low);
+}
+
+.gravity-low .gravity-name {
+    color: var(--gravity-low);
+}
+
+
+/* MEDIUM / MOYEN */
+
+.gravity-medium .gravity-icon {
+    color: var(--gravity-medium);
+}
+
+.gravity-medium .gravity-name {
+    color: var(--gravity-medium);
+}
+
+
+/* HIGH / ÉLEVÉ */
+
+.gravity-high .gravity-icon {
+    color: var(--gravity-high);
+}
+
+.gravity-high .gravity-name {
+    color: var(--gravity-high);
+}
+
+
+/* =========================================================
    GRAVITY SELECTED
    ========================================================= */
 
-.gravity:has(input:checked) {
-    background: #EAF3F7;
+.gravity-low:has(input:checked) {
+    background: var(--gravity-low-light);
 
-    border: 2px solid #1E5A78;
+    border: 2px solid var(--gravity-low);
 
     box-shadow:
-        0 0 0 2px rgba(30, 90, 120, 0.10);
+        0 0 0 2px rgba(21, 128, 61, 0.10);
 }
 
-.gravity:has(input:checked) .gravity-icon {
-    color: #1E5A78;
+.gravity-medium:has(input:checked) {
+    background: var(--gravity-medium-light);
 
+    border: 2px solid var(--gravity-medium);
+
+    box-shadow:
+        0 0 0 2px rgba(212, 167, 44, 0.12);
+}
+
+.gravity-high:has(input:checked) {
+    background: var(--gravity-high-light);
+
+    border: 2px solid var(--gravity-high);
+
+    box-shadow:
+        0 0 0 2px rgba(201, 74, 74, 0.10);
+}
+
+
+.gravity:has(input:checked) .gravity-icon {
     transform: scale(1.08);
 }
 
 .gravity:has(input:checked) .gravity-name {
-    color: #16465F;
-
     font-weight: 700;
 }
 
@@ -671,7 +731,7 @@ textarea:focus {
     }
 
     .gravity-grid {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
+        grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
     .image-preview {
@@ -722,6 +782,7 @@ textarea:focus {
 
     .section h2 {
         font-size: 19px;
+
         margin-bottom: 20px;
     }
 

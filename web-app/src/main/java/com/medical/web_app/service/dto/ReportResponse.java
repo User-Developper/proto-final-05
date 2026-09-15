@@ -2,6 +2,7 @@ package com.medical.web_app.service.dto;
 
 import com.medical.web_app.model.Category;
 import com.medical.web_app.model.Gravity;
+import com.medical.web_app.model.Status;
 
 import java.time.LocalDate;
 
@@ -29,6 +30,15 @@ public class ReportResponse {
 
         private Double longitude;
 
+        private Status status;
+
+        public Status getStatus() {
+                return status;
+        }
+
+        public void setStatus(Status status) {
+                this.status = status;
+        }
 
         public Integer getId() {
                 return id;

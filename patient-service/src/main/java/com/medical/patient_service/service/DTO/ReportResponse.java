@@ -2,6 +2,7 @@ package com.medical.patient_service.service.DTO;
 
 import com.medical.patient_service.model.Category;
 import com.medical.patient_service.model.Gravity;
+import com.medical.patient_service.model.Status;
 
 public class ReportResponse {
 
@@ -14,6 +15,15 @@ public class ReportResponse {
     private String location;
     private Double latitude;
     private Double longitude;
+    private Status status;
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
 
     public Long getUserId() {
         return userId;

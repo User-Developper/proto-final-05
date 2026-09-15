@@ -26,70 +26,103 @@
 
 <body>
 
-<div th:replace="fragments/header :: header"></div>
+<!-- HEADER -->
+<div th:replace="~{fragments/header :: header}"></div>
+
+<!-- MOBILE NAV -->
+<div th:replace="~{fragments/mobile-nav :: mobile-nav}"></div>
 
 
 <main class="report-page">
 
     <div class="report-container">
 
-
-        <!-- RETOUR -->
-
-        <a th:href="@{/report-list}"
-           class="back-link">
-
-            <i class="fa-solid fa-arrow-left"></i>
-
-            Retour aux signalements
-
-        </a>
-
-
-        <!-- CONTENU DU SIGNALEMENT -->
-
         <article class="report-content">
 
 
-            <!-- EN-TÊTE -->
+            <!-- =====================================================
+                 HEADER DU SIGNALEMENT
+                 ===================================================== -->
 
             <header class="report-header">
 
+                <div class="report-header-top">
 
-                <!-- AVATAR UTILISATEUR -->
+                    <!-- PROFIL -->
+                    <div class="report-user-avatar">
 
-                <div class="report-user-avatar">
+                        <i class="fa-solid fa-user"></i>
 
-                    <i class="fa-solid fa-user"></i>
+                    </div>
+
+
+                    <!-- GRAVITÉ -->
+                    <div class="report-gravity"
+                         th:if="${report.gravity != null}"
+                         th:classappend="${report.gravity.name() == 'LOW' ? 'gravity-low' :
+                                          report.gravity.name() == 'MEDIUM' ? 'gravity-medium' :
+                                          report.gravity.name() == 'HIGH' ? 'gravity-high' : ''}"
+                         th:title="${'Gravité : ' +
+                                    (report.gravity.name() == 'LOW' ? 'Basique' :
+                                     report.gravity.name() == 'MEDIUM' ? 'Moyen' :
+                                     report.gravity.name() == 'HIGH' ? 'Élevé' :
+                                     report.gravity.name())}"
+                         th:attr="aria-label=${'Gravité : ' +
+                                    (report.gravity.name() == 'LOW' ? 'Basique' :
+                                     report.gravity.name() == 'MEDIUM' ? 'Moyen' :
+                                     report.gravity.name() == 'HIGH' ? 'Élevé' :
+                                     report.gravity.name())}">
+
+                        <i class="fa-solid fa-circle-info"
+                           th:if="${report.gravity.name() == 'LOW'}"
+                           aria-hidden="true">
+                        </i>
+
+                        <i class="fa-solid fa-triangle-exclamation"
+                           th:if="${report.gravity.name() == 'MEDIUM'}"
+                           aria-hidden="true">
+                        </i>
+
+                        <i class="fa-solid fa-triangle-exclamation"
+                           th:if="${report.gravity.name() == 'HIGH'}"
+                           aria-hidden="true">
+                        </i>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CATÉGORIE -->
+                <div class="report-category-wrapper"
+                     th:if="${report.category != null}">
+
+                    <span class="report-category-label">
+                        Catégorie
+                    </span>
+
+                    <div class="report-category">
+
+                        <span th:text="${report.category}">
+                            Catégorie
+                        </span>
+
+                    </div>
 
                 </div>
 
 
                 <!-- TITRE -->
-
                 <h1 th:text="${report.title}">
                     Titre du signalement
                 </h1>
 
 
-                <!-- CATÉGORIE + DATE -->
+                <!-- DATE -->
+                <div class="report-header-info">
 
-                <div class="report-meta">
-
-
-                    <!-- CATÉGORIE -->
-
-                    <span class="report-category"
-                          th:if="${report.category != null}"
-                          th:text="${report.category}">
-                        Catégorie
-                    </span>
-
-
-                    <!-- DATE -->
-
-                    <span class="report-date"
-                          th:if="${report.date != null}">
+                    <div class="report-date"
+                         th:if="${report.date != null}">
 
                         <i class="fa-regular fa-calendar"></i>
 
@@ -97,105 +130,83 @@
                             01/01/2026
                         </span>
 
-                    </span>
+                    </div>
 
                 </div>
 
             </header>
 
 
-            <!-- IMAGES -->
+            <!-- =====================================================
+                 IMAGES
+                 ===================================================== -->
 
             <section class="report-images"
                      th:if="${reportImages != null and !reportImages.isEmpty()}">
 
+                <div class="image-slider">
 
-                <!-- IMAGE PRINCIPALE -->
+                    <div class="main-image">
 
-                <div class="main-image">
+                        <img id="reportMainImage"
+                             th:src="@{'/report-images/' + ${report.id} + '/' + ${reportImages[0].storageName}}"
+                             th:alt="${reportImages[0].fileName}">
 
-                    <img th:src="@{'/report-images/' + ${report.id} + '/' + ${reportImages[0].storageName}}"
-                         th:alt="${reportImages[0].fileName}">
+                    </div>
+
+
+                    <!-- IMAGE PRÉCÉDENTE -->
+
+                    <button type="button"
+                            class="slider-button slider-prev"
+                            id="prevImage"
+                            aria-label="Image précédente"
+                            th:if="${reportImages.size() > 1}">
+
+                        <i class="fa-solid fa-chevron-left"></i>
+
+                    </button>
+
+
+                    <!-- IMAGE SUIVANTE -->
+
+                    <button type="button"
+                            class="slider-button slider-next"
+                            id="nextImage"
+                            aria-label="Image suivante"
+                            th:if="${reportImages.size() > 1}">
+
+                        <i class="fa-solid fa-chevron-right"></i>
+
+                    </button>
 
                 </div>
 
 
-                <!-- GALERIE -->
+                <!-- MINIATURES -->
 
                 <div class="image-gallery"
                      th:if="${reportImages.size() > 1}">
 
-                    <div class="gallery-image"
-                         th:each="image, stat : ${reportImages}"
-                         th:if="${stat.index > 0}">
+                    <button type="button"
+                            class="gallery-image"
+                            th:each="image, stat : ${reportImages}"
+                            th:classappend="${stat.index == 0 ? 'active' : ''}"
+                            th:attr="data-image=@{'/report-images/' + ${report.id} + '/' + ${image.storageName}}">
 
                         <img th:src="@{'/report-images/' + ${report.id} + '/' + ${image.storageName}}"
                              th:alt="${image.fileName}">
 
-                    </div>
+                    </button>
 
                 </div>
 
             </section>
 
 
-            <!-- DESCRIPTION -->
-
-            <section class="report-description"
-                     th:if="${report.description != null and !report.description.isBlank()}">
-
-                <h2>
-                    Description
-                </h2>
-
-                <p th:text="${report.description}">
-                    Description du signalement
-                </p>
-
-            </section>
-
-
-            <!-- LOCALISATION -->
-
-            <section class="report-location"
-                     th:if="${report.location != null and !report.location.isBlank()}">
-
-                <div class="section-heading">
-
-
-                    <div class="location-information">
-
-                        <span class="section-label">
-                            LOCALISATION
-                        </span>
-
-                        <h2 th:text="${report.location}">
-                            Localisation
-                        </h2>
-
-                    </div>
-
-
-                    <!-- CARTE -->
-
-                    <a th:if="${report.latitude != null and report.longitude != null}"
-                       th:href="@{'https://www.google.com/maps/search/?api=1&query=' + ${report.latitude} + ',' + ${report.longitude}}"
-                       target="_blank"
-                       rel="noopener noreferrer"
-                       class="map-button">
-
-                        <i class="fa-solid fa-location-dot"></i>
-
-                        Voir sur la carte
-
-                    </a>
-
-                </div>
-
-            </section>
-
-
-            <!-- AUCUNE IMAGE -->
+            <!-- =====================================================
+                 AUCUNE IMAGE
+                 ===================================================== -->
 
             <section class="report-no-image"
                      th:if="${reportImages == null or reportImages.isEmpty()}">
@@ -213,17 +224,215 @@
             </section>
 
 
-            <!-- ACTIONS -->
+            <!-- =====================================================
+                 DESCRIPTION
+                 ===================================================== -->
+
+            <section class="report-description"
+                     th:if="${report.description != null and !report.description.isBlank()}">
+
+                <div class="section-heading">
+
+                    <span class="section-label">
+                        DESCRIPTION
+                    </span>
+
+                </div>
+
+                <p th:text="${report.description}">
+                    Description du signalement
+                </p>
+
+            </section>
+
+
+            <!-- =====================================================
+                 LOCALISATION
+                 ===================================================== -->
+
+            <section class="report-location"
+                     th:if="${report.location != null and !report.location.isBlank()}">
+
+                <div class="location-information">
+
+                    <span class="section-label">
+                        LOCALISATION
+                    </span>
+
+                    <h2 th:text="${report.location}">
+                        Localisation
+                    </h2>
+
+                </div>
+
+
+                <a th:if="${report.latitude != null and report.longitude != null}"
+                   th:href="@{'https://www.google.com/maps/search/?api=1&query=' + ${report.latitude} + ',' + ${report.longitude}}"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="map-button">
+
+                    <i class="fa-solid fa-location-dot"></i>
+
+                    <span>
+                        Voir sur la carte
+                    </span>
+
+                </a>
+
+            </section>
+
+
+            <!-- =====================================================
+                 SUIVI DU SIGNALEMENT
+                 ===================================================== -->
+
+            <section class="report-status">
+
+                <div class="status-heading">
+
+                    <span class="section-label">
+                        SUIVI DU SIGNALEMENT
+                    </span>
+
+                </div>
+
+
+                <div class="status-tracker">
+
+
+                    <!-- SIGNALÉ -->
+
+                    <div class="status-step status-reported"
+                         th:classappend="${report.status != null and
+                                          (report.status.name() == 'REPORTED' or
+                                           report.status.name() == 'VALIDATED' or
+                                           report.status.name() == 'IN_PROGRESS' or
+                                           report.status.name() == 'RESOLVED')
+                                          ? 'completed' : ''}">
+
+                        <div class="status-dot"></div>
+
+                        <span class="status-label">
+                            Signalé
+                        </span>
+
+                    </div>
+
+
+                    <!-- LIGNE -->
+
+                    <div class="status-line"
+                         th:classappend="${report.status != null and
+                                          (report.status.name() == 'VALIDATED' or
+                                           report.status.name() == 'IN_PROGRESS' or
+                                           report.status.name() == 'RESOLVED')
+                                          ? 'completed' : ''}">
+                    </div>
+
+
+                    <!-- VALIDÉ -->
+
+                    <div class="status-step status-validated"
+                         th:classappend="${report.status != null and
+                                          (report.status.name() == 'VALIDATED' or
+                                           report.status.name() == 'IN_PROGRESS' or
+                                           report.status.name() == 'RESOLVED')
+                                          ? 'completed' : ''}">
+
+                        <div class="status-dot"></div>
+
+                        <span class="status-label">
+                            Validé
+                        </span>
+
+                    </div>
+
+
+                    <!-- LIGNE -->
+
+                    <div class="status-line"
+                         th:classappend="${report.status != null and
+                                          (report.status.name() == 'IN_PROGRESS' or
+                                           report.status.name() == 'RESOLVED')
+                                          ? 'completed' : ''}">
+                    </div>
+
+
+                    <!-- EN COURS -->
+
+                    <div class="status-step status-in-progress"
+                         th:classappend="${report.status != null and
+                                          (report.status.name() == 'IN_PROGRESS' or
+                                           report.status.name() == 'RESOLVED')
+                                          ? 'completed' : ''}">
+
+                        <div class="status-dot"></div>
+
+                        <span class="status-label">
+                            En cours
+                        </span>
+
+                    </div>
+
+
+                    <!-- LIGNE -->
+
+                    <div class="status-line"
+                         th:classappend="${report.status != null and
+                                          report.status.name() == 'RESOLVED'
+                                          ? 'completed' : ''}">
+                    </div>
+
+
+                    <!-- RÉSOLU -->
+
+                    <div class="status-step status-resolved"
+                         th:classappend="${report.status != null and
+                                          report.status.name() == 'RESOLVED'
+                                          ? 'completed' : ''}">
+
+                        <div class="status-dot"></div>
+
+                        <span class="status-label">
+                            Résolu
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- REJETÉ -->
+
+                <div class="report-status-rejected"
+                     th:if="${report.status != null and report.status.name() == 'REJECTED'}">
+
+                    <i class="fa-solid fa-circle-xmark"></i>
+
+                    <span>
+                        Signalement rejeté
+                    </span>
+
+                </div>
+
+            </section>
+
+
+            <!-- =====================================================
+                 ACTIONS
+                 ===================================================== -->
 
             <section class="report-actions">
-
 
                 <button type="button"
                         class="report-action">
 
                     <i class="fa-solid fa-pen"></i>
 
-                    Modifier
+                    <span>
+                        Modifier
+                    </span>
 
                 </button>
 
@@ -233,22 +442,13 @@
 
                     <i class="fa-solid fa-trash"></i>
 
-                    Supprimer
-
-                </button>
-
-
-                <button type="button"
-                        class="report-action">
-
-                    <i class="fa-solid fa-box-archive"></i>
-
-                    Archiver
+                    <span>
+                        Supprimer
+                    </span>
 
                 </button>
 
             </section>
-
 
         </article>
 
@@ -257,11 +457,121 @@
 </main>
 
 
-<div th:replace="fragments/footer :: footer"></div>
+<!-- FOOTER -->
+
+<div th:replace="~{fragments/footer :: footer}"></div>
 
 
 <script th:src="@{/js/app.js}"></script>
 
-</body>
 
+<script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const mainImage =
+            document.getElementById("reportMainImage");
+
+        const previousButton =
+            document.getElementById("prevImage");
+
+        const nextButton =
+            document.getElementById("nextImage");
+
+        const thumbnails =
+            document.querySelectorAll(".gallery-image");
+
+
+        if (!mainImage || thumbnails.length === 0) {
+            return;
+        }
+
+
+        const images =
+            Array.from(thumbnails).map(function (thumbnail) {
+
+                return thumbnail.dataset.image;
+
+            });
+
+
+        let currentIndex = 0;
+
+
+        function showImage(index) {
+
+            if (index < 0) {
+                index = images.length - 1;
+            }
+
+            if (index >= images.length) {
+                index = 0;
+            }
+
+
+            currentIndex = index;
+
+
+            mainImage.src =
+                images[currentIndex];
+
+
+            thumbnails.forEach(function (thumbnail, i) {
+
+                thumbnail.classList.toggle(
+                    "active",
+                    i === currentIndex
+                );
+
+            });
+
+        }
+
+
+        if (previousButton) {
+
+            previousButton.addEventListener(
+                "click",
+                function () {
+
+                    showImage(currentIndex - 1);
+
+                }
+            );
+
+        }
+
+
+        if (nextButton) {
+
+            nextButton.addEventListener(
+                "click",
+                function () {
+
+                    showImage(currentIndex + 1);
+
+                }
+            );
+
+        }
+
+
+        thumbnails.forEach(function (thumbnail, index) {
+
+            thumbnail.addEventListener(
+                "click",
+                function () {
+
+                    showImage(index);
+
+                }
+            );
+
+        });
+
+    });
+
+</script>
+
+</body>
 </html>

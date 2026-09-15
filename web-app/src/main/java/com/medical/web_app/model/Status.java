@@ -1,8 +1,10 @@
 package com.medical.web_app.model;
 
 public enum Status {
-    PENDING,
+
+    REPORTED,
     VALIDATED,
-    REJECTED,
-    RESOLVED
+    IN_PROGRESS,
+    RESOLVED,
+    REJECTED
 }

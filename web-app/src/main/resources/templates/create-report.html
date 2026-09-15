@@ -17,8 +17,6 @@
     <link rel="stylesheet"
           th:href="@{/css/create-report.css}">
 
-
-
     <script th:src="@{/js/app.js}" defer></script>
 
     <link rel="stylesheet"
@@ -30,11 +28,15 @@
 
 <div th:replace="~{fragments/header :: header}"></div>
 
+
 <main class="create-report-page">
 
     <div class="container">
 
+
+        <!-- ================================================== -->
         <!-- PROCESSUS -->
+        <!-- ================================================== -->
 
         <div class="step-header">
 
@@ -52,7 +54,9 @@
 
                 </div>
 
+
                 <div class="step-line"></div>
+
 
                 <div class="step-column">
 
@@ -62,7 +66,9 @@
 
                 </div>
 
+
                 <div class="step-line"></div>
+
 
                 <div class="step-column">
 
@@ -77,19 +83,30 @@
         </div>
 
 
+        <!-- ================================================== -->
+        <!-- FORMULAIRE -->
+        <!-- ================================================== -->
+
         <form th:action="@{/create-report}"
               th:object="${reportForm}"
               method="post"
               enctype="multipart/form-data">
 
 
+            <!-- ================================================== -->
             <!-- CATEGORY -->
+            <!-- ================================================== -->
 
             <section class="section">
 
-                <h2>Type de signalement</h2>
+                <h2>
+                    Type de signalement
+                </h2>
 
                 <div class="category-grid">
+
+
+                    <!-- AIR -->
 
                     <label class="category-card">
 
@@ -108,6 +125,8 @@
                     </label>
 
 
+                    <!-- EAU -->
+
                     <label class="category-card">
 
                         <input type="radio"
@@ -124,6 +143,8 @@
 
                     </label>
 
+
+                    <!-- VÉGÉTATION -->
 
                     <label class="category-card">
 
@@ -142,6 +163,8 @@
                     </label>
 
 
+                    <!-- PRODUITS TOXIQUES -->
+
                     <label class="category-card">
 
                         <input type="radio"
@@ -159,6 +182,8 @@
                     </label>
 
 
+                    <!-- DÉCHETS -->
+
                     <label class="category-card">
 
                         <input type="radio"
@@ -175,6 +200,8 @@
 
                     </label>
 
+
+                    <!-- BRUIT -->
 
                     <label class="category-card">
 
@@ -197,11 +224,15 @@
             </section>
 
 
+            <!-- ================================================== -->
             <!-- TITLE -->
+            <!-- ================================================== -->
 
             <section class="section">
 
-                <h2>Titre</h2>
+                <h2>
+                    Titre
+                </h2>
 
                 <input type="text"
                        th:field="*{title}"
@@ -210,11 +241,15 @@
             </section>
 
 
+            <!-- ================================================== -->
             <!-- DESCRIPTION -->
+            <!-- ================================================== -->
 
             <section class="section">
 
-                <h2>Description</h2>
+                <h2>
+                    Description
+                </h2>
 
                 <textarea
                         th:field="*{description}"
@@ -224,22 +259,31 @@
             </section>
 
 
+            <!-- ================================================== -->
             <!-- GRAVITY -->
+            <!-- ================================================== -->
 
             <section class="section">
 
-                <h2>Gravité</h2>
+                <h2>
+                    Gravité
+                </h2>
 
                 <div class="gravity-grid">
 
-                    <label class="gravity basic">
+
+                    <!-- LOW / BASIQUE -->
+
+                    <label class="gravity gravity-low">
 
                         <input type="radio"
                                th:field="*{gravity}"
-                               value="BASIC">
+                               value="LOW">
 
                         <span class="gravity-icon">
+
                             <i class="fa-solid fa-circle-info"></i>
+
                         </span>
 
                         <span class="gravity-name">
@@ -249,14 +293,18 @@
                     </label>
 
 
-                    <label class="gravity medium">
+                    <!-- MEDIUM / MOYEN -->
+
+                    <label class="gravity gravity-medium">
 
                         <input type="radio"
                                th:field="*{gravity}"
                                value="MEDIUM">
 
                         <span class="gravity-icon">
+
                             <i class="fa-solid fa-triangle-exclamation"></i>
+
                         </span>
 
                         <span class="gravity-name">
@@ -266,35 +314,22 @@
                     </label>
 
 
-                    <label class="gravity high">
+                    <!-- HIGH / ÉLEVÉ -->
+
+                    <label class="gravity gravity-high">
 
                         <input type="radio"
                                th:field="*{gravity}"
                                value="HIGH">
 
                         <span class="gravity-icon">
+
                             <i class="fa-solid fa-bell"></i>
+
                         </span>
 
                         <span class="gravity-name">
                             Élevé
-                        </span>
-
-                    </label>
-
-
-                    <label class="gravity critical">
-
-                        <input type="radio"
-                               th:field="*{gravity}"
-                               value="CRITICAL">
-
-                        <span class="gravity-icon">
-                            <i class="fa-solid fa-circle-exclamation"></i>
-                        </span>
-
-                        <span class="gravity-name">
-                            Critique
                         </span>
 
                     </label>
@@ -304,12 +339,16 @@
             </section>
 
 
+            <!-- ================================================== -->
             <!-- LOCATION -->
+            <!-- ================================================== -->
 
             <!--
             <div class="section">
 
-                <h2>Localisation</h2>
+                <h2>
+                    Localisation
+                </h2>
 
                 <input type="text"
                        th:field="*{location}"
@@ -328,15 +367,20 @@
             -->
 
 
+            <!-- ================================================== -->
             <!-- IMAGES -->
+            <!-- ================================================== -->
 
             <section class="section image-section">
 
-                <h2>Photos du signalement</h2>
+                <h2>
+                    Photos du signalement
+                </h2>
 
                 <p class="image-help">
                     Ajoutez une ou plusieurs photos pour illustrer le signalement.
                 </p>
+
 
                 <label for="reportImages"
                        class="image-upload">
@@ -346,6 +390,7 @@
                         <i class="fa-solid fa-camera"></i>
 
                     </span>
+
 
                     <span class="image-upload-content">
 
@@ -359,6 +404,7 @@
 
                     </span>
 
+
                     <span class="image-upload-arrow">
 
                         <i class="fa-solid fa-chevron-right"></i>
@@ -366,6 +412,7 @@
                     </span>
 
                 </label>
+
 
                 <input
                         type="file"
@@ -376,9 +423,11 @@
                         hidden
                 >
 
+
                 <div id="imagePreview"
                      class="image-preview">
                 </div>
+
 
                 <p id="imageCount"
                    class="image-count">
@@ -387,6 +436,10 @@
             </section>
 
 
+            <!-- ================================================== -->
+            <!-- COORDONNÉES -->
+            <!-- ================================================== -->
+
             <input type="hidden"
                    th:field="*{latitude}">
 
@@ -394,7 +447,9 @@
                    th:field="*{longitude}">
 
 
+            <!-- ================================================== -->
             <!-- SUBMIT -->
+            <!-- ================================================== -->
 
             <div class="sticky-actions">
 

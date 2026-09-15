@@ -1,8 +1,7 @@
 package org.example.model;
 
 public enum Gravity {
-    BASIC,
+    LOW,
     MEDIUM,
     HIGH,
-    CRITICAL
 }

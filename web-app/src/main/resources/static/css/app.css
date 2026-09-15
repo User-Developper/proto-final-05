@@ -1,4 +1,3 @@
-
 /* =========================================================
    RESET
 ========================================================= */
@@ -10,36 +9,68 @@
 }
 
 
-body {
-    font-family: "Segoe UI", system-ui, sans-serif;
-    background: #f1f5f9;
-    color: #0f172a;
-}
-
-
 /* =========================================================
    DESIGN TOKENS
 ========================================================= */
 
 :root {
 
-    --primary: #15803d;
-    --primary-dark: #166534;
-    --primary-light: #dcfce7;
+    --primary: #20252B;
+    --primary-dark: #171B1F;
+    --primary-light: #F0F2F4;
 
-    --secondary: #0284c7;
+    --header: #20252B;
+    --header-hover: rgba(255, 255, 255, 0.08);
+    --header-active: rgba(255, 255, 255, 0.14);
 
-    --success: #16a34a;
-    --warning: #f59e0b;
-    --danger: #dc2626;
+    --secondary: #4B5563;
 
-    --bg: #f8fafc;
-    --card: #ffffff;
+    --success: #15803D;
+    --warning: #D4A72C;
+    --danger: #C94A4A;
 
-    --text: #172033;
-    --muted: #64748b;
+    --bg: #F6F8FC;
+    --card: #FFFFFF;
 
-    --border: #e2e8f0;
+    --text: #20252B;
+    --muted: #69727D;
+
+    --border: #DCE1E6;
+    --border-light: #E9ECEF;
+
+    --hover: rgba(32, 37, 43, 0.055);
+
+    --sidebar-bg: #20252B;
+    --sidebar-hover: rgba(255, 255, 255, 0.08);
+    --sidebar-active: rgba(255, 255, 255, 0.14);
+
+    --sidebar-text: rgba(255, 255, 255, 0.90);
+    --sidebar-muted: rgba(255, 255, 255, 0.62);
+
+    --shadow: 0 10px 30px rgba(32, 37, 43, 0.08);
+    --shadow-button: 0 5px 14px rgba(32, 37, 43, 0.18);
+
+    --overlay: rgba(15, 23, 42, 0.35);
+}
+
+
+/* =========================================================
+   BODY
+========================================================= */
+
+body {
+
+    font-family:
+        "Inter",
+        "Segoe UI",
+        system-ui,
+        sans-serif;
+
+    background: var(--bg);
+
+    color: var(--text);
+
+    min-height: 100vh;
 }
 
 
@@ -50,21 +81,20 @@ body {
 .app-header {
 
     position: sticky;
+
     top: 0;
 
     width: 100%;
+
     height: 64px;
 
-    padding: 0 16px;
+    padding: 0 18px;
 
-    background: rgba(255, 255, 255, 0.96);
-
-    border-bottom: 1px solid var(--border);
+    background: var(--header);
 
     display: flex;
-    align-items: center;
 
-    backdrop-filter: blur(14px);
+    align-items: center;
 
     z-index: 1000;
 }
@@ -82,22 +112,25 @@ body {
 
     transform: translateX(-50%);
 
-    color: #111827;
+    color: #FFFFFF;
 
     font-size: 20px;
 
-    font-weight: 800;
+    font-weight: 750;
 
-    letter-spacing: -0.6px;
+    letter-spacing: -0.5px;
 
     text-decoration: none;
 
-    transition: color 0.2s ease;
+    transition: opacity 0.2s ease;
 }
 
 
 .app-logo:hover {
-    color: var(--primary);
+
+    color: #FFFFFF;
+
+    opacity: 0.82;
 }
 
 
@@ -108,18 +141,21 @@ body {
 .burger-btn {
 
     width: 42px;
+
     height: 42px;
 
     border: none;
 
-    border-radius: 12px;
+    border-radius: 11px;
 
-    background: #f8fafc;
+    background: transparent;
 
-    color: #374151;
+    color: #FFFFFF;
 
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
     cursor: pointer;
@@ -131,11 +167,13 @@ body {
 
 
 .burger-btn:hover {
-    background: #f1f5f9;
+
+    background: var(--header-hover);
 }
 
 
 .burger-btn:active {
+
     transform: scale(0.94);
 }
 
@@ -166,17 +204,18 @@ body {
 
     min-height: 42px;
 
-    padding: 0 14px;
+    padding: 0 10px;
 
-    border: 1px solid var(--border);
+    border: none;
 
-    border-radius: 12px;
+    border-radius: 11px;
 
-    background: #ffffff;
+    background: transparent;
 
-    color: #1f2937;
+    color: #FFFFFF;
 
     display: flex;
+
     align-items: center;
 
     gap: 9px;
@@ -190,49 +229,41 @@ body {
     cursor: pointer;
 
     transition:
-        background 0.2s ease,
-        border-color 0.2s ease,
-        box-shadow 0.2s ease;
+        background 0.2s ease;
 }
 
 
 .account-btn:hover,
 .account-btn.active {
 
-    background: #f8fafc;
-
-    border-color: #cbd5e1;
-
-    box-shadow:
-        0 4px 14px rgba(15, 23, 42, 0.06);
+    background: var(--header-hover);
 }
 
 
 .account-btn > i:first-child {
 
-    color: #64748b;
-
+    color: rgba(255, 255, 255, 0.90);
 }
 
 
 /* =========================================================
-   CHEVRON
+   ACCOUNT CHEVRON
 ========================================================= */
 
 .account-chevron {
 
-    color: #94a3b8;
+    color: rgba(255, 255, 255, 0.58);
 
-    font-size: 10px;
+    font-size: 9px;
 
-    transition: transform 0.2s ease;
+    transition:
+        transform 0.2s ease;
 }
 
 
 .account-btn.active .account-chevron {
 
     transform: rotate(180deg);
-
 }
 
 
@@ -242,32 +273,43 @@ body {
 
 .account-avatar {
 
-    width: 26px;
-    height: 26px;
+    width: 30px;
+
+    height: 30px;
 
     border-radius: 50%;
 
-    background: #f0fdf4;
+    background: rgba(255, 255, 255, 0.10);
 
-    color: var(--primary);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+
+    color: #FFFFFF;
 
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
     font-size: 12px;
 }
 
 
+/* =========================================================
+   ACCOUNT NAME
+========================================================= */
+
 .account-name {
 
-    max-width: 150px;
+    max-width: 160px;
 
     overflow: hidden;
 
     text-overflow: ellipsis;
 
     white-space: nowrap;
+
+    color: #FFFFFF;
 }
 
 
@@ -283,26 +325,24 @@ body {
 
     right: 0;
 
-    width: 320px;
+    width: 290px;
 
     padding: 8px;
 
-    background: #ffffff;
+    background: var(--header);
 
-    border: 1px solid var(--border);
+    border: 1px solid rgba(255, 255, 255, 0.10);
 
-    border-radius: 18px;
+    border-radius: 14px;
 
     box-shadow:
-        0 20px 45px rgba(15, 23, 42, 0.14);
+        0 18px 40px rgba(0, 0, 0, 0.24);
 
     opacity: 0;
 
     visibility: hidden;
 
-    transform:
-        translateY(-6px)
-        scale(0.98);
+    transform: translateY(-6px);
 
     transform-origin: top right;
 
@@ -321,9 +361,7 @@ body {
 
     visibility: visible;
 
-    transform:
-        translateY(0)
-        scale(1);
+    transform: translateY(0);
 }
 
 
@@ -333,7 +371,7 @@ body {
 
 .account-menu-header {
 
-    padding: 12px 12px 10px;
+    padding: 13px 13px 12px;
 }
 
 
@@ -341,11 +379,17 @@ body {
 
     display: block;
 
-    color: #111827;
+    color: #FFFFFF;
 
-    font-size: 15px;
+    font-size: 14px;
 
     font-weight: 700;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
 }
 
 
@@ -353,11 +397,25 @@ body {
 
     display: block;
 
-    margin-top: 3px;
+    margin-top: 4px;
 
-    color: #64748b;
+    color: rgba(255, 255, 255, 0.55);
 
-    font-size: 12px;
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   ACCOUNT MENU DIVIDER
+========================================================= */
+
+.account-menu-divider {
+
+    height: 1px;
+
+    margin: 6px 7px;
+
+    background: rgba(255, 255, 255, 0.09);
 }
 
 
@@ -367,33 +425,33 @@ body {
 
 .account-option {
 
-    min-height: 64px;
+    min-height: 52px;
 
-    padding: 10px 11px;
+    padding: 9px 10px;
 
-    border-radius: 13px;
+    border-radius: 10px;
 
     display: flex;
+
     align-items: center;
 
     gap: 12px;
 
     text-decoration: none;
 
-    color: #1f2937;
+    color: rgba(255, 255, 255, 0.88);
 
     transition:
         background 0.18s ease,
-        transform 0.18s ease;
+        color 0.18s ease;
 }
 
 
 .account-option:hover {
 
-    background: #f8fafc;
+    background: var(--header-hover);
 
-    transform: translateX(2px);
-
+    color: #FFFFFF;
 }
 
 
@@ -403,37 +461,23 @@ body {
 
 .account-option-icon {
 
-    flex: 0 0 40px;
+    flex: 0 0 30px;
 
-    width: 40px;
-    height: 40px;
+    width: 30px;
 
-    border-radius: 11px;
-
-    background: #f1f5f9;
-
-    color: #475569;
+    height: 30px;
 
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
-    font-size: 15px;
+    color: rgba(255, 255, 255, 0.68);
+
+    font-size: 14px;
 }
 
-
-.account-option-icon.professional {
-
-    background: #f0fdf4;
-
-    color: var(--primary);
-
-}
-
-
-/* =========================================================
-   ACCOUNT OPTION CONTENT
-========================================================= */
 
 .account-option-content {
 
@@ -447,11 +491,11 @@ body {
 
     display: block;
 
-    color: #1f2937;
+    color: rgba(255, 255, 255, 0.92);
 
     font-size: 13px;
 
-    font-weight: 700;
+    font-weight: 600;
 }
 
 
@@ -459,13 +503,13 @@ body {
 
     display: block;
 
-    margin-top: 3px;
+    margin-top: 2px;
 
-    color: #64748b;
+    color: rgba(255, 255, 255, 0.48);
 
     font-size: 11px;
 
-    line-height: 1.4;
+    line-height: 1.35;
 }
 
 
@@ -475,33 +519,21 @@ body {
 
 .account-option-arrow {
 
-    color: #cbd5e1;
+    color: rgba(255, 255, 255, 0.35);
 
-    font-size: 11px;
+    font-size: 9px;
 
-    transition: 0.18s ease;
+    transition:
+        color 0.18s ease,
+        transform 0.18s ease;
 }
 
 
 .account-option:hover .account-option-arrow {
 
-    color: #94a3b8;
+    color: rgba(255, 255, 255, 0.80);
 
     transform: translateX(2px);
-}
-
-
-/* =========================================================
-   DIVIDER
-========================================================= */
-
-.account-menu-divider {
-
-    height: 1px;
-
-    margin: 6px 10px;
-
-    background: #eef2f7;
 }
 
 
@@ -511,21 +543,25 @@ body {
 
 .logout-option {
 
-    color: var(--danger);
+    color: rgba(255, 255, 255, 0.82);
 }
 
 
 .logout-option .account-option-icon {
 
-    background: #fef2f2;
+    color: rgba(255, 255, 255, 0.62);
+}
 
-    color: var(--danger);
+
+.logout-option:hover .account-option-icon {
+
+    color: #FFFFFF;
 }
 
 
 .logout-option .account-option-content strong {
 
-    color: var(--danger);
+    color: rgba(255, 255, 255, 0.88);
 }
 
 
@@ -538,25 +574,27 @@ body {
     display: none;
 
     margin-left: auto;
-
 }
 
 
 .mobile-account-btn {
 
     width: 42px;
+
     height: 42px;
 
     border: none;
 
-    border-radius: 12px;
+    border-radius: 11px;
 
-    background: #f8fafc;
+    background: transparent;
 
-    color: #374151;
+    color: #FFFFFF;
 
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
     cursor: pointer;
@@ -570,15 +608,13 @@ body {
 .mobile-account-btn:hover,
 .mobile-account-btn.active {
 
-    background: #f1f5f9;
-
+    background: var(--header-hover);
 }
 
 
 .mobile-account-btn:active {
 
     transform: scale(0.94);
-
 }
 
 
@@ -591,23 +627,27 @@ body {
     position: fixed;
 
     top: 0;
+
     left: -320px;
 
     width: 290px;
+
     height: 100vh;
 
-    background: #ffffff;
+    background: var(--sidebar-bg);
 
-    transition: left 0.3s ease;
+    transition:
+        left 0.28s ease;
 
     z-index: 2000;
 
     box-shadow:
-        8px 0 30px rgba(0, 0, 0, 0.12);
+        8px 0 30px rgba(23, 34, 53, 0.18);
 }
 
 
 .sidebar.open {
+
     left: 0;
 }
 
@@ -623,20 +663,22 @@ body {
     padding: 0 16px;
 
     display: flex;
+
     align-items: center;
+
     justify-content: space-between;
 
-    border-bottom: 1px solid #eef2f7;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.10);
 }
 
 
 .sidebar-header .user {
 
-    background: #f8fafc;
+    background: transparent;
 
-    padding: 10px;
+    padding: 7px;
 
-    border-radius: 14px;
+    border-radius: 11px;
 }
 
 
@@ -650,15 +692,15 @@ body {
 
     align-items: center;
 
-    gap: 12px;
+    gap: 11px;
 }
 
 
 .avatar {
 
-    font-size: 28px;
+    font-size: 27px;
 
-    color: var(--primary);
+    color: #FFFFFF;
 }
 
 
@@ -666,7 +708,7 @@ body {
 
     display: block;
 
-    color: #111827;
+    color: #FFFFFF;
 
     font-size: 14px;
 }
@@ -680,18 +722,20 @@ body {
 
     padding: 0;
 
-    color: #64748b;
+    color: var(--sidebar-muted);
 
     font-size: 12px;
 
     text-decoration: none;
+
+    transition:
+        color 0.18s ease;
 }
 
 
 .user-info a:hover {
 
-    color: var(--primary);
-
+    color: #FFFFFF;
 }
 
 
@@ -702,53 +746,24 @@ body {
 .close-btn {
 
     width: 38px;
+
     height: 38px;
 
     border: none;
 
     border-radius: 10px;
 
-    background: #f8fafc;
+    background: transparent;
 
-    color: #475569;
+    color: var(--sidebar-muted);
 
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
     cursor: pointer;
-
-    transition: background 0.2s ease;
-}
-
-
-.close-btn:hover {
-
-    background: #f1f5f9;
-
-}
-
-
-/* =========================================================
-   SIDEBAR NAV
-========================================================= */
-
-.sidebar-nav a {
-
-    margin: 6px 12px;
-
-    padding: 14px 16px;
-
-    border-radius: 14px;
-
-    display: flex;
-    align-items: center;
-
-    gap: 12px;
-
-    color: #111827;
-
-    text-decoration: none;
 
     transition:
         background 0.2s ease,
@@ -756,12 +771,53 @@ body {
 }
 
 
+.close-btn:hover {
+
+    background: var(--sidebar-hover);
+
+    color: #FFFFFF;
+}
+
+
+/* =========================================================
+   SIDEBAR NAV
+========================================================= */
+
+.sidebar-nav {
+
+    padding-top: 10px;
+}
+
+
+.sidebar-nav a {
+
+    margin: 3px 10px;
+
+    padding: 13px 14px;
+
+    border-radius: 11px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    color: var(--sidebar-text);
+
+    text-decoration: none;
+
+    transition:
+        background 0.18s ease,
+        color 0.18s ease;
+}
+
+
 .sidebar-nav a:hover {
 
-    background: var(--primary-light);
+    background: var(--sidebar-hover);
 
-    color: var(--primary);
-
+    color: #FFFFFF;
 }
 
 
@@ -769,28 +825,64 @@ body {
 
     width: 20px;
 
-    color: #64748b;
+    color: var(--sidebar-muted);
+
+    transition:
+        color 0.18s ease;
 }
 
 
 .sidebar-nav a:hover i {
 
-    color: var(--primary);
-
+    color: #FFFFFF;
 }
 
 
+/* =========================================================
+   SIDEBAR ACTIVE
+========================================================= */
+
+.sidebar-nav a.active {
+
+    background: var(--sidebar-active);
+
+    color: #FFFFFF;
+}
+
+
+.sidebar-nav a.active i {
+
+    color: #FFFFFF;
+}
+
+
+/* =========================================================
+   SIDEBAR LOGOUT
+========================================================= */
+
 .sidebar-nav .danger {
 
-    color: var(--danger);
-
+    color: var(--sidebar-text);
 }
 
 
 .sidebar-nav .danger i {
 
-    color: var(--danger);
+    color: var(--sidebar-muted);
+}
 
+
+.sidebar-nav .danger:hover {
+
+    background: var(--sidebar-hover);
+
+    color: #FFFFFF;
+}
+
+
+.sidebar-nav .danger:hover i {
+
+    color: #FFFFFF;
 }
 
 
@@ -804,13 +896,14 @@ body {
 
     inset: 0;
 
-    background: rgba(15, 23, 42, 0.4);
+    background: var(--overlay);
 
     opacity: 0;
 
     pointer-events: none;
 
-    transition: opacity 0.2s ease;
+    transition:
+        opacity 0.2s ease;
 
     z-index: 1500;
 }
@@ -821,7 +914,6 @@ body {
     opacity: 1;
 
     pointer-events: all;
-
 }
 
 
@@ -834,16 +926,16 @@ body {
     position: fixed;
 
     bottom: 0;
+
     left: 0;
+
     right: 0;
 
     height: 68px;
 
-    background: rgba(255, 255, 255, 0.94);
+    background: var(--header);
 
-    backdrop-filter: blur(14px);
-
-    border-top: 1px solid #e5e7eb;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
 
     display: flex;
 
@@ -855,9 +947,14 @@ body {
 }
 
 
+/* =========================================================
+   NAV ITEMS
+========================================================= */
+
 .nav-item {
 
     width: 100%;
+
     height: 100%;
 
     display: flex;
@@ -870,25 +967,33 @@ body {
 
     gap: 4px;
 
-    color: var(--muted);
+    color: rgba(255, 255, 255, 0.58);
 
     font-size: 11px;
 
     text-decoration: none;
+
+    transition:
+        color 0.18s ease,
+        background 0.18s ease;
+}
+
+
+.nav-item:hover {
+
+    background: var(--header-hover);
 }
 
 
 .nav-item i {
 
     font-size: 18px;
-
 }
 
 
 .nav-item.active {
 
-    color: var(--primary);
-
+    color: #FFFFFF;
 }
 
 
@@ -900,16 +1005,17 @@ body {
 
     position: relative;
 
-    top: -18px;
+    top: -10px;
 
-    width: 52px;
-    height: 52px;
+    width: 48px;
 
-    border-radius: 18px;
+    height: 48px;
 
-    background: var(--primary);
+    border-radius: 14px;
 
-    color: #ffffff !important;
+    background: #30363D;
+
+    color: #FFFFFF !important;
 
     display: flex;
 
@@ -917,26 +1023,59 @@ body {
 
     justify-content: center;
 
+    border: 1px solid rgba(255, 255, 255, 0.10);
+
     box-shadow:
-        0 10px 25px rgba(22, 163, 74, 0.30);
+        0 6px 16px rgba(0, 0, 0, 0.22);
 
     transition:
+        background 0.2s ease,
         transform 0.2s ease,
-        background 0.2s ease;
+        border-color 0.2s ease;
 }
 
 
 .nav-center:hover {
 
-    background: var(--primary-dark);
+    background: #3A424A;
 
+    border-color: rgba(255, 255, 255, 0.16);
 }
 
 
 .nav-center:active {
 
-    transform: scale(0.92);
+    transform: scale(0.93);
+}
 
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.app-footer {
+
+    width: 100%;
+
+    min-height: 64px;
+
+    padding: 20px;
+
+    background: var(--header);
+
+    color: rgba(255, 255, 255, 0.68);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    font-size: 13px;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 
@@ -957,7 +1096,6 @@ body {
     .mobile-account {
         display: none;
     }
-
 }
 
 
@@ -972,39 +1110,29 @@ body {
         height: 60px;
 
         padding: 0 14px;
-
     }
 
-
     .desktop-account {
-
         display: none;
     }
 
-
     .mobile-account {
-
         display: block;
     }
 
-
     .app-logo {
-
         font-size: 19px;
-
     }
-
 
     .burger-btn,
     .mobile-account-btn {
 
         width: 40px;
+
         height: 40px;
 
-        border-radius: 11px;
-
+        border-radius: 10px;
     }
-
 
     .mobile-account-menu {
 
@@ -1015,12 +1143,18 @@ body {
         right: 12px;
 
         width: min(
-            320px,
+            290px,
             calc(100vw - 24px)
         );
-
     }
 
+    .app-footer {
+        display: none;
+    }
+
+    .home-page {
+        padding-bottom: 68px;
+    }
 }
 
 
@@ -1035,14 +1169,10 @@ body {
         width: calc(100vw - 20px);
 
         right: 10px;
-
     }
-
 
     .account-option-content small {
 
         font-size: 10px;
-
     }
-
 }

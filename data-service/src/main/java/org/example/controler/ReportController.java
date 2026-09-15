@@ -7,6 +7,7 @@ import org.example.DTO.ReportResponse;
 import org.example.model.ProfessionalClient;
 import org.example.model.Report;
 import org.example.model.ReportImage;
+import org.example.model.Status;
 import org.example.repository.ProfessionalClientRepository;
 import org.example.repository.ReportImageRepository;
 import org.example.repository.ReportRepository;
@@ -69,6 +70,7 @@ public class ReportController {
         report.setLatitude(request.getLatitude());
         report.setLongitude(request.getLongitude());
         report.setDate(LocalDate.now());
+        report.setStatus(Status.REPORTED);
 
         Report saved =
                 reportRepository.save(report);
@@ -87,6 +89,7 @@ public class ReportController {
         response.setDate(saved.getDate());
         response.setLatitude(saved.getLatitude());
         response.setLongitude(saved.getLongitude());
+        response.setStatus(saved.getStatus());
 
         return response;
     }

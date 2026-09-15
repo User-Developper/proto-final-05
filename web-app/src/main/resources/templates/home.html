@@ -1,136 +1,724 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="fr"
+      xmlns:th="http://www.thymeleaf.org">
+
 <head>
 
-
     <meta charset="UTF-8">
-    <title>Accueil - Alert</title>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" th:href="@{/css/app.css}">
-    <link rel="stylesheet" th:href="@{/css/home.css}">
+    <title>Alert — Signalement environnemental</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/app.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/home.css}">
 
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
 </head>
+
 
 <body>
 
-<h1>Bienvenue Docteur</h1>
+<!-- =========================================================
+     HEADER
+     ========================================================= -->
 
-<a th:href="@{/web/patient}">
-    Rechercher un patient
-</a>
-
-<form th:action="@{/logout}" method="post">
-
-    <button type="submit">
-        Déconnexion
-    </button>
-
-</form>
-
-<a th:href="@{/report}">
-    Créer
-</a>
-<a th:href="@{/create-report}">
-    Créer
-</a>
-<a th:href="@{/create-report-step-0}">
-    Créer
-</a>
-
-
-<!-- HEADER -->
 <div th:replace="~{fragments/header :: header}"></div>
 
-<!-- MOBILE NAV -->
-<div th:replace="~{fragments/mobile-nav :: mobile-nav}"></div>
 
 <main class="home-page">
 
-    <!-- HERO SIMPLE -->
-    <section class="hero">
 
-        <h1>Signalements autour de vous</h1>
+    <!-- =====================================================
+         HERO
+         ===================================================== -->
 
-        <p>
-            Consulte les incidents récents et contribue à améliorer la sécurité.
-        </p>
+    <section class="home-hero">
 
-        <!-- ACTION CTA -->
-        <a th:href="@{/create-report}" class="cta-button">
-            <i class="fa-solid fa-plus"></i>
-            Nouveau signalement
-        </a>
+        <div class="home-container hero-container">
 
-    </section>
 
-    <!-- FILTERS (future ready) -->
-    <section class="filters">
+            <div class="hero-content">
 
-        <button class="filter active">Tous</button>
-        <button class="filter">Faible</button>
-        <button class="filter">Moyen</button>
-        <button class="filter">Élevé</button>
-        <button class="filter">Critique</button>
 
-    </section>
-
-    <!-- FEED -->
-    <section class="feed">
-
-        <!-- CARD (DYNAMIC THYMELEAF) -->
-        <article class="report-card" th:each="report : ${reports}">
-
-            <div class="report-header">
-
-                <h3 th:text="${report.title}">
-                    Titre du signalement
-                </h3>
-
-                <span class="badge"
-                      th:text="${report.gravity}">
-                    Gravité
+                <span class="hero-eyebrow">
+                    Ensemble pour notre environnement
                 </span>
+
+
+                <h1>
+                    Votre environnement
+                    <span>mérite notre attention.</span>
+                </h1>
+
+
+                <p class="hero-description">
+                    Signalez simplement un problème environnemental,
+                    localisez-le et suivez son évolution.
+                </p>
+
+
+                <!-- =================================================
+                     PLANÈTE MOBILE
+                     Placée avant les boutons
+                     ================================================= -->
+
+                <div class="hero-mobile-visual">
+
+                    <div class="hero-visual-content">
+
+                        <i class="fa-solid fa-earth-europe"></i>
+
+                        <div>
+
+                            <strong>
+                                Agir localement
+                            </strong>
+
+                            <span>
+                                Pour un environnement plus propre
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     BOUTONS HERO
+                     ================================================= -->
+
+                <div class="hero-actions">
+
+
+                    <a th:href="@{/create-report}"
+                       class="btn btn-primary">
+
+                        <i class="fa-solid fa-plus"></i>
+
+                        Faire un signalement
+
+                    </a>
+
+
+                    <a th:href="@{/map}"
+                       class="btn btn-secondary">
+
+                        <i class="fa-solid fa-map-location-dot"></i>
+
+                        Explorer la carte
+
+                    </a>
+
+
+                </div>
+
 
             </div>
 
-            <p class="report-desc"
-               th:text="${report.description}">
-                Description...
-            </p>
 
-            <div class="report-meta">
+            <!-- =================================================
+                 PLANÈTE DESKTOP
+                 ================================================= -->
 
-                <span>
-                    📍 <span th:text="${report.location}"></span>
-                </span>
+            <div class="hero-visual">
 
-                <span>
-                    🕒 <span th:text="${#temporals.format(report.createdAt,'dd/MM HH:mm')}"></span>
-                </span>
+                <div class="hero-visual-content">
+
+                    <i class="fa-solid fa-earth-europe"></i>
+
+                    <div>
+
+                        <strong>
+                            Agir localement
+                        </strong>
+
+                        <span>
+                            Pour un environnement plus propre
+                        </span>
+
+                    </div>
+
+                </div>
 
             </div>
 
-            <a th:href="@{'/report/' + ${report.id}}"
-               class="open-btn">
-                Voir détails
-            </a>
 
-        </article>
+        </div>
 
     </section>
 
 
-    <script th:src="@{/js/app.js}"></script>
-    <div th:replace="~{fragments/footer :: footer}"></div>
+
+    <!-- =====================================================
+         CARTE / AUTOUR DE VOUS
+         ===================================================== -->
+
+    <section class="around-section">
+
+        <div class="home-container">
+
+
+            <div class="section-heading">
+
+
+                <div>
+
+                    <span class="section-eyebrow">
+                        À proximité
+                    </span>
+
+
+                    <h2>
+                        Les alertes autour de vous
+                    </h2>
+
+
+                    <p>
+                        Découvrez les signalements récents
+                        enregistrés dans votre secteur.
+                    </p>
+
+                </div>
+
+
+                <a th:href="@{/map}"
+                   class="section-link">
+
+                    Explorer la carte
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </a>
+
+
+            </div>
+
+
+            <!-- =================================================
+                 MAP PREVIEW
+                 ================================================= -->
+
+            <div class="map-preview">
+
+                <div class="map-placeholder">
+
+
+                    <div class="map-background">
+
+
+                        <div class="map-road road-one"></div>
+
+                        <div class="map-road road-two"></div>
+
+                        <div class="map-road road-three"></div>
+
+                        <div class="map-water"></div>
+
+
+                        <div class="map-marker marker-one">
+
+                            <i class="fa-solid fa-location-dot"></i>
+
+                        </div>
+
+
+                        <div class="map-marker marker-two">
+
+                            <i class="fa-solid fa-location-dot"></i>
+
+                        </div>
+
+
+                        <div class="map-marker marker-three">
+
+                            <i class="fa-solid fa-location-dot"></i>
+
+                        </div>
+
+
+                        <div class="map-center-marker">
+
+                            <i class="fa-solid fa-crosshairs"></i>
+
+                            <span>
+                                Voir les signalements
+                            </span>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="map-overlay-card">
+
+
+                        <span>
+
+                            <i class="fa-solid fa-location-dot"></i>
+
+                            Carte des signalements
+
+                        </span>
+
+
+                        <strong>
+                            Consultez les problèmes
+                            signalés près de chez vous.
+                        </strong>
+
+
+                        <a th:href="@{/map}">
+
+                            Ouvrir la carte
+
+                            <i class="fa-solid fa-arrow-right"></i>
+
+                        </a>
+
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         DERNIÈRES ALERTES
+         ===================================================== -->
+
+    <section class="reports-section">
+
+        <div class="home-container">
+
+
+            <div class="section-heading">
+
+
+                <div>
+
+                    <span class="section-eyebrow">
+                        Activité récente
+                    </span>
+
+
+                    <h2>
+                        Les dernières alertes
+                    </h2>
+
+
+                    <p>
+                        Un aperçu des signalements récemment publiés.
+                    </p>
+
+                </div>
+
+
+                <a th:href="@{/report-list}"
+                   class="section-link">
+
+                    Voir tous les signalements
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </a>
+
+
+            </div>
+
+
+            <div class="reports-grid">
+
+
+                <!-- =================================================
+                     REPORT CARD
+                     ================================================= -->
+
+                <article class="report-card"
+                         th:each="report : ${reports}">
+
+
+                    <div class="report-card-top">
+
+
+                        <span class="report-category">
+
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+
+                            <span th:text="${report.category}">
+                                Catégorie
+                            </span>
+
+                        </span>
+
+
+                        <span class="report-status"
+                              th:text="${report.status}">
+
+                            En cours
+
+                        </span>
+
+
+                    </div>
+
+
+                    <h3 th:text="${report.title}">
+                        Titre du signalement
+                    </h3>
+
+
+                    <p class="report-description"
+                       th:text="${report.description}">
+
+                        Description du signalement.
+
+                    </p>
+
+
+                    <div class="report-meta">
+
+
+                        <span>
+
+                            <i class="fa-solid fa-location-dot"></i>
+
+                            <span th:text="${report.location}">
+                                Localisation
+                            </span>
+
+                        </span>
+
+
+                        <span>
+
+                            <i class="fa-regular fa-clock"></i>
+
+                            Récemment
+
+                        </span>
+
+
+                    </div>
+
+
+                    <a th:href="@{'/report/' + ${report.id}}"
+                       class="report-link">
+
+                        Voir le signalement
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </a>
+
+
+                </article>
+
+
+                <!-- =================================================
+                     EMPTY STATE
+                     ================================================= -->
+
+                <div class="reports-empty"
+                     th:if="${reports == null or #lists.isEmpty(reports)}">
+
+
+                    <i class="fa-regular fa-clipboard"></i>
+
+
+                    <h3>
+                        Aucun signalement récent
+                    </h3>
+
+
+                    <p>
+                        Les nouveaux signalements apparaîtront ici.
+                    </p>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         COMMENT ÇA MARCHE
+         ===================================================== -->
+
+    <section class="how-section">
+
+        <div class="home-container">
+
+
+            <div class="how-header">
+
+
+                <span class="section-eyebrow">
+                    Simple et transparent
+                </span>
+
+
+                <h2>
+                    Comment ça fonctionne ?
+                </h2>
+
+
+                <p>
+                    Quelques étapes suffisent pour faire remonter
+                    un problème et suivre son évolution.
+                </p>
+
+
+            </div>
+
+
+            <div class="steps-grid">
+
+
+                <!-- =================================================
+                     ÉTAPE 01
+                     ================================================= -->
+
+                <div class="step">
+
+
+                    <div class="step-number">
+                        01
+                    </div>
+
+
+                    <div class="step-content">
+
+
+                        <div class="step-icon">
+
+                            <i class="fa-solid fa-pen-to-square"></i>
+
+                        </div>
+
+
+                        <div class="step-text">
+
+
+                            <h3>
+                                Décrivez
+                            </h3>
+
+
+                            <p>
+                                Expliquez simplement le problème
+                                que vous avez constaté.
+                            </p>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     ÉTAPE 02
+                     ================================================= -->
+
+                <div class="step">
+
+
+                    <div class="step-number">
+                        02
+                    </div>
+
+
+                    <div class="step-content">
+
+
+                        <div class="step-icon">
+
+                            <i class="fa-solid fa-location-dot"></i>
+
+                        </div>
+
+
+                        <div class="step-text">
+
+
+                            <h3>
+                                Localisez
+                            </h3>
+
+
+                            <p>
+                                Indiquez précisément où se trouve
+                                le problème.
+                            </p>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     ÉTAPE 03
+                     ================================================= -->
+
+                <div class="step">
+
+
+                    <div class="step-number">
+                        03
+                    </div>
+
+
+                    <div class="step-content">
+
+
+                        <div class="step-icon">
+
+                            <i class="fa-solid fa-chart-line"></i>
+
+                        </div>
+
+
+                        <div class="step-text">
+
+
+                            <h3>
+                                Suivez
+                            </h3>
+
+
+                            <p>
+                                Retrouvez votre signalement et
+                                consultez son évolution.
+                            </p>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         FINAL CTA
+         ===================================================== -->
+
+    <section class="final-cta">
+
+        <div class="home-container">
+
+
+            <div class="final-cta-content">
+
+
+                <div>
+
+
+                    <span class="final-cta-eyebrow">
+                        Votre constat peut faire la différence
+                    </span>
+
+
+                    <h2>
+                        Un problème près de chez vous ?
+                    </h2>
+
+
+                    <p>
+                        Prenez quelques instants pour le signaler
+                        et contribuez à améliorer votre environnement.
+                    </p>
+
+
+                </div>
+
+
+                <a th:href="@{/create-report}"
+                   class="final-cta-button">
+
+                    Faire un signalement
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+    </section>
+
 
 </main>
 
 
 
+<!-- =========================================================
+     FOOTER
+     ========================================================= -->
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+
+
+<!-- =========================================================
+     MOBILE NAV
+     ========================================================= -->
+
+<div th:replace="~{fragments/mobile-nav :: mobile-nav}"></div>
+
+
+
+<script th:src="@{/js/app.js}"></script>
 
 </body>
+
 </html>

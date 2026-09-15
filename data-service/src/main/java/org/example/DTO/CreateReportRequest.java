@@ -3,6 +3,7 @@ package org.example.DTO;
 
 import org.example.model.Category;
 import org.example.model.Gravity;
+import org.example.model.Status;
 
 public class CreateReportRequest {
 
@@ -34,6 +35,15 @@ public class CreateReportRequest {
 
     private Category category;
     private Gravity gravity;
+    private Status status;
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
 
     public String getTitle() {
         return title;
