@@ -43,6 +43,8 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/signin",
+                                "/pro-signup",
+                                "/pro-access-success",
                                 "/",
                                 "/signup",
                                 "/report",
