@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+
+<html lang="fr"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Demande envoyée</title>
+
+    <!-- FONT AWESOME -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet"
+          th:href="@{/css/pro-access-success.css}">
+
+
+</head>
+
+<body>
+
+<div class="success-page">
+
+    ```
+    <main class="success-container">
+
+        <!-- IDENTITÉ APPLICATION -->
+        <div class="success-brand">
+
+            <div class="brand-mark">
+                <span>●</span>
+            </div>
+
+            <div class="brand-name">
+                Signalement
+            </div>
+
+            <p class="brand-baseline">
+                Signaler. Suivre. Agir.
+            </p>
+
+        </div>
+
+
+        <!-- CARTE DE CONFIRMATION -->
+        <section class="success-card">
+
+            <!-- ICÔNE -->
+            <div class="success-icon">
+
+                <i class="fa-solid fa-check"></i>
+
+            </div>
+
+
+            <!-- CONTENU -->
+            <div class="success-content">
+
+                <h1>
+                    Demande envoyée
+                </h1>
+
+                <p>
+                    Votre demande d'accès a été transmise à l'administrateur.
+                    Vous recevrez une réponse lorsque votre compte aura été validé.
+                </p>
+
+            </div>
+
+
+            <!-- ACTION -->
+            <a th:href="@{/home}"
+               class="home-button">
+
+                <i class="fa-solid fa-house"></i>
+
+                <span>
+                Retour à l'accueil
+            </span>
+
+            </a>
+
+        </section>
+
+
+        <!-- TEXTE BAS DE PAGE -->
+        <p class="success-footer">
+
+            Une plateforme pour signaler et suivre les problèmes
+            de votre environnement.
+
+        </p>
+
+    </main>
+
+
+</div>
+
+</body>
+
+</html>

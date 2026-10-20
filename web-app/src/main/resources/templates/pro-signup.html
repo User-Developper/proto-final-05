@@ -1,0 +1,484 @@
+
+<!DOCTYPE html>
+<html lang="fr"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Inscription professionnelle</title>
+
+    <!-- FONT AWESOME -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet"
+          th:href="@{/css/pro-signup.css}">
+
+</head>
+
+<body>
+
+<div class="pro-signup-page">
+
+    <main class="pro-signup-container">
+
+        <!-- IDENTITÉ APPLICATION -->
+        <div class="pro-signup-brand">
+
+            <div class="brand-mark">
+                <i class="fa-solid fa-shield-halved"></i>
+            </div>
+
+            <div class="brand-name">
+                Signalement
+            </div>
+
+            <p class="brand-baseline">
+                Signaler. Suivre. Agir.
+            </p>
+
+        </div>
+
+
+        <!-- CARTE -->
+        <div class="pro-signup-card">
+
+            <!-- EN-TÊTE -->
+            <div class="card-header">
+
+                <div class="header-icon">
+                    <i class="fa-solid fa-building"></i>
+                </div>
+
+                <div>
+                    <h1>
+                        Créer un compte professionnel
+                    </h1>
+
+                    <p>
+                        Demandez votre accès à l'espace professionnel.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <form th:action="@{/pro/signup}"
+                  method="post">
+
+
+                <!-- =================================================
+                     ORGANISME
+                ================================================== -->
+
+                <div class="section">
+
+                    <div class="section-title">
+
+                        <span class="section-number">
+                            1
+                        </span>
+
+                        <div>
+                            <strong>
+                                Votre organisme
+                            </strong>
+
+                            <small>
+                                Sélectionnez l'organisme auquel vous appartenez.
+                            </small>
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="professionalClient">
+
+                            Organisme *
+
+                        </label>
+
+                        <div class="select-wrapper">
+
+                            <select id="professionalClient"
+                                    name="professionalClientId"
+                                    required>
+
+                                <option value="">
+                                    Sélectionner votre organisme
+                                </option>
+
+                                <option value="1">
+                                    Entreprise de propreté
+                                </option>
+
+                                <option value="2">
+                                    Service environnement
+                                </option>
+
+                                <option value="3">
+                                    Prestataire municipal
+                                </option>
+
+                            </select>
+
+                            <i class="fa-solid fa-chevron-down"></i>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     INFORMATIONS
+                ================================================== -->
+
+                <div class="section">
+
+                    <div class="section-title">
+
+                        <span class="section-number">
+                            2
+                        </span>
+
+                        <div>
+                            <strong>
+                                Vos informations
+                            </strong>
+
+                            <small>
+                                Ces informations seront associées à votre compte.
+                            </small>
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label for="lastName">
+                                Nom *
+                            </label>
+
+                            <input
+                                    type="text"
+                                    id="lastName"
+                                    name="lastName"
+                                    autocomplete="family-name"
+                                    required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="firstName">
+                                Prénom *
+                            </label>
+
+                            <input
+                                    type="text"
+                                    id="firstName"
+                                    name="firstName"
+                                    autocomplete="given-name"
+                                    required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="function">
+                            Fonction *
+                        </label>
+
+                        <input
+                                type="text"
+                                id="function"
+                                name="function"
+                                placeholder="Ex. Responsable de secteur"
+                                required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="phone">
+                            Téléphone professionnel
+                        </label>
+
+                        <input
+                                type="tel"
+                                id="phone"
+                                name="phone"
+                                autocomplete="tel"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     CONNEXION
+                ================================================== -->
+
+                <div class="section">
+
+                    <div class="section-title">
+
+                        <span class="section-number">
+                            3
+                        </span>
+
+                        <div>
+                            <strong>
+                                Identifiants de connexion
+                            </strong>
+
+                            <small>
+                                Utilisez votre adresse e-mail professionnelle.
+                            </small>
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="email">
+                            E-mail professionnel *
+                        </label>
+
+                        <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                autocomplete="email"
+                                required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="password">
+                            Mot de passe *
+                        </label>
+
+                        <div class="password-wrapper">
+
+                            <input
+                                    type="password"
+                                    id="password"
+                                    name="password"
+                                    autocomplete="new-password"
+                                    required
+                            >
+
+                            <button
+                                    type="button"
+                                    class="password-toggle"
+                                    aria-label="Afficher le mot de passe">
+
+                                <i class="fa-regular fa-eye"></i>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="confirmPassword">
+                            Confirmation du mot de passe *
+                        </label>
+
+                        <div class="password-wrapper">
+
+                            <input
+                                    type="password"
+                                    id="confirmPassword"
+                                    name="confirmPassword"
+                                    autocomplete="new-password"
+                                    required
+                            >
+
+                            <button
+                                    type="button"
+                                    class="password-toggle"
+                                    aria-label="Afficher la confirmation du mot de passe">
+
+                                <i class="fa-regular fa-eye"></i>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     VALIDATION
+                ================================================== -->
+
+                <div class="validation-info">
+
+                    <div class="validation-icon">
+
+                        <i class="fa-solid fa-shield-check"></i>
+
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Validation professionnelle
+                        </strong>
+
+                        <p>
+                            Votre demande sera vérifiée avant l'activation
+                            de votre compte professionnel.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CONDITIONS -->
+
+                <div class="checkbox-group">
+
+                    <label class="checkbox-label">
+
+                        <input
+                                type="checkbox"
+                                name="terms"
+                                required
+                        >
+
+                        <span>
+
+                            J'accepte les
+                            <a href="#">
+                                conditions d'utilisation
+                            </a>
+                            et la
+                            <a href="#">
+                                politique de confidentialité
+                            </a>.
+
+                        </span>
+
+                    </label>
+
+                </div>
+
+
+                <!-- BOUTON -->
+
+                <button
+                        type="submit"
+                        class="pro-signup-button">
+
+                    <span>
+                        Demander l'accès
+                    </span>
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </button>
+
+
+            </form>
+
+
+            <!-- CONNEXION -->
+
+            <div class="login-section">
+
+                <p>
+                    Vous avez déjà un compte professionnel ?
+                </p>
+
+                <a th:href="@{/pro/signin}">
+                    Se connecter
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- FOOTER -->
+
+        <p class="signup-footer">
+
+            Accès réservé aux organismes professionnels référencés.
+
+        </p>
+
+    </main>
+
+</div>
+
+
+<script>
+
+    document.querySelectorAll(".password-toggle").forEach(button => {
+
+        button.addEventListener("click", () => {
+
+            const input = button.parentElement.querySelector("input");
+            const icon = button.querySelector("i");
+
+            if (input.type === "password") {
+
+                input.type = "text";
+
+                icon.classList.remove("fa-eye");
+                icon.classList.add("fa-eye-slash");
+
+            } else {
+
+                input.type = "password";
+
+                icon.classList.remove("fa-eye-slash");
+                icon.classList.add("fa-eye");
+
+            }
+
+        });
+
+    });
+
+</script>
+
+</body>
+
+</html>
+

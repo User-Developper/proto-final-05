@@ -1,0 +1,734 @@
+
+/* =========================================================
+   VARIABLES
+   ========================================================= */
+
+:root {
+
+    --primary: #1E5A78;
+    --primary-dark: #16465F;
+    --primary-light: #EAF3F7;
+
+    --text: #17232B;
+    --text-secondary: #667781;
+
+    --background: #F6F9FA;
+
+    --white: #FFFFFF;
+
+    --border: #DCE5E9;
+    --border-hover: #B8CBD2;
+
+    --danger: #C94A4A;
+    --danger-bg: #FEF2F2;
+    --danger-border: #E8B7B7;
+
+    --shadow:
+        0 12px 35px rgba(15, 70, 85, 0.08);
+
+    --shadow-button:
+        0 5px 14px rgba(30, 90, 120, 0.18);
+}
+
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+html {
+    font-size: 16px;
+}
+
+
+body {
+
+    min-height: 100vh;
+
+    font-family:
+        Inter,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
+
+    color: var(--text);
+
+    background: var(--background);
+
+    -webkit-font-smoothing: antialiased;
+}
+
+
+/* =========================================================
+   PAGE
+   ========================================================= */
+
+.signup-page {
+
+    position: relative;
+
+    min-height: 100vh;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 28px 16px;
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   DÉCORATIONS DISCRÈTES
+   ========================================================= */
+
+.signup-page::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 320px;
+    height: 320px;
+
+    top: -180px;
+    right: -150px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(30, 90, 120, 0.035);
+
+    pointer-events: none;
+}
+
+
+.signup-page::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 280px;
+    height: 280px;
+
+    bottom: -170px;
+    left: -140px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(30, 90, 120, 0.03);
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   CONTAINER
+   ========================================================= */
+
+.signup-container {
+
+    position: relative;
+
+    z-index: 1;
+
+    width: 100%;
+
+    max-width: 400px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: stretch;
+}
+
+
+/* =========================================================
+   IDENTITÉ APPLICATION
+   ========================================================= */
+
+.signup-brand {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    text-align: center;
+
+    margin-bottom: 20px;
+}
+
+
+.brand-mark {
+
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 10px;
+
+    border-radius: 12px;
+
+    background: var(--primary);
+
+    color: var(--white);
+
+    box-shadow:
+        0 5px 14px rgba(30, 90, 120, 0.18);
+}
+
+
+.brand-mark span {
+
+    font-size: 17px;
+
+    line-height: 1;
+
+    color: var(--white);
+}
+
+
+.brand-name {
+
+    font-size: 21px;
+
+    font-weight: 700;
+
+    letter-spacing: -0.3px;
+
+    color: var(--text);
+}
+
+
+.brand-baseline {
+
+    margin-top: 4px;
+
+    font-size: 12px;
+
+    font-weight: 500;
+
+    letter-spacing: 0.2px;
+
+    color: var(--text-secondary);
+}
+
+
+/* =========================================================
+   CARTE
+   ========================================================= */
+
+.signup-card {
+
+    width: 100%;
+
+    padding: 30px 28px;
+
+    background: var(--white);
+
+    border: none;
+
+    border-radius: 18px;
+
+    box-shadow: var(--shadow);
+}
+
+
+/* =========================================================
+   FORMULAIRE
+   ========================================================= */
+
+.signup-card form {
+
+    width: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 16px;
+}
+
+
+/* =========================================================
+   FORM GROUP
+   ========================================================= */
+
+.form-group {
+
+    width: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+}
+
+
+/* =========================================================
+   LABEL
+   ========================================================= */
+
+.form-group label {
+
+    margin-bottom: 7px;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    color: var(--text);
+}
+
+
+.form-group label > span {
+
+    color: var(--danger);
+}
+
+
+/* =========================================================
+   INPUT
+   ========================================================= */
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"] {
+
+    width: 100%;
+
+    height: 48px;
+
+    padding: 0 13px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 10px;
+
+    background: var(--white);
+
+    color: var(--text);
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
+}
+
+
+.form-group input:hover {
+
+    border-color: var(--border-hover);
+}
+
+
+.form-group input:focus {
+
+    border-color: var(--primary);
+
+    background: #FBFDFC;
+
+    box-shadow:
+        0 0 0 3px rgba(30, 90, 120, 0.10);
+}
+
+
+.form-group input::placeholder {
+
+    color: #9AA7AD;
+}
+
+
+/* =========================================================
+   MOT DE PASSE
+   ========================================================= */
+
+.password-wrapper {
+
+    position: relative;
+
+    width: 100%;
+}
+
+
+.password-wrapper input {
+
+    padding-right: 48px !important;
+}
+
+
+.password-toggle {
+
+    position: absolute;
+
+    top: 50%;
+    right: 9px;
+
+    width: 32px;
+    height: 32px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    transform: translateY(-50%);
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: transparent;
+
+    color: var(--text-secondary);
+
+    cursor: pointer;
+
+    transition:
+        color 0.2s ease,
+        background-color 0.2s ease;
+}
+
+
+.password-toggle:hover {
+
+    color: var(--primary);
+
+    background: var(--primary-light);
+}
+
+
+.password-toggle:focus-visible {
+
+    outline: 2px solid var(--primary);
+
+    outline-offset: 2px;
+}
+
+
+.password-toggle i {
+
+    font-size: 15px;
+}
+
+
+/* =========================================================
+   CHECKBOX
+   ========================================================= */
+
+.checkbox-group {
+
+    margin-top: 1px;
+}
+
+
+.checkbox-label {
+
+    display: flex !important;
+
+    flex-direction: row !important;
+
+    align-items: flex-start;
+
+    gap: 9px;
+
+    margin: 0 !important;
+
+    color: var(--text-secondary) !important;
+
+    font-size: 12px !important;
+
+    font-weight: 500 !important;
+
+    line-height: 1.5;
+
+    cursor: pointer;
+}
+
+
+.checkbox-label input[type="checkbox"] {
+
+    flex: 0 0 auto;
+
+    width: 17px;
+    height: 17px;
+
+    margin-top: 1px;
+
+    accent-color: var(--primary);
+
+    cursor: pointer;
+}
+
+
+.checkbox-label a {
+
+    color: var(--primary);
+
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition: color 0.2s ease;
+}
+
+
+.checkbox-label a:hover {
+
+    color: var(--primary-dark);
+
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   BOUTON INSCRIPTION
+   ========================================================= */
+
+.signup-button {
+
+    width: 100%;
+
+    height: 48px;
+
+    margin-top: 2px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: var(--primary);
+
+    color: var(--white);
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    box-shadow: var(--shadow-button);
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.signup-button:hover {
+
+    background: var(--primary-dark);
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 7px 17px rgba(30, 90, 120, 0.22);
+}
+
+
+.signup-button:active {
+
+    transform: translateY(0);
+}
+
+
+.signup-button:focus-visible {
+
+    outline: 2px solid var(--primary);
+
+    outline-offset: 3px;
+}
+
+
+/* =========================================================
+   CONNEXION
+   ========================================================= */
+
+.login-section {
+
+    margin-top: 20px;
+
+    padding-top: 19px;
+
+    border-top: 1px solid var(--border);
+
+    text-align: center;
+}
+
+
+.login-section p {
+
+    display: inline;
+
+    font-size: 13px;
+
+    color: var(--text-secondary);
+}
+
+
+.login-section a {
+
+    margin-left: 4px;
+
+    color: var(--primary);
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition: color 0.2s ease;
+}
+
+
+.login-section a:hover {
+
+    color: var(--primary-dark);
+
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.signup-footer {
+
+    margin-top: 18px;
+
+    padding: 0 10px;
+
+    text-align: center;
+
+    color: var(--text-secondary);
+
+    font-size: 11px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (min-width: 600px) {
+
+    .signup-page {
+
+        padding: 40px 20px;
+    }
+
+
+    .signup-card {
+
+        padding: 32px;
+    }
+}
+
+
+/* =========================================================
+   DESKTOP
+   ========================================================= */
+
+@media (min-width: 900px) {
+
+    .signup-container {
+
+        max-width: 400px;
+    }
+
+
+    .signup-card {
+
+        border-radius: 18px;
+    }
+}
+
+
+/* =========================================================
+   PETITS ÉCRANS
+   ========================================================= */
+
+@media (max-width: 420px) {
+
+    .signup-page {
+
+        padding: 24px 14px;
+    }
+
+
+    .signup-card {
+
+        padding: 26px 20px;
+
+        border-radius: 16px;
+    }
+
+
+    .signup-brand {
+
+        margin-bottom: 18px;
+    }
+
+
+    .brand-name {
+
+        font-size: 20px;
+    }
+}
+
+
+/* =========================================================
+   TRÈS PETITS ÉCRANS
+   ========================================================= */
+
+@media (max-width: 360px) {
+
+    .signup-page {
+
+        padding: 20px 10px;
+    }
+
+
+    .signup-card {
+
+        padding: 22px 17px;
+    }
+
+
+    .form-group input,
+    .signup-button {
+
+        height: 46px;
+    }
+}
+
