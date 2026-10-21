@@ -128,7 +128,17 @@ services:
 #      MYSQL_PASSWORD: medical_pass
 
 
-
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: 123
+    ports:
+      - 27018:27017
+    extends:
+      file: common-config.yml
+      service: microservice-mongo-config
 
 
 

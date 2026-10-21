@@ -23,6 +23,11 @@ public interface PatientserviceFeignClient {
             @RequestParam("username") String username
     );
 
+    @PostMapping("/reports")
+    ReportResponse submitFinal(
+            @RequestBody CreateReportRequest request
+    );
+
 
     @GetMapping("/profile")
     Optional<User> findUserByProfile(
@@ -60,10 +65,7 @@ public interface PatientserviceFeignClient {
     );
 
 
-    @PostMapping("/reports")
-    ReportResponse submitFinal(
-            @RequestBody CreateReportRequest request
-    );
+
 
 
     @GetMapping("/reports/client/{clientId}")
