@@ -1,7 +1,7 @@
 package com.medical.patient_service.service.form;
 
 import com.medical.patient_service.model.*;
-import com.medical.patient_service.service.DTO.CreateReportImageRequest;
+//import com.medical.patient_service.service.DTO.CreateReportImageRequest;
 import com.medical.patient_service.service.DTO.CreateReportRequest;
 import com.medical.patient_service.service.DTO.PageResponse;
 import com.medical.patient_service.service.DTO.ReportImageResponse;
@@ -87,15 +87,15 @@ public interface DataServiceFeignClient {
     );
 
 
-    @PostMapping("/reports/{reportId}/images")
-    ReportImageResponse addReportImage(
-            @PathVariable("reportId") Integer reportId,
-            @RequestBody CreateReportImageRequest request
-    );
-
-
-    @GetMapping("/reports/{reportId}/images")
-    List<ReportImageResponse> getReportImages(
-            @PathVariable("reportId") Integer reportId
-    );
+//    @PostMapping("/reports/{reportId}/images")
+//    ReportImageResponse addReportImage(
+//            @PathVariable("reportId") Integer reportId,
+//            @RequestBody CreateReportImageRequest request
+//    );
+//
+//
+//    @GetMapping("/reports/{reportId}/images")
+//    List<ReportImageResponse> getReportImages(
+//            @PathVariable("reportId") Integer reportId
+//    );
 }

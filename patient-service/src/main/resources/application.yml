@@ -1,12 +1,13 @@
+
 server:
   port: 8082
+
 spring:
   application:
     name: "patient-service"
 
   datasource:
     url: jdbc:mysql://localhost:3308/medical_db
-
     username: root
     password: mddb
 
@@ -17,6 +18,7 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
+
   sql:
     init:
       mode: always
@@ -30,11 +32,10 @@ spring:
         health-check-path: /actuator/health
         health-check-interval: 15s
 
-
-
 app:
-    storage:
-      directory: ../storage/reports
+  storage:
+    directory: ../storage/reports
 
-
-
+services:
+  report-storage:
+    url: http://localhost:9000

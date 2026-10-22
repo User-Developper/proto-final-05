@@ -136,9 +136,9 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: 123
     ports:
       - 27018:27017
-    extends:
-      file: common-config.yml
-      service: microservice-mongo-config
+#    extends:
+##      file: common-config.yml
+#      service: report_storage_service
 
 
 

@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 @Data
 public class ReportImageResponse {
 
-    private Integer id;
+    private String id;
 
     private Integer reportId;
 
