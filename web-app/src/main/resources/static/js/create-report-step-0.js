@@ -89,11 +89,6 @@ document.addEventListener("DOMContentLoaded", function () {
             defaultZoom
         );
 
-
-    /* =========================================================
-       OPENSTREETMAP
-    ========================================================= */
-
     L.tileLayer(
         "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
         {
@@ -103,10 +98,6 @@ document.addEventListener("DOMContentLoaded", function () {
     ).addTo(map);
 
 
-    /* =========================================================
-       VARIABLES
-    ========================================================= */
-
     let marker = null;
 
     let clientCircle = null;
@@ -114,9 +105,6 @@ document.addEventListener("DOMContentLoaded", function () {
     let searchTimeout = null;
 
 
-    /* =========================================================
-       CLIENT ZONE
-    ========================================================= */
 
     if (
         activeClient &&
@@ -146,6 +134,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     [
                         clientLat,
                         clientLng
+
+
+
                     ],
                     {
                         radius:

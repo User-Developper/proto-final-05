@@ -73,8 +73,6 @@ public class WebAppService {
 
     public ReportResponse submitFinal(CreateReportTemp form) {
 
-        System.out.println("USER ID AVANT ENVOI PATIENT SERVICE = "
-                + form.getUserId());
 
         CreateReportRequest req = new CreateReportRequest();
 
