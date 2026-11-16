@@ -51,7 +51,10 @@ public class SecurityConfiguration {
                                 "report-images/**",
                                 "/css/**",
                                 "/images/**",
-                                "/js/**"
+                                "/js/**",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/swagger-ui.html"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
