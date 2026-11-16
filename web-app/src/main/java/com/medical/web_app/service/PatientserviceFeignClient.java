@@ -106,9 +106,15 @@ public interface PatientserviceFeignClient {
             @RequestPart("file") MultipartFile file
     );
 
-    @GetMapping("/reports/{reportId}/images/{storageName}")
+//    @GetMapping("/reports/{reportId}/images/{storageName}")
+//    byte[] getReportImage(
+//            @PathVariable("reportId") Integer reportId,
+//            @PathVariable("storageName") String storageName
+//    );
+
+    @GetMapping("/reports/{reportId}/images/{imageId}")
     byte[] getReportImage(
             @PathVariable("reportId") Integer reportId,
-            @PathVariable("storageName") String storageName
+            @PathVariable("imageId") String imageId
     );
 }

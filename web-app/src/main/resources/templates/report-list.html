@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="fr"
+      xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
-    <title>Signalements - Alert</title>
+    <title>Signalements - EchoVOCE</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -21,55 +22,58 @@
 
 <main class="reports-page">
 
-    <!-- HEADER -->
     <section class="page-header">
         <h1>Signalements</h1>
         <p>Consultez les incidents signalés par la communauté</p>
     </section>
 
-    <!-- TOOLBAR -->
     <div class="toolbar">
 
-        <!-- ❌ plus de form submit -->
         <div class="search-container">
-
             <input type="text"
                    id="searchInput"
-                   placeholder="Rechercher un signalement...">
+                   placeholder="Rechercher un signalement..."
+                   aria-label="Rechercher un signalement">
 
-            <button class="search-btn" id="searchBtn">
+            <button class="search-btn"
+                    id="searchBtn"
+                    type="button"
+                    aria-label="Rechercher">
                 <i class="fa-solid fa-magnifying-glass"></i>
             </button>
-
         </div>
 
-        <button class="filter-btn" id="openFilters">
+        <button class="filter-btn"
+                id="openFilters"
+                type="button">
             <i class="fa-solid fa-filter"></i>
             Filtres
         </button>
 
     </div>
 
-    <!-- GRID -->
     <section class="reports-grid" id="reportsGrid"></section>
 
-    <!-- PAGINATION -->
     <div class="pagination" id="pagination"></div>
 
 </main>
 
-<!-- FILTER SHEET -->
 <div class="filter-sheet" id="filterSheet">
 
     <div class="sheet-header">
         <h3>Filtres</h3>
-        <button id="closeFilters">✕</button>
+        <button id="closeFilters"
+                type="button"
+                aria-label="Fermer les filtres">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
     </div>
 
     <div class="sheet-body">
 
         <div class="filter-group">
-            <label>Catégorie</label>
+            <label for="categoryFilter">Catégorie</label>
+
             <select id="categoryFilter" class="filter-select">
                 <option value="">Toutes</option>
                 <option value="AIR_POLLUTION">Air</option>
@@ -78,28 +82,22 @@
                 <option value="NOISE">Bruit</option>
                 <option value="WASTE">Déchets</option>
                 <option value="VEGETATION">Végétation</option>
-                <option value="TOXIC_PRODUCTS">Toxiques</option>
+                <option value="TOXIC_PRODUCTS">Produits toxiques</option>
             </select>
         </div>
 
         <div class="filter-group">
-            <label>Gravité</label>
+            <label for="gravityFilter">Gravité</label>
+
             <select id="gravityFilter" class="filter-select">
                 <option value="">Toutes</option>
-                <option value="BASIC">Faible</option>
+                <option value="LOW">Faible</option>
                 <option value="MEDIUM">Moyenne</option>
                 <option value="HIGH">Élevée</option>
-                <option value="CRITICAL">Critique</option>
             </select>
         </div>
 
     </div>
-
-<!--    <div class="sheet-footer">-->
-<!--        <button class="apply-btn" id="applyFilters">-->
-<!--            Appliquer-->
-<!--        </button>-->
-<!--    </div>-->
 
 </div>
 

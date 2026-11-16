@@ -2,14 +2,13 @@ package com.medical.patient_service.service;
 
 
 //import com.medical.patient_service.model.ProfessionalClient;
-import com.medical.patient_service.model.ProfessionalClient;
-import com.medical.patient_service.model.Report;
-import com.medical.patient_service.model.User;
+import com.medical.patient_service.model.*;
 //import com.medical.patient_service.repository.ProfessionalClientRepository;
 //import com.medical.patient_service.repository_del.ProfessionalClientRepository;
 //import com.medical.patient_service.repository_del.ReportRepository;
 //import com.medical.patient_service.repository_del.UserRepository;
 import com.medical.patient_service.service.DTO.CreateReportRequest;
+import com.medical.patient_service.service.DTO.PageResponse;
 import com.medical.patient_service.service.DTO.ReportResponse;
 import com.medical.patient_service.service.DTO.ReportSummary;
 import com.medical.patient_service.service.form.DataServiceFeignClient;
@@ -182,6 +181,23 @@ public class UserService {
     public ProfessionalClient getClientById(Integer clientId){
 
         return dataServiceFeignClient.getClientById(clientId);
+    }
+
+
+    public PageResponse<ReportResponse> getAllReports(
+            int page,
+            int size,
+            Category category,
+            Gravity gravity,
+            String q) {
+
+        return dataServiceFeignClient.getAllReports(
+                page,
+                size,
+                category,
+                gravity,
+                q
+        );
     }
 
 

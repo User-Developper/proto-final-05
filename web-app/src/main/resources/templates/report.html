@@ -26,12 +26,9 @@
 
 <body>
 
-<!-- HEADER -->
 <div th:replace="~{fragments/header :: header}"></div>
 
-<!-- MOBILE NAV -->
 <div th:replace="~{fragments/mobile-nav :: mobile-nav}"></div>
-
 
 <main class="report-page">
 
@@ -39,24 +36,16 @@
 
         <article class="report-content">
 
-
-            <!-- =====================================================
-                 HEADER DU SIGNALEMENT
-                 ===================================================== -->
-
             <header class="report-header">
 
                 <div class="report-header-top">
 
-                    <!-- PROFIL -->
                     <div class="report-user-avatar">
 
                         <i class="fa-solid fa-user"></i>
 
                     </div>
 
-
-                    <!-- GRAVITÉ -->
                     <div class="report-gravity"
                          th:if="${report.gravity != null}"
                          th:classappend="${report.gravity.name() == 'LOW' ? 'gravity-low' :
@@ -92,8 +81,6 @@
 
                 </div>
 
-
-                <!-- CATÉGORIE -->
                 <div class="report-category-wrapper"
                      th:if="${report.category != null}">
 
@@ -111,14 +98,10 @@
 
                 </div>
 
-
-                <!-- TITRE -->
                 <h1 th:text="${report.title}">
                     Titre du signalement
                 </h1>
 
-
-                <!-- DATE -->
                 <div class="report-header-info">
 
                     <div class="report-date"
@@ -136,11 +119,6 @@
 
             </header>
 
-
-            <!-- =====================================================
-                 IMAGES
-                 ===================================================== -->
-
             <section class="report-images"
                      th:if="${reportImages != null and !reportImages.isEmpty()}">
 
@@ -149,13 +127,10 @@
                     <div class="main-image">
 
                         <img id="reportMainImage"
-                             th:src="@{'/report-images/' + ${report.id} + '/' + ${reportImages[0].storageName}}"
+                             th:src="@{'/report-images/' + ${report.id} + '/' + ${reportImages[0].id}}"
                              th:alt="${reportImages[0].fileName}">
 
                     </div>
-
-
-                    <!-- IMAGE PRÉCÉDENTE -->
 
                     <button type="button"
                             class="slider-button slider-prev"
@@ -166,9 +141,6 @@
                         <i class="fa-solid fa-chevron-left"></i>
 
                     </button>
-
-
-                    <!-- IMAGE SUIVANTE -->
 
                     <button type="button"
                             class="slider-button slider-next"
@@ -182,9 +154,6 @@
 
                 </div>
 
-
-                <!-- MINIATURES -->
-
                 <div class="image-gallery"
                      th:if="${reportImages.size() > 1}">
 
@@ -192,9 +161,9 @@
                             class="gallery-image"
                             th:each="image, stat : ${reportImages}"
                             th:classappend="${stat.index == 0 ? 'active' : ''}"
-                            th:attr="data-image=@{'/report-images/' + ${report.id} + '/' + ${image.storageName}}">
+                            th:attr="data-image=@{'/report-images/' + ${report.id} + '/' + ${image.id}}">
 
-                        <img th:src="@{'/report-images/' + ${report.id} + '/' + ${image.storageName}}"
+                        <img th:src="@{'/report-images/' + ${report.id} + '/' + ${image.id}}"
                              th:alt="${image.fileName}">
 
                     </button>
@@ -202,11 +171,6 @@
                 </div>
 
             </section>
-
-
-            <!-- =====================================================
-                 AUCUNE IMAGE
-                 ===================================================== -->
 
             <section class="report-no-image"
                      th:if="${reportImages == null or reportImages.isEmpty()}">
@@ -222,11 +186,6 @@
                 </div>
 
             </section>
-
-
-            <!-- =====================================================
-                 DESCRIPTION
-                 ===================================================== -->
 
             <section class="report-description"
                      th:if="${report.description != null and !report.description.isBlank()}">
@@ -245,11 +204,6 @@
 
             </section>
 
-
-            <!-- =====================================================
-                 LOCALISATION
-                 ===================================================== -->
-
             <section class="report-location"
                      th:if="${report.location != null and !report.location.isBlank()}">
 
@@ -264,7 +218,6 @@
                     </h2>
 
                 </div>
-
 
                 <a th:if="${report.latitude != null and report.longitude != null}"
                    th:href="@{'https://www.google.com/maps/search/?api=1&query=' + ${report.latitude} + ',' + ${report.longitude}}"
@@ -282,11 +235,6 @@
 
             </section>
 
-
-            <!-- =====================================================
-                 SUIVI DU SIGNALEMENT
-                 ===================================================== -->
-
             <section class="report-status">
 
                 <div class="status-heading">
@@ -297,11 +245,7 @@
 
                 </div>
 
-
                 <div class="status-tracker">
-
-
-                    <!-- SIGNALÉ -->
 
                     <div class="status-step status-reported"
                          th:classappend="${report.status != null and
@@ -319,9 +263,6 @@
 
                     </div>
 
-
-                    <!-- LIGNE -->
-
                     <div class="status-line"
                          th:classappend="${report.status != null and
                                           (report.status.name() == 'VALIDATED' or
@@ -329,9 +270,6 @@
                                            report.status.name() == 'RESOLVED')
                                           ? 'completed' : ''}">
                     </div>
-
-
-                    <!-- VALIDÉ -->
 
                     <div class="status-step status-validated"
                          th:classappend="${report.status != null and
@@ -348,18 +286,12 @@
 
                     </div>
 
-
-                    <!-- LIGNE -->
-
                     <div class="status-line"
                          th:classappend="${report.status != null and
                                           (report.status.name() == 'IN_PROGRESS' or
                                            report.status.name() == 'RESOLVED')
                                           ? 'completed' : ''}">
                     </div>
-
-
-                    <!-- EN COURS -->
 
                     <div class="status-step status-in-progress"
                          th:classappend="${report.status != null and
@@ -375,17 +307,11 @@
 
                     </div>
 
-
-                    <!-- LIGNE -->
-
                     <div class="status-line"
                          th:classappend="${report.status != null and
                                           report.status.name() == 'RESOLVED'
                                           ? 'completed' : ''}">
                     </div>
-
-
-                    <!-- RÉSOLU -->
 
                     <div class="status-step status-resolved"
                          th:classappend="${report.status != null and
@@ -402,9 +328,6 @@
 
                 </div>
 
-
-                <!-- REJETÉ -->
-
                 <div class="report-status-rejected"
                      th:if="${report.status != null and report.status.name() == 'REJECTED'}">
 
@@ -418,11 +341,6 @@
 
             </section>
 
-
-            <!-- =====================================================
-                 ACTIONS
-                 ===================================================== -->
-
             <section class="report-actions">
 
                 <button type="button"
@@ -435,7 +353,6 @@
                     </span>
 
                 </button>
-
 
                 <button type="button"
                         class="report-action">
@@ -456,14 +373,9 @@
 
 </main>
 
-
-<!-- FOOTER -->
-
 <div th:replace="~{fragments/footer :: footer}"></div>
 
-
 <script th:src="@{/js/app.js}"></script>
-
 
 <script>
 
@@ -481,22 +393,16 @@
         const thumbnails =
             document.querySelectorAll(".gallery-image");
 
-
         if (!mainImage || thumbnails.length === 0) {
             return;
         }
 
-
         const images =
             Array.from(thumbnails).map(function (thumbnail) {
-
                 return thumbnail.dataset.image;
-
             });
 
-
         let currentIndex = 0;
-
 
         function showImage(index) {
 
@@ -508,65 +414,35 @@
                 index = 0;
             }
 
-
             currentIndex = index;
 
-
-            mainImage.src =
-                images[currentIndex];
-
+            mainImage.src = images[currentIndex];
 
             thumbnails.forEach(function (thumbnail, i) {
-
                 thumbnail.classList.toggle(
                     "active",
                     i === currentIndex
                 );
-
             });
 
         }
 
-
         if (previousButton) {
-
-            previousButton.addEventListener(
-                "click",
-                function () {
-
-                    showImage(currentIndex - 1);
-
-                }
-            );
-
+            previousButton.addEventListener("click", function () {
+                showImage(currentIndex - 1);
+            });
         }
-
 
         if (nextButton) {
-
-            nextButton.addEventListener(
-                "click",
-                function () {
-
-                    showImage(currentIndex + 1);
-
-                }
-            );
-
+            nextButton.addEventListener("click", function () {
+                showImage(currentIndex + 1);
+            });
         }
 
-
         thumbnails.forEach(function (thumbnail, index) {
-
-            thumbnail.addEventListener(
-                "click",
-                function () {
-
-                    showImage(index);
-
-                }
-            );
-
+            thumbnail.addEventListener("click", function () {
+                showImage(index);
+            });
         });
 
     });

@@ -16,7 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
+import org.springframework.http.ContentDisposition;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
@@ -690,49 +690,103 @@ public class ReportController {
         return "report-list";
     }
 
-    @GetMapping("/report-images/{reportId}/{storageName}")
+    @GetMapping("/report-images/{reportId}/{imageId}")
     public ResponseEntity<byte[]> getReportImage(
             @PathVariable Integer reportId,
-            @PathVariable String storageName) {
+            @PathVariable String imageId) {
 
-        byte[] image =
-                webAppService.getReportImage(
-                        reportId,
-                        storageName
-                );
+        List<ReportImageResponse> images =
+                webAppService.getReportImages(reportId);
+
+        if (images == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        ReportImageResponse metadata = images.stream()
+                .filter(image -> imageId.equals(image.getId()))
+                .findFirst()
+                .orElse(null);
+
+        if (metadata == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        byte[] image = webAppService.getReportImage(reportId, imageId);
 
         if (image == null || image.length == 0) {
             return ResponseEntity.notFound().build();
         }
 
-        MediaType mediaType =
-                MediaType.APPLICATION_OCTET_STREAM;
+        MediaType mediaType = MediaType.APPLICATION_OCTET_STREAM;
 
-        if (storageName.toLowerCase().endsWith(".jpg")
-                || storageName.toLowerCase().endsWith(".jpeg")) {
-
-            mediaType = MediaType.IMAGE_JPEG;
-
-        } else if (storageName.toLowerCase().endsWith(".png")) {
-
-            mediaType = MediaType.IMAGE_PNG;
-
-        } else if (storageName.toLowerCase().endsWith(".gif")) {
-
-            mediaType = MediaType.IMAGE_GIF;
-
-        } else if (storageName.toLowerCase().endsWith(".webp")) {
-
-            mediaType =
-                    MediaType.parseMediaType("image/webp");
+        if (metadata.getContentType() != null
+                && !metadata.getContentType().isBlank()) {
+            try {
+                mediaType = MediaType.parseMediaType(metadata.getContentType());
+            } catch (IllegalArgumentException ignored) {
+                mediaType = MediaType.APPLICATION_OCTET_STREAM;
+            }
         }
 
+        String fileName = metadata.getFileName();
+
+        if (fileName == null || fileName.isBlank()) {
+            fileName = "image";
+        }
+
+        ContentDisposition disposition = ContentDisposition.inline()
+                .filename(fileName)
+                .build();
+
         return ResponseEntity.ok()
-                .header(
-                        HttpHeaders.CONTENT_DISPOSITION,
-                        "inline; filename=\"" + storageName + "\""
-                )
+                .header(HttpHeaders.CONTENT_DISPOSITION, disposition.toString())
                 .contentType(mediaType)
                 .body(image);
     }
+
+//    @GetMapping("/report-images/{reportId}/{storageName}")
+//    public ResponseEntity<byte[]> getReportImage(
+//            @PathVariable Integer reportId,
+//            @PathVariable String storageName) {
+//
+//        byte[] image =
+//                webAppService.getReportImage(
+//                        reportId,
+//                        storageName
+//                );
+//
+//        if (image == null || image.length == 0) {
+//            return ResponseEntity.notFound().build();
+//        }
+//
+//        MediaType mediaType =
+//                MediaType.APPLICATION_OCTET_STREAM;
+//
+//        if (storageName.toLowerCase().endsWith(".jpg")
+//                || storageName.toLowerCase().endsWith(".jpeg")) {
+//
+//            mediaType = MediaType.IMAGE_JPEG;
+//
+//        } else if (storageName.toLowerCase().endsWith(".png")) {
+//
+//            mediaType = MediaType.IMAGE_PNG;
+//
+//        } else if (storageName.toLowerCase().endsWith(".gif")) {
+//
+//            mediaType = MediaType.IMAGE_GIF;
+//
+//        } else if (storageName.toLowerCase().endsWith(".webp")) {
+//
+//            mediaType =
+//                    MediaType.parseMediaType("image/webp");
+//        }
+//
+//        return ResponseEntity.ok()
+//                .header(
+//                        HttpHeaders.CONTENT_DISPOSITION,
+//                        "inline; filename=\"" + storageName + "\""
+//                )
+//                .contentType(mediaType)
+//                .body(image);
+//    }
 }

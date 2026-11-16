@@ -137,16 +137,19 @@ public class WebAppService {
         );
     }
 
-    public byte[] getReportImage(
-            Integer reportId,
-            String storageName) {
+//    public byte[] getReportImage(
+//            Integer reportId,
+//            String storageName) {
+//
+//        return patientserviceFeignClient.getReportImage(
+//                reportId,
+//                storageName
+//        );
+//    }
 
-        return patientserviceFeignClient.getReportImage(
-                reportId,
-                storageName
-        );
+    public byte[] getReportImage(Integer reportId, String imageId) {
+        return patientserviceFeignClient.getReportImage(reportId, imageId);
     }
-
 
 
     public String uploadReportImage(

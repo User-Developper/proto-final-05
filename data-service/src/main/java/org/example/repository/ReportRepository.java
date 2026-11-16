@@ -15,4 +15,7 @@ public interface ReportRepository extends JpaRepository<Report, Integer>, JpaSpe
     List<Report> findByUserId(Long userId);
 
 
+
 }
+
+
