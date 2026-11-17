@@ -51,6 +51,9 @@ public class SecurityConfiguration {
                                 "report-images/**",
                                 "/css/**",
                                 "/images/**",
+                                "/conditions-utilisation",
+                                "/politique-confidentialite",
+                                "/regal.css/**",
                                 "/js/**"
                         ).permitAll()
                         .anyRequest().authenticated()

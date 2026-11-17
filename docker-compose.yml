@@ -1,14 +1,11 @@
-
 services:
-
-
 
 
   patient-service:
     image: devocin08/patient-service
     mem_limit: 700m
     ports:
-      - "8081:8082"
+      - "8086:8082"
     networks:
       - healthcare-app
     depends_on:
@@ -22,60 +19,60 @@ services:
         window: 120s
     environment:
       SPRING_PROFILES_ACTIVE: default
-#      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
+      #      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
       SPRING_CLOUD_CONSUL_HOST: consul
       MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: "*"
       MANAGEMENT_ENDPOINT_HEALTH_SHOW_DETAILS: "always"
-      SPRING_DATASOURCE_URL: "jdbc:mysql://mysql-medical:3306/medical_db"
+      SPRING_DATASOURCE_URL: "jdbc:mysql://mysql-echovoce:3306/echovoce_db"
 
-#  data-service:
-#    image: devocin08/data-service
-#    mem_limit: 700m
-#    ports:
-#      - "8081:8085"
-#    networks:
-#      - healthcare-app
-#    depends_on:
-#      - consul
-#
-#    deploy:
-#      restart_policy:
-#        condition: on-failure
-#        delay: 5s
-#        max_attempts: 3
-#        window: 120s
-#    environment:
-#      SPRING_PROFILES_ACTIVE: default
-#      #      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
-#      SPRING_CLOUD_CONSUL_HOST: consul
-#      MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: "*"
-#      MANAGEMENT_ENDPOINT_HEALTH_SHOW_DETAILS: "always"
-#      SPRING_DATASOURCE_URL: "jdbc:mysql://mysql-medical:3306/medical_db"
+  data-service:
+    image: devocin08/data-service
+    mem_limit: 700m
+    ports:
+      - "8089:8085"
+    networks:
+      - healthcare-app
+    depends_on:
+      - consul
+
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    environment:
+      SPRING_PROFILES_ACTIVE: default
+      #      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
+      SPRING_CLOUD_CONSUL_HOST: consul
+      MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: "*"
+      MANAGEMENT_ENDPOINT_HEALTH_SHOW_DETAILS: "always"
+      SPRING_DATASOURCE_URL: "jdbc:mysql://mysql-echovoce:3306/echovoce_db"
 
 
   web-app:
     image: devocin08/web-app
     mem_limit: 700m
     ports:
-      - "8084:8083"
+      - "8084:8088"
     networks:
       - healthcare-app
     depends_on:
       - patient-service
       - consul
 
-#    deploy:
-#      restart_policy:
-#        condition: on-failure
-#        delay: 5s
-#        max_attempts: 3
-#        window: 120s
+    #    deploy:
+    #      restart_policy:
+    #        condition: on-failure
+    #        delay: 5s
+    #        max_attempts: 3
+    #        window: 120s
     environment:
-        SPRING_PROFILES_ACTIVE: default
-        #      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
-        SPRING_CLOUD_CONSUL_HOST: consul
-        MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: "*"
-        MANAGEMENT_ENDPOINT_HEALTH_SHOW_DETAILS: "always"
+      SPRING_PROFILES_ACTIVE: default
+      #      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
+      SPRING_CLOUD_CONSUL_HOST: consul
+      MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: "*"
+      MANAGEMENT_ENDPOINT_HEALTH_SHOW_DETAILS: "always"
 
 
   consul:
@@ -86,14 +83,14 @@ services:
     command: "agent -dev -client=0.0.0.0"
     networks:
       - healthcare-app
-#    healthcheck:
-#      test: "curl --fail --silent localhost:8500/v1/status/leader | grep . || exit 1"
-#      interval: 10s
-#      timeout: 5s
-#      retries: 10
-#      start_period: 10s
-#    depends_on:
-#      -
+    #    healthcheck:
+    #      test: "curl --fail --silent localhost:8500/v1/status/leader | grep . || exit 1"
+    #      interval: 10s
+    #      timeout: 5s
+    #      retries: 10
+    #      start_period: 10s
+    #    depends_on:
+    #      -
     deploy:
       restart_policy:
         condition: on-failure
@@ -108,7 +105,7 @@ services:
 
   mysql:
     image: mysql:8.0
-    container_name: mysql-medical
+    container_name: mysql-echovoce
     mem_limit: 700m
     restart: always
 
@@ -123,9 +120,9 @@ services:
 
     environment:
       MYSQL_ROOT_PASSWORD: mddb
-      MYSQL_DATABASE: medical_db
-#      MYSQL_USER: medical_user
-#      MYSQL_PASSWORD: medical_pass
+      MYSQL_DATABASE: echovoce_db
+  #      MYSQL_USER: medical_user
+  #      MYSQL_PASSWORD: medical_pass
 
 
   mongodb:

@@ -1,12 +1,12 @@
 server:
   port: 8085
+
 spring:
   application:
     name: "data-service"
 
   datasource:
-    url: jdbc:mysql://localhost:3308/medical_db
-
+    url: jdbc:mysql://mysql-echovoce:3306/echovoce_db
     username: root
     password: mddb
 
@@ -17,25 +17,20 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
+
   sql:
     init:
       mode: always
 
   cloud:
     consul:
-      host: localhost
+      host: consul
       port: 8500
       discovery:
         enabled: true
         health-check-path: /actuator/health
         health-check-interval: 15s
 
-
   app:
     upload:
       directory: uploads/reports
-
-
-
-
-

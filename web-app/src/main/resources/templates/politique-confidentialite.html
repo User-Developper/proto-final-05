@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="fr"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#20252B">
+
+    <title>Politique de confidentialité | EchoVOCE</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <link rel="stylesheet"
+          th:href="@{/css/legal.css}">
+</head>
+
+<body>
+
+<header class="legal-header">
+    <div class="legal-header-inner">
+
+        <a th:href="@{/}" class="legal-brand">
+            <span class="legal-brand-icon">
+                <i class="fa-solid fa-earth-europe"></i>
+            </span>
+
+            <span>EchoVOCE</span>
+        </a>
+
+        <a th:href="@{/signin}" class="back-link">
+            <i class="fa-solid fa-arrow-left"></i>
+            Retour à la connexion
+        </a>
+
+    </div>
+</header>
+
+<main class="legal-main">
+
+    <div class="legal-container">
+
+        <div class="legal-intro">
+            <span class="legal-eyebrow">Protection des données</span>
+
+            <h1>Politique de confidentialité</h1>
+
+            <p>
+                Cette politique explique comment EchoVOCE collecte,
+                utilise et protège les données personnelles des utilisateurs.
+            </p>
+
+            <span class="legal-update">
+                Dernière mise à jour : [date à compléter]
+            </span>
+        </div>
+
+        <article class="legal-card">
+
+            <div class="legal-notice">
+                <i class="fa-solid fa-shield-halved"></i>
+
+                <p>
+                    La protection des données personnelles constitue
+                    un engagement important. Les traitements décrits
+                    ci-dessous doivent être adaptés aux fonctionnalités
+                    réellement mises en œuvre sur EchoVOCE.
+                </p>
+            </div>
+
+            <section class="legal-section">
+                <h2>1. Responsable du traitement</h2>
+
+                <p>
+                    Le responsable du traitement des données personnelles
+                    est :
+                </p>
+
+                <div class="legal-information">
+                    <p><strong>Responsable :</strong> [Nom ou organisme]</p>
+                    <p><strong>Adresse :</strong> [Adresse à compléter]</p>
+                    <p><strong>Contact :</strong> [Adresse électronique à compléter]</p>
+                </div>
+            </section>
+
+            <section class="legal-section">
+                <h2>2. Données personnelles collectées</h2>
+
+                <p>
+                    Selon les fonctionnalités utilisées, EchoVOCE peut
+                    traiter les catégories de données suivantes :
+                </p>
+
+                <ul>
+                    <li>
+                        <strong>Données de compte :</strong>
+                        nom d'utilisateur, prénom et adresse électronique,
+                        si ces informations sont demandées lors de l'inscription.
+                    </li>
+                    <li>
+                        <strong>Données d'authentification :</strong>
+                        mot de passe stocké sous une forme protégée,
+                        ainsi que les informations techniques nécessaires
+                        à la gestion de la connexion.
+                    </li>
+                    <li>
+                        <strong>Données de signalement :</strong>
+                        titre, description, catégorie, niveau de gravité
+                        et statut du signalement.
+                    </li>
+                    <li>
+                        <strong>Données de localisation :</strong>
+                        adresse ou coordonnées géographiques associées
+                        à un signalement.
+                    </li>
+                    <li>
+                        <strong>Fichiers transmis :</strong>
+                        photographies et autres pièces jointes
+                        éventuellement associées aux signalements.
+                    </li>
+                    <li>
+                        <strong>Données techniques :</strong>
+                        informations nécessaires au fonctionnement,
+                        à la sécurité et au diagnostic de la plateforme,
+                        lorsqu'elles sont effectivement enregistrées.
+                    </li>
+                </ul>
+            </section>
+
+            <section class="legal-section">
+                <h2>3. Finalités des traitements</h2>
+
+                <p>Les données peuvent être utilisées pour :</p>
+
+                <ul>
+                    <li>Créer et gérer les comptes utilisateurs.</li>
+                    <li>Permettre l'authentification et sécuriser les accès.</li>
+                    <li>Enregistrer et gérer les signalements environnementaux.</li>
+                    <li>Afficher les signalements et leur localisation.</li>
+                    <li>Permettre le suivi de l'évolution des signalements.</li>
+                    <li>Gérer les demandes adressées au responsable de la plateforme.</li>
+                    <li>Assurer la maintenance et la sécurité du service.</li>
+                </ul>
+            </section>
+
+            <section class="legal-section">
+                <h2>4. Bases légales des traitements</h2>
+
+                <p>
+                    Chaque traitement doit reposer sur une base légale
+                    prévue par le Règlement général sur la protection
+                    des données (RGPD).
+                </p>
+
+                <p>Selon les traitements effectivement réalisés, les bases légales peuvent notamment être :</p>
+
+                <ul>
+                    <li>
+                        <strong>Le consentement :</strong>
+                        lorsque l'utilisateur accepte un traitement
+                        qui nécessite son accord.
+                    </li>
+                    <li>
+                        <strong>L'exécution d'un contrat :</strong>
+                        lorsque le traitement est nécessaire à la
+                        fourniture d'un service demandé par l'utilisateur.
+                    </li>
+                    <li>
+                        <strong>L'intérêt légitime :</strong>
+                        notamment pour assurer la sécurité et le bon
+                        fonctionnement de la plateforme, sous réserve
+                        de respecter les droits des personnes.
+                    </li>
+                </ul>
+
+                <p>
+                    La base légale applicable doit être déterminée
+                    pour chaque finalité avant la mise en production.
+                </p>
+            </section>
+
+            <section class="legal-section">
+                <h2>5. Destinataires des données</h2>
+
+                <p>
+                    Les données sont accessibles uniquement aux personnes
+                    et organismes qui en ont besoin pour les finalités
+                    prévues.
+                </p>
+
+                <p>
+                    Selon l'organisation du service, il peut s'agir
+                    des personnes habilitées à administrer la plateforme,
+                    de ses responsables techniques et de ses prestataires
+                    intervenant dans l'hébergement ou la maintenance.
+                </p>
+
+                <p>
+                    Les données ne doivent pas être communiquées à des
+                    tiers à des fins commerciales sans base légale
+                    appropriée.
+                </p>
+            </section>
+
+            <section class="legal-section">
+                <h2>6. Durée de conservation</h2>
+
+                <p>
+                    Les données personnelles sont conservées pendant
+                    une durée limitée, déterminée en fonction de leur
+                    finalité et des obligations légales applicables.
+                </p>
+
+                <div class="legal-table-wrapper">
+                    <table class="legal-table">
+                        <thead>
+                        <tr>
+                            <th>Catégorie de données</th>
+                            <th>Durée de conservation</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <tr>
+                            <td>Données de compte</td>
+                            <td>[Durée à définir]</td>
+                        </tr>
+                        <tr>
+                            <td>Données de signalement</td>
+                            <td>[Durée à définir]</td>
+                        </tr>
+                        <tr>
+                            <td>Photographies et pièces jointes</td>
+                            <td>[Durée à définir]</td>
+                        </tr>
+                        <tr>
+                            <td>Données techniques et journaux</td>
+                            <td>[Durée à définir]</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <p>
+                    À l'issue de ces durées, les données sont supprimées,
+                    anonymisées ou archivées lorsque la réglementation
+                    le permet ou l'impose.
+                </p>
+            </section>
+
+            <section class="legal-section">
+                <h2>7. Sécurité des données</h2>
+
+                <p>
+                    EchoVOCE met en œuvre des mesures techniques et
+                    organisationnelles destinées à protéger les données
+                    personnelles contre les accès non autorisés,
+                    la perte, l'altération ou la divulgation.
+                </p>
+
+                <p>Ces mesures peuvent notamment comprendre :</p>
+
+                <ul>
+                    <li>La protection des accès par authentification.</li>
+                    <li>Le stockage sécurisé des mots de passe sous forme hachée.</li>
+                    <li>La limitation des accès aux personnes habilitées.</li>
+                    <li>La sécurisation des échanges réseau lorsque le service est déployé en HTTPS.</li>
+                    <li>La protection des bases de données et des fichiers transmis.</li>
+                    <li>La mise en place de sauvegardes et de mesures de surveillance adaptées.</li>
+                </ul>
+            </section>
+
+            <section class="legal-section">
+                <h2>8. Cookies et traceurs</h2>
+
+                <p>
+                    La plateforme peut utiliser des cookies ou des
+                    mécanismes similaires nécessaires au fonctionnement
+                    du service, notamment pour la gestion des sessions
+                    et l'authentification.
+                </p>
+
+                <p>
+                    Les éventuels cookies non essentiels doivent faire
+                    l'objet d'une information spécifique et, lorsque
+                    la réglementation l'exige, d'un consentement préalable.
+                </p>
+
+                <p>
+                    Les cookies réellement utilisés et leurs finalités
+                    doivent être précisés dans cette rubrique avant
+                    la mise en production.
+                </p>
+            </section>
+
+            <section class="legal-section">
+                <h2>9. Droits des utilisateurs</h2>
+
+                <p>
+                    Conformément au RGPD et à la réglementation applicable,
+                    les utilisateurs disposent, selon les conditions
+                    prévues par la loi, des droits suivants :
+                </p>
+
+                <ul>
+                    <li><strong>Droit d'accès :</strong> obtenir des informations sur les données traitées et en
+                        recevoir une copie.
+                    </li>
+                    <li><strong>Droit de rectification :</strong> demander la correction de données inexactes ou
+                        incomplètes.
+                    </li>
+                    <li><strong>Droit à l'effacement :</strong> demander la suppression de données dans les cas prévus
+                        par la réglementation.
+                    </li>
+                    <li><strong>Droit à la limitation :</strong> demander la suspension temporaire de certains
+                        traitements.
+                    </li>
+                    <li><strong>Droit d'opposition :</strong> s'opposer à certains traitements dans les conditions
+                        prévues par le RGPD.
+                    </li>
+                    <li><strong>Droit à la portabilité :</strong> recevoir certaines données dans un format structuré
+                        lorsque ce droit s'applique.
+                    </li>
+                    <li><strong>Droit de retirer son consentement :</strong> lorsque le traitement repose sur celui-ci.
+                    </li>
+                </ul>
+
+                <p>
+                    Pour exercer ces droits, l'utilisateur peut adresser
+                    sa demande à :
+                </p>
+
+                <p class="legal-placeholder">
+                    [Adresse électronique de contact à compléter]
+                </p>
+
+                <p>
+                    Une vérification de l'identité peut être demandée
+                    lorsque cela est nécessaire pour protéger les données
+                    contre une communication à une personne non autorisée.
+                </p>
+
+                <p>
+                    L'utilisateur peut également introduire une
+                    réclamation auprès de la Commission nationale
+                    de l'informatique et des libertés (CNIL).
+                </p>
+
+                <a href="https://www.cnil.fr/fr"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="external-link">
+                    Consulter le site de la CNIL
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                </a>
+            </section>
+
+            <section class="legal-section">
+                <h2>10. Transferts de données</h2>
+
+                <p>
+                    Les données personnelles sont hébergées et traitées
+                    dans les lieux indiqués par le responsable de la
+                    plateforme.
+                </p>
+
+                <p>
+                    Si des données sont transférées en dehors de
+                    l'Espace économique européen, ce transfert doit
+                    respecter les conditions prévues par le RGPD et
+                    être encadré par des garanties appropriées.
+                </p>
+
+                <p>
+                    Le lieu réel d'hébergement et les éventuels transferts
+                    doivent être précisés avant la mise en production.
+                </p>
+            </section>
+
+            <section class="legal-section">
+                <h2>11. Modification de la politique</h2>
+
+                <p>
+                    Cette politique peut être mise à jour pour refléter
+                    les évolutions de la plateforme, des traitements
+                    de données ou de la réglementation.
+                </p>
+
+                <p>
+                    La date de dernière mise à jour figure en haut
+                    de cette page.
+                </p>
+            </section>
+
+            <section class="legal-section">
+                <h2>12. Contact</h2>
+
+                <p>
+                    Pour toute question relative à la protection
+                    des données personnelles ou à cette politique,
+                    l'utilisateur peut contacter :
+                </p>
+
+                <p class="legal-placeholder">
+                    [Nom du responsable et adresse électronique à compléter]
+                </p>
+            </section>
+
+            <div class="legal-bottom">
+                <a th:href="@{/conditions-utilisation}">
+                    Consulter les conditions d'utilisation
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+
+        </article>
+
+    </div>
+
+</main>
+
+<footer class="legal-footer">
+    <div class="legal-footer-inner">
+        <span>© EchoVOCE</span>
+
+        <nav aria-label="Liens juridiques">
+            <a th:href="@{/conditions-utilisation}">
+                Conditions d'utilisation
+            </a>
+
+            <a th:href="@{/politique-confidentialite}">
+                Confidentialité
+            </a>
+        </nav>
+    </div>
+</footer>
+
+</body>
+</html>

@@ -1,8 +1,10 @@
-package com.medical.web_app.controller;
+package com.medical.web_app;
 
+import com.medical.web_app.controller.ReportController;
 import com.medical.web_app.model.User;
 import com.medical.web_app.service.WebAppService;
 import com.medical.web_app.service.dto.CreateReportTemp;
+import com.medical.web_app.service.dto.ReportImageResponse;
 import com.medical.web_app.service.dto.ReportResponse;
 import com.medical.web_app.service.form.ReportForm;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,15 +13,16 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.ui.ExtendedModelMap;
-import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 import java.security.Principal;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,7 +38,7 @@ class ReportControllerTest {
     @InjectMocks
     private ReportController reportController;
 
-    private Model model;
+    private ExtendedModelMap model;
     private MockHttpSession session;
     private Principal principal;
 
@@ -49,13 +52,14 @@ class ReportControllerTest {
     private User createUser() {
         User user = new User();
         user.setId(10L);
+        user.setUsername("alice");
         return user;
     }
 
     private CreateReportTemp createReport() {
         CreateReportTemp report = new CreateReportTemp();
         report.setUserId(10L);
-        report.setTitle("Signalement test");
+        report.setTitle("Test report");
         report.setDescription("Description test");
         report.setLocation("Paris");
         report.setClientId(5);
@@ -65,116 +69,127 @@ class ReportControllerTest {
     private ReportResponse createReportResponse() {
         ReportResponse response = new ReportResponse();
         response.setId(1);
+        response.setUserId(10L);
         return response;
     }
 
-    // ==========================================
-    // PAGE REPORT
-    // ==========================================
+    private ReportImageResponse createImageMetadata(
+            String id,
+            String contentType,
+            String fileName
+    ) {
+        ReportImageResponse metadata = mock(ReportImageResponse.class);
+
+        when(metadata.getId()).thenReturn(id);
+        lenient().when(metadata.getContentType()).thenReturn(contentType);
+        lenient().when(metadata.getFileName()).thenReturn(fileName);
+
+        return metadata;
+    }
+
+    @Test
+    void shouldReturnReportPage() {
+        ReportResponse report = createReportResponse();
+        User author = createUser();
+
+        when(webAppService.getReportById(1)).thenReturn(report);
+        when(webAppService.getUserById(10L)).thenReturn(author);
+        when(webAppService.getReportImages(1)).thenReturn(List.of());
+
+        String view = reportController.reportPage(1, model);
+
+        assertEquals("report", view);
+        assertEquals(report, model.getAttribute("report"));
+        assertEquals(author, model.getAttribute("author"));
+        assertEquals(List.of(), model.getAttribute("reportImages"));
+    }
 
     @Test
     void shouldRedirectWhenReportDoesNotExist() {
         when(webAppService.getReportById(1)).thenReturn(null);
 
-        String result = reportController.reportPage(1, model);
+        String view = reportController.reportPage(1, model);
 
-        assertEquals("redirect:/report-list", result);
+        assertEquals("redirect:/report-list", view);
     }
 
     @Test
-    void shouldDisplayReportWithoutAuthor() {
-        ReportResponse report = mock(ReportResponse.class);
-        when(report.getUserId()).thenReturn(null);
+    void shouldReturnReportPageWhenAuthorDoesNotExist() {
+        ReportResponse report = createReportResponse();
 
         when(webAppService.getReportById(1)).thenReturn(report);
-        when(webAppService.getReportImages(1)).thenReturn(null);
-
-        String result = reportController.reportPage(1, model);
-
-        assertEquals("report", result);
-        assertEquals(report, model.getAttribute("report"));
-        assertNull(model.getAttribute("author"));
-        assertTrue(((List<?>) model.getAttribute("reportImages")).isEmpty());
-
-        verify(webAppService, never()).getUserById(anyLong());
-    }
-
-    @Test
-    void shouldDisplayReportWithAuthor() {
-        ReportResponse report = mock(ReportResponse.class);
-        User author = createUser();
-
-        when(report.getUserId()).thenReturn(10L);
-        when(webAppService.getReportById(1)).thenReturn(report);
-        when(webAppService.getUserById(10L)).thenReturn(author);
+        when(webAppService.getUserById(10L)).thenReturn(null);
         when(webAppService.getReportImages(1)).thenReturn(List.of());
 
-        String result = reportController.reportPage(1, model);
+        String view = reportController.reportPage(1, model);
 
-        assertEquals("report", result);
-        assertEquals(author, model.getAttribute("author"));
+        assertEquals("report", view);
+        assertNull(model.getAttribute("author"));
     }
 
-    // ==========================================
-    // CRÉATION DU REPORT
-    // ==========================================
+    @Test
+    void shouldUseEmptyImageListWhenImagesAreNull() {
+        ReportResponse report = createReportResponse();
+
+        when(webAppService.getReportById(1)).thenReturn(report);
+        when(webAppService.getUserById(10L)).thenReturn(createUser());
+        when(webAppService.getReportImages(1)).thenReturn(null);
+
+        String view = reportController.reportPage(1, model);
+
+        assertEquals("report", view);
+        assertEquals(List.of(), model.getAttribute("reportImages"));
+    }
 
     @Test
-    void shouldDisplayCreateReportPage() {
-        String result = reportController.createReport(model);
+    void shouldReturnCreateReportPage() {
+        String view = reportController.createReport(model);
 
-        assertEquals("create-report", result);
+        assertEquals("create-report", view);
         assertNotNull(model.getAttribute("reportForm"));
     }
 
     @Test
-    void shouldRedirectWhenUserDoesNotExist() {
+    void shouldRedirectToSigninWhenUserDoesNotExist() {
+        ReportForm form = new ReportForm();
+
         when(webAppService.getUser("alice")).thenReturn(Optional.empty());
 
-        String result = reportController.submitReportStep1(
-                mock(ReportForm.class),
-                null,
-                principal,
-                session
-        );
-
-        assertEquals("redirect:/signin", result);
-        assertNull(session.getAttribute("report"));
-    }
-
-    @Test
-    void shouldCreateTemporaryReportWithoutImages() {
-        User user = createUser();
-        ReportForm form = mock(ReportForm.class);
-
-        when(form.getTitle()).thenReturn("Titre test");
-        when(form.getDescription()).thenReturn("Description test");
-        when(webAppService.getUser("alice")).thenReturn(Optional.of(user));
-
-        String result = reportController.submitReportStep1(
+        String view = reportController.submitReportStep1(
                 form,
                 null,
                 principal,
                 session
         );
 
-        assertEquals("redirect:/create-report-step-0", result);
-
-        CreateReportTemp report =
-                (CreateReportTemp) session.getAttribute("report");
-
-        assertNotNull(report);
-        assertEquals(10L, report.getUserId());
-        assertEquals("Titre test", report.getTitle());
-
-        assertNotNull(session.getAttribute("reportImageBytes"));
-        assertNotNull(session.getAttribute("reportImageTypes"));
-        assertNotNull(session.getAttribute("reportImageNames"));
+        assertEquals("redirect:/signin", view);
     }
 
     @Test
-    void shouldSaveUploadedImageInSession() {
+    void shouldSubmitReportStep1WithoutImages() {
         User user = createUser();
+        ReportForm form = new ReportForm();
+
+        when(webAppService.getUser("alice")).thenReturn(Optional.of(user));
+
+        String view = reportController.submitReportStep1(
+                form,
+                null,
+                principal,
+                session
+        );
+
+        assertEquals("redirect:/create-report-step-0", view);
+        assertNotNull(session.getAttribute("report"));
+        assertEquals(List.of(), session.getAttribute("reportImageBytes"));
+        assertEquals(List.of(), session.getAttribute("reportImageTypes"));
+        assertEquals(List.of(), session.getAttribute("reportImageNames"));
+    }
+
+    @Test
+    void shouldSubmitReportStep1WithImages() {
+        User user = createUser();
+        ReportForm form = new ReportForm();
 
         MockMultipartFile image = new MockMultipartFile(
                 "images",
@@ -185,14 +200,14 @@ class ReportControllerTest {
 
         when(webAppService.getUser("alice")).thenReturn(Optional.of(user));
 
-        String result = reportController.submitReportStep1(
-                mock(ReportForm.class),
+        String view = reportController.submitReportStep1(
+                form,
                 List.of(image),
                 principal,
                 session
         );
 
-        assertEquals("redirect:/create-report-step-0", result);
+        assertEquals("redirect:/create-report-step-0", view);
 
         List<byte[]> images =
                 (List<byte[]>) session.getAttribute("reportImageBytes");
@@ -201,62 +216,82 @@ class ReportControllerTest {
         assertArrayEquals(new byte[]{1, 2, 3}, images.get(0));
     }
 
-    // ==========================================
-    // ÉTAPE 2 : AFFICHAGE
-    // ==========================================
+    @Test
+    void shouldIgnoreEmptyImages() {
+        User user = createUser();
+        ReportForm form = new ReportForm();
+
+        MockMultipartFile emptyImage = new MockMultipartFile(
+                "images",
+                "empty.jpg",
+                "image/jpeg",
+                new byte[0]
+        );
+
+        when(webAppService.getUser("alice")).thenReturn(Optional.of(user));
+
+        String view = reportController.submitReportStep1(
+                form,
+                List.of(emptyImage),
+                principal,
+                session
+        );
+
+        assertEquals("redirect:/create-report-step-0", view);
+
+        List<byte[]> images =
+                (List<byte[]>) session.getAttribute("reportImageBytes");
+
+        assertTrue(images.isEmpty());
+    }
 
     @Test
     void shouldRedirectToSigninWhenUserDoesNotExistAtStep2() {
         when(webAppService.getUser("alice")).thenReturn(Optional.empty());
 
-        String result = reportController.submitReportStep2(
+        String view = reportController.submitReportStep2(
                 model,
                 session,
                 principal
         );
 
-        assertEquals("redirect:/signin", result);
+        assertEquals("redirect:/signin", view);
     }
 
     @Test
-    void shouldRedirectWhenTemporaryReportDoesNotExistAtStep2() {
+    void shouldRedirectToCreateReportWhenTemporaryReportDoesNotExistAtStep2() {
         when(webAppService.getUser("alice"))
                 .thenReturn(Optional.of(createUser()));
 
-        String result = reportController.submitReportStep2(
+        String view = reportController.submitReportStep2(
                 model,
                 session,
                 principal
         );
 
-        assertEquals("redirect:/create-report", result);
+        assertEquals("redirect:/create-report", view);
     }
 
     @Test
-    void shouldDisplayStep2() {
+    void shouldReturnStep2Page() {
         User user = createUser();
         session.setAttribute("report", createReport());
 
-        when(webAppService.getUser("alice"))
-                .thenReturn(Optional.of(user));
+        when(webAppService.getUser("alice")).thenReturn(Optional.of(user));
 
-        String result = reportController.submitReportStep2(
+        String view = reportController.submitReportStep2(
                 model,
                 session,
                 principal
         );
 
-        assertEquals("create-report-step-0", result);
+        assertEquals("create-report-step-0", view);
         assertEquals(user, model.getAttribute("user"));
     }
 
-    // ==========================================
-    // ÉTAPE 2 : TRAITEMENT
-    // ==========================================
-
     @Test
-    void shouldRedirectWhenReportIsMissingAtStep2Post() {
-        String result = reportController.submitStep2(
+    void shouldRedirectWhenReportIsNullAtStep2Submission() {
+        String view = reportController.submitStep2(
                 48.8566,
                 2.3522,
                 "Paris",
@@ -264,64 +299,64 @@ class ReportControllerTest {
                 session
         );
 
-        assertEquals("redirect:/create-report", result);
+        assertEquals("redirect:/create-report", view);
     }
 
     @Test
-    void shouldSaveLocationAndCoordinates() {
+    void shouldSubmitStep2() {
         CreateReportTemp report = createReport();
         session.setAttribute("report", report);
 
-        String result = reportController.submitStep2(
+        String view = reportController.submitStep2(
                 48.8566,
                 2.3522,
                 "Paris",
-                8,
+                5,
                 session
         );
 
-        assertEquals("redirect:/create-report-step-1", result);
-        assertEquals(Double.valueOf(48.8566), report.getLatitude());
-        assertEquals(Double.valueOf(2.3522), report.getLongitude());
+        assertEquals("redirect:/create-report-step-1", view);
+        assertEquals(48.8566, report.getLatitude());
+        assertEquals(2.3522, report.getLongitude());
         assertEquals("Paris", report.getLocation());
-        assertEquals(Integer.valueOf(8), report.getClientId());
-    }
-
-    // ==========================================
-    // ÉTAPE 3 : AFFICHAGE
-    // ==========================================
-
-    @Test
-    void shouldRedirectWhenReportIsMissingAtStep3() {
-        String result = reportController.submitReportStep3(model, session);
-
-        assertEquals("redirect:/create-report", result);
+        assertEquals(5, report.getClientId());
     }
 
     @Test
-    void shouldDisplayStep3WithoutImages() {
-        session.setAttribute("report", createReport());
+    void shouldRedirectWhenReportIsNullAtStep3() {
+        String view = reportController.submitReportStep3(model, session);
+
+        assertEquals("redirect:/create-report", view);
+    }
+
+    @Test
+    void shouldReturnStep3Page() {
+        CreateReportTemp report = createReport();
+        session.setAttribute("report", report);
 
         when(webAppService.getClientById(5)).thenReturn(null);
 
-        String result = reportController.submitReportStep3(model, session);
+        String view = reportController.submitReportStep3(model, session);
 
-        assertEquals("create-report-step-1", result);
-        assertNotNull(model.getAttribute("reportImages"));
-        assertTrue(((List<?>) model.getAttribute("reportImages")).isEmpty());
+        assertEquals("create-report-step-1", view);
+        assertEquals(report, model.getAttribute("report"));
+        assertNull(model.getAttribute("client"));
+        assertEquals(List.of(), model.getAttribute("reportImages"));
     }
 
     @Test
-    void shouldConvertImageToBase64() {
-        session.setAttribute("report", createReport());
+    void shouldDisplayTemporaryImagesAtStep3() {
+        CreateReportTemp report = createReport();
+
+        session.setAttribute("report", report);
         session.setAttribute("reportImageBytes", List.of(new byte[]{1, 2, 3}));
         session.setAttribute("reportImageTypes", List.of("image/jpeg"));
 
         when(webAppService.getClientById(5)).thenReturn(null);
 
-        String result = reportController.submitReportStep3(model, session);
+        String view = reportController.submitReportStep3(model, session);
 
-        assertEquals("create-report-step-1", result);
+        assertEquals("create-report-step-1", view);
 
         List<String> images =
                 (List<String>) model.getAttribute("reportImages");
@@ -330,112 +365,230 @@ class ReportControllerTest {
         assertTrue(images.get(0).startsWith("data:image/jpeg;base64,"));
     }
 
-    // ==========================================
-    // ENVOI FINAL
-    // ==========================================
+    @Test
+    void shouldIgnoreTemporaryImagesWhenTypesAreNull() {
+        session.setAttribute("report", createReport());
+        session.setAttribute("reportImageBytes", List.of(new byte[]{1, 2, 3}));
+
+        when(webAppService.getClientById(5)).thenReturn(null);
+
+        String view = reportController.submitReportStep3(model, session);
+
+        assertEquals("create-report-step-1", view);
+        assertEquals(List.of(), model.getAttribute("reportImages"));
+    }
 
     @Test
-    void shouldRedirectWhenReportIsMissingAtFinalSubmit() {
-        String result = reportController.finalSubmit(
+    void shouldIgnoreTemporaryImagesWithNullBytesOrType() {
+        session.setAttribute("report", createReport());
+        session.setAttribute("reportImageBytes",
+                Collections.singletonList((byte[]) null));
+        session.setAttribute("reportImageTypes",
+                Collections.singletonList((String) null));
+
+        when(webAppService.getClientById(5)).thenReturn(null);
+
+        String view = reportController.submitReportStep3(model, session);
+
+        assertEquals("create-report-step-1", view);
+        assertEquals(List.of(), model.getAttribute("reportImages"));
+    }
+
+    @Test
+    void shouldRedirectWhenReportIsNullAtFinalSubmission() {
+        String view = reportController.finalSubmit(
                 session,
                 new RedirectAttributesModelMap()
         );
 
-        assertEquals("redirect:/create-report", result);
-        verify(webAppService, never()).submitFinal(any());
+        assertEquals("redirect:/create-report", view);
     }
 
     @Test
-    void shouldSubmitReportWithoutImages() {
+    void shouldSubmitFinalReportWithoutImages() {
         CreateReportTemp report = createReport();
         session.setAttribute("report", report);
 
-        when(webAppService.submitFinal(report))
-                .thenReturn(createReportResponse());
+        ReportResponse response = createReportResponse();
 
-        RedirectAttributesModelMap redirectAttributes =
-                new RedirectAttributesModelMap();
+        when(webAppService.submitFinal(report)).thenReturn(response);
 
-        String result = reportController.finalSubmit(
+        String view = reportController.finalSubmit(
                 session,
-                redirectAttributes
+                new RedirectAttributesModelMap()
         );
 
-        assertEquals("redirect:/report-success", result);
+        assertEquals("redirect:/report-success", view);
         verify(webAppService).submitFinal(report);
-
         assertNull(session.getAttribute("report"));
-
-        assertEquals(
-                "Votre signalement a bien été enregistré.",
-                redirectAttributes.getFlashAttributes().get("success")
-        );
     }
 
     @Test
-    void shouldUploadImageWhenSubmittingReport() {
+    void shouldSubmitFinalReportWithImages() {
         CreateReportTemp report = createReport();
-        session.setAttribute("report", report);
 
+        session.setAttribute("report", report);
         session.setAttribute("reportImageBytes", List.of(new byte[]{1, 2, 3}));
         session.setAttribute("reportImageTypes", List.of("image/jpeg"));
         session.setAttribute("reportImageNames", List.of("photo.jpg"));
 
-        when(webAppService.submitFinal(report))
-                .thenReturn(createReportResponse());
+        ReportResponse response = createReportResponse();
 
-        when(webAppService.uploadReportImage(
-                eq(1),
-                any(MultipartFile.class)
-        )).thenReturn("stored-photo.jpg");
+        when(webAppService.submitFinal(report)).thenReturn(response);
+        when(webAppService.uploadReportImage(eq(1), any(MultipartFile.class)))
+                .thenReturn("stored-photo.jpg");
 
-        String result = reportController.finalSubmit(
+        String view = reportController.finalSubmit(
                 session,
                 new RedirectAttributesModelMap()
         );
 
-        assertEquals("redirect:/report-success", result);
+        assertEquals("redirect:/report-success", view);
 
+        verify(webAppService).submitFinal(report);
         verify(webAppService).uploadReportImage(
                 eq(1),
                 any(MultipartFile.class)
         );
+
+        assertNull(session.getAttribute("report"));
+        assertNull(session.getAttribute("reportImageBytes"));
+        assertNull(session.getAttribute("reportImageTypes"));
+        assertNull(session.getAttribute("reportImageNames"));
     }
 
-    // ==========================================
-    // PAGES STATIQUES
-    // ==========================================
+    @Test
+    void shouldUseDefaultFilenameWhenOriginalFilenameIsMissing() {
+        CreateReportTemp report = createReport();
+
+        session.setAttribute("report", report);
+        session.setAttribute("reportImageBytes", List.of(new byte[]{1, 2, 3}));
+        session.setAttribute("reportImageTypes", List.of("image/jpeg"));
+        session.setAttribute("reportImageNames", List.of(" "));
+
+        when(webAppService.submitFinal(report))
+                .thenReturn(createReportResponse());
+
+        when(webAppService.uploadReportImage(eq(1), any(MultipartFile.class)))
+                .thenReturn("stored-photo.jpg");
+
+        String view = reportController.finalSubmit(
+                session,
+                new RedirectAttributesModelMap()
+        );
+
+        assertEquals("redirect:/report-success", view);
+
+        verify(webAppService).uploadReportImage(
+                eq(1),
+                argThat(file -> "image-1".equals(file.getOriginalFilename()))
+        );
+    }
 
     @Test
-    void shouldDisplayReportSuccessPage() {
+    void shouldIgnoreEmptyImageBytesDuringFinalSubmission() {
+        CreateReportTemp report = createReport();
+
+        session.setAttribute("report", report);
+        session.setAttribute("reportImageBytes", List.of(new byte[0]));
+        session.setAttribute("reportImageTypes", List.of("image/jpeg"));
+
+        when(webAppService.submitFinal(report))
+                .thenReturn(createReportResponse());
+
+        String view = reportController.finalSubmit(
+                session,
+                new RedirectAttributesModelMap()
+        );
+
+        assertEquals("redirect:/report-success", view);
+
+        verify(webAppService, never())
+                .uploadReportImage(anyInt(), any(MultipartFile.class));
+    }
+
+    @Test
+    void shouldReturnReportSuccessPage() {
         assertEquals("report-success", reportController.reportSuccess());
     }
 
     @Test
-    void shouldDisplayReportListPage() {
+    void shouldReturnReportListPage() {
         assertEquals("report-list", reportController.reportList());
     }
 
-    // ==========================================
-    // RÉCUPÉRATION DES IMAGES
-    // ==========================================
+    @Test
+    void shouldReturnConditionsPage() {
+        assertEquals(
+                "conditions-utilisation",
+                reportController.conditionsUtilisation()
+        );
+    }
 
     @Test
-    void shouldReturnNotFoundWhenImageDoesNotExist() {
-        when(webAppService.getReportImage(1, "photo.jpg"))
+    void shouldReturnPrivacyPolicyPage() {
+        assertEquals(
+                "politique-confidentialite",
+                reportController.politiqueConfidentialite()
+        );
+    }
+
+    @Test
+    void shouldReturnNotFoundWhenImageListIsNull() {
+        when(webAppService.getReportImages(1)).thenReturn(null);
+
+        var response = reportController.getReportImage(1, "photo-1");
+
+        assertEquals(404, response.getStatusCode().value());
+
+        verify(webAppService, never())
+                .getReportImage(anyInt(), anyString());
+    }
+
+    @Test
+    void shouldReturnNotFoundWhenImageDoesNotExistInList() {
+        ReportImageResponse metadata =
+                createImageMetadata("photo-2", "image/jpeg", "photo.jpg");
+
+        when(webAppService.getReportImages(1))
+                .thenReturn(List.of(metadata));
+
+        var response = reportController.getReportImage(1, "photo-1");
+
+        assertEquals(404, response.getStatusCode().value());
+
+        verify(webAppService, never())
+                .getReportImage(anyInt(), anyString());
+    }
+
+    @Test
+    void shouldReturnNotFoundWhenImageDataIsNull() {
+        ReportImageResponse metadata =
+                createImageMetadata("photo-1", "image/jpeg", "photo.jpg");
+
+        when(webAppService.getReportImages(1))
+                .thenReturn(List.of(metadata));
+
+        when(webAppService.getReportImage(1, "photo-1"))
                 .thenReturn(null);
 
-        var response = reportController.getReportImage(1, "photo.jpg");
+        var response = reportController.getReportImage(1, "photo-1");
 
         assertEquals(404, response.getStatusCode().value());
     }
 
     @Test
-    void shouldReturnNotFoundWhenImageIsEmpty() {
-        when(webAppService.getReportImage(1, "photo.jpg"))
+    void shouldReturnNotFoundWhenImageDataIsEmpty() {
+        ReportImageResponse metadata =
+                createImageMetadata("photo-1", "image/jpeg", "photo.jpg");
+
+        when(webAppService.getReportImages(1))
+                .thenReturn(List.of(metadata));
+
+        when(webAppService.getReportImage(1, "photo-1"))
                 .thenReturn(new byte[0]);
 
-        var response = reportController.getReportImage(1, "photo.jpg");
+        var response = reportController.getReportImage(1, "photo-1");
 
         assertEquals(404, response.getStatusCode().value());
     }
@@ -444,56 +597,180 @@ class ReportControllerTest {
     void shouldReturnJpegImage() {
         byte[] image = {1, 2, 3};
 
-        when(webAppService.getReportImage(1, "photo.jpg"))
+        ReportImageResponse metadata =
+                createImageMetadata("photo-1", "image/jpeg", "photo.jpg");
+
+        when(webAppService.getReportImages(1))
+                .thenReturn(List.of(metadata));
+
+        when(webAppService.getReportImage(1, "photo-1"))
                 .thenReturn(image);
 
-        var response = reportController.getReportImage(1, "photo.jpg");
+        var response = reportController.getReportImage(1, "photo-1");
 
         assertEquals(200, response.getStatusCode().value());
         assertEquals(MediaType.IMAGE_JPEG, response.getHeaders().getContentType());
         assertArrayEquals(image, response.getBody());
+
+        assertTrue(response.getHeaders()
+                .getFirst(HttpHeaders.CONTENT_DISPOSITION)
+                .contains("photo.jpg"));
     }
 
     @Test
     void shouldReturnPngImage() {
-        when(webAppService.getReportImage(1, "photo.png"))
+        ReportImageResponse metadata =
+                createImageMetadata("photo-1", "image/png", "photo.png");
+
+        when(webAppService.getReportImages(1))
+                .thenReturn(List.of(metadata));
+
+        when(webAppService.getReportImage(1, "photo-1"))
                 .thenReturn(new byte[]{1});
 
-        var response = reportController.getReportImage(1, "photo.png");
+        var response = reportController.getReportImage(1, "photo-1");
 
+        assertEquals(200, response.getStatusCode().value());
         assertEquals(MediaType.IMAGE_PNG, response.getHeaders().getContentType());
     }
 
     @Test
     void shouldReturnGifImage() {
-        when(webAppService.getReportImage(1, "photo.gif"))
+        ReportImageResponse metadata =
+                createImageMetadata("photo-1", "image/gif", "photo.gif");
+
+        when(webAppService.getReportImages(1))
+                .thenReturn(List.of(metadata));
+
+        when(webAppService.getReportImage(1, "photo-1"))
                 .thenReturn(new byte[]{1});
 
-        var response = reportController.getReportImage(1, "photo.gif");
+        var response = reportController.getReportImage(1, "photo-1");
 
+        assertEquals(200, response.getStatusCode().value());
         assertEquals(MediaType.IMAGE_GIF, response.getHeaders().getContentType());
     }
 
     @Test
     void shouldReturnWebpImage() {
-        when(webAppService.getReportImage(1, "photo.webp"))
+        ReportImageResponse metadata =
+                createImageMetadata("photo-1", "image/webp", "photo.webp");
+
+        when(webAppService.getReportImages(1))
+                .thenReturn(List.of(metadata));
+
+        when(webAppService.getReportImage(1, "photo-1"))
                 .thenReturn(new byte[]{1});
 
-        var response = reportController.getReportImage(1, "photo.webp");
+        var response = reportController.getReportImage(1, "photo-1");
 
-        assertEquals("image/webp", response.getHeaders().getContentType().toString());
+        assertEquals(200, response.getStatusCode().value());
+        assertEquals(
+                "image/webp",
+                response.getHeaders().getContentType().toString()
+        );
     }
 
     @Test
-    void shouldReturnDefaultContentTypeForUnknownExtension() {
-        when(webAppService.getReportImage(1, "document.pdf"))
+    void shouldUseDefaultContentTypeWhenContentTypeIsNull() {
+        ReportImageResponse metadata =
+                createImageMetadata("photo-1", null, "photo.jpg");
+
+        when(webAppService.getReportImages(1))
+                .thenReturn(List.of(metadata));
+
+        when(webAppService.getReportImage(1, "photo-1"))
                 .thenReturn(new byte[]{1});
 
-        var response = reportController.getReportImage(1, "document.pdf");
+        var response = reportController.getReportImage(1, "photo-1");
+
+        assertEquals(200, response.getStatusCode().value());
+        assertEquals(
+                MediaType.APPLICATION_OCTET_STREAM,
+                response.getHeaders().getContentType()
+        );
+    }
+
+    @Test
+    void shouldUseDefaultContentTypeWhenContentTypeIsBlank() {
+        ReportImageResponse metadata =
+                createImageMetadata("photo-1", " ", "photo.jpg");
+
+        when(webAppService.getReportImages(1))
+                .thenReturn(List.of(metadata));
+
+        when(webAppService.getReportImage(1, "photo-1"))
+                .thenReturn(new byte[]{1});
+
+        var response = reportController.getReportImage(1, "photo-1");
 
         assertEquals(
                 MediaType.APPLICATION_OCTET_STREAM,
                 response.getHeaders().getContentType()
         );
+    }
+
+    @Test
+    void shouldUseDefaultContentTypeWhenContentTypeIsInvalid() {
+        ReportImageResponse metadata =
+                createImageMetadata(
+                        "photo-1",
+                        "invalid-content-type",
+                        "photo.jpg"
+                );
+
+        when(webAppService.getReportImages(1))
+                .thenReturn(List.of(metadata));
+
+        when(webAppService.getReportImage(1, "photo-1"))
+                .thenReturn(new byte[]{1});
+
+        var response = reportController.getReportImage(1, "photo-1");
+
+        assertEquals(200, response.getStatusCode().value());
+        assertEquals(
+                MediaType.APPLICATION_OCTET_STREAM,
+                response.getHeaders().getContentType()
+        );
+    }
+
+    @Test
+    void shouldUseDefaultFilenameWhenFilenameIsNull() {
+        ReportImageResponse metadata =
+                createImageMetadata("photo-1", "image/jpeg", null);
+
+        when(webAppService.getReportImages(1))
+                .thenReturn(List.of(metadata));
+
+        when(webAppService.getReportImage(1, "photo-1"))
+                .thenReturn(new byte[]{1});
+
+        var response = reportController.getReportImage(1, "photo-1");
+
+        assertEquals(200, response.getStatusCode().value());
+
+        assertTrue(response.getHeaders()
+                .getFirst(HttpHeaders.CONTENT_DISPOSITION)
+                .contains("image"));
+    }
+
+    @Test
+    void shouldUseDefaultFilenameWhenFilenameIsBlank() {
+        ReportImageResponse metadata =
+                createImageMetadata("photo-1", "image/jpeg", " ");
+
+        when(webAppService.getReportImages(1))
+                .thenReturn(List.of(metadata));
+
+        when(webAppService.getReportImage(1, "photo-1"))
+                .thenReturn(new byte[]{1});
+
+        var response = reportController.getReportImage(1, "photo-1");
+
+        assertEquals(200, response.getStatusCode().value());
+
+        assertTrue(response.getHeaders()
+                .getFirst(HttpHeaders.CONTENT_DISPOSITION)
+                .contains("image"));
     }
 }

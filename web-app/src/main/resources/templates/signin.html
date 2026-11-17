@@ -3,26 +3,18 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#20252B">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <title>Connexion | EchoVOCE</title>
 
-    <title>Connexion</title>
-
-
-    <!-- FONT AWESOME -->
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
-
-    <!-- CSS -->
     <link rel="stylesheet"
           th:href="@{/css/signin.css}">
-
 </head>
-
 
 <body>
 
@@ -30,185 +22,141 @@
 
     <main class="login-container">
 
-
-        <!-- IDENTITÉ DE L'APPLICATION -->
-        <div class="login-brand">
-
+        <a th:href="@{/}" class="login-brand" aria-label="Accueil EchoVOCE">
             <div class="brand-mark">
-                <span>●</span>
+                <i class="fa-solid fa-earth-europe"></i>
             </div>
 
-            <div class="brand-name">
-                Signalement
+            <span class="brand-name">EchoVOCE</span>
+            <span class="brand-baseline">Signaler. Suivre. Agir.</span>
+        </a>
+
+        <section class="login-card">
+
+            <div class="card-heading">
+                <h1>Connectez-vous</h1>
             </div>
 
-            <p class="brand-baseline">
-                Signaler. Suivre. Agir.
-            </p>
+            <form th:action="@{/signin}" method="post">
 
-        </div>
-
-
-        <!-- CARTE DE CONNEXION -->
-        <div class="login-card">
-
-
-            <!-- FORMULAIRE -->
-            <form th:action="@{/signin}"
-                  method="post">
-
-
-                <!-- NOM D'UTILISATEUR -->
                 <div class="form-group">
-
                     <label for="username">
-
                         Nom d'utilisateur
-
-                        <span>*</span>
-
+                        <span class="required">*</span>
                     </label>
 
-                    <input
-                            type="text"
-                            name="username"
-                            id="username"
-                            autocomplete="username"
-                    >
+                    <div class="input-wrapper">
+                        <i class="fa-regular fa-user input-icon"></i>
 
-                    <small
-                            class="error"
-                            id="usernameError">
-                    </small>
+                        <input
+                                type="text"
+                                name="username"
+                                id="username"
+                                placeholder="Votre nom d'utilisateur"
+                                autocomplete="username"
+                                required>
+                    </div>
 
+                    <small class="error" id="usernameError"></small>
                 </div>
 
-
-                <!-- MOT DE PASSE -->
                 <div class="form-group">
-
                     <label for="password">
-
                         Mot de passe
-
-                        <span>*</span>
-
+                        <span class="required">*</span>
                     </label>
 
-
-                    <div class="password-wrapper">
+                    <div class="input-wrapper password-wrapper">
+                        <i class="fa-solid fa-lock input-icon"></i>
 
                         <input
                                 type="password"
                                 name="password"
                                 id="password"
+                                placeholder="Votre mot de passe"
                                 autocomplete="current-password"
-                        >
+                                required>
 
                         <button
                                 type="button"
                                 class="password-toggle"
                                 id="passwordToggle"
-                                aria-label="Afficher le mot de passe"
-                        >
+                                aria-label="Afficher le mot de passe">
 
                             <i class="fa-regular fa-eye"></i>
-
                         </button>
-
                     </div>
 
-
-                    <small
-                            class="error"
-                            id="passwordError">
-                    </small>
-
+                    <small class="error" id="passwordError"></small>
                 </div>
 
+                <div class="form-options">
+                    <a href="#" id="forgotPassword">
+                        Mot de passe oublié ?
+                    </a>
+                </div>
 
-                <!-- BOUTON CONNEXION -->
-                <button
-                        type="submit"
-                        class="login-button"
-                >
-
-                    Se connecter
-
+                <button type="submit" class="login-button">
+                    <span>Se connecter</span>
+                    <i class="fa-solid fa-arrow-right"></i>
                 </button>
-
 
             </form>
 
+            <div th:if="${param.error}"
+                 class="error-box"
+                 role="alert">
 
-            <!-- ERREUR SERVEUR -->
-            <div
-                    th:if="${param.error}"
-                    class="error-box"
-            >
-
-                <span class="error-icon">
-                    !
-                </span>
+                <i class="fa-solid fa-circle-exclamation"></i>
 
                 <span>
-                    Nom d'utilisateur ou mot de passe incorrect
+                    Nom d'utilisateur ou mot de passe incorrect.
+                    Vérifiez vos identifiants et réessayez.
                 </span>
-
             </div>
 
-
-            <!-- MOT DE PASSE OUBLIÉ -->
-            <div class="forgot-password">
-
-                <a
-                        href="#"
-                        id="forgotPassword"
-                >
-
-                    Mot de passe oublié ?
-
-                </a>
-
-            </div>
-
-
-            <!-- INSCRIPTION -->
             <div class="register-section">
-
-                <p>
-                    Pas encore de compte ?
-                </p>
+                <span>Vous n'avez pas encore de compte ?</span>
 
                 <a th:href="@{/signup}">
-
                     Créer un compte
-
+                    <i class="fa-solid fa-arrow-right"></i>
                 </a>
-
             </div>
 
+        </section>
 
-        </div>
+        <footer class="login-footer">
 
+            <p>
+                Une plateforme citoyenne pour préserver
+                notre environnement.
+            </p>
 
-        <!-- TEXTE BAS DE PAGE -->
-        <p class="login-footer">
+            <nav class="legal-links" aria-label="Informations légales">
+                <a th:href="@{/conditions-utilisation}">
+                    Conditions d'utilisation
+                </a>
 
-            Une plateforme pour signaler et suivre les problèmes
-            de votre environnement.
+                <span class="legal-separator">·</span>
 
-        </p>
+                <a th:href="@{/politique-confidentialite}">
+                    Politique de confidentialité
+                </a>
+            </nav>
 
+            <span class="copyright">
+                © <span th:text="${#dates.year(#dates.createNow())}">2026</span>
+                EchoVOCE. Tous droits réservés.
+            </span>
+
+        </footer>
 
     </main>
 
 </div>
 
-
-<!-- JAVASCRIPT -->
 <script th:src="@{/js/signin.js}"></script>
 
 </body>
-
 </html>
