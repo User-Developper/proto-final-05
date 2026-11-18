@@ -6,7 +6,7 @@ spring:
     name: "patient-service"
 
   datasource:
-    url: jdbc:mysql://mysql-echovoce:3306/echovoce_db
+    url: jdbc:mysql://localhost:3308/echovoce_db
     username: root
     password: mddb
 
@@ -24,7 +24,7 @@ spring:
 
   cloud:
     consul:
-      host: consul
+      host: localhost
       port: 8500
       discovery:
         enabled: true

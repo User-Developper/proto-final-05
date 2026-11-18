@@ -2,14 +2,9 @@ package com.medical.web_app.service;
 
 import com.medical.web_app.model.*;
 import com.medical.web_app.service.dto.*;
-import com.medical.web_app.service.form.ReportForm;
 import com.medical.web_app.service.form.SignupForm;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestClient;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -20,14 +15,6 @@ public class WebAppService {
 
     private final PatientserviceFeignClient patientserviceFeignClient;
     private final PasswordEncoder passwordEncoder;
-
-
-
-
-
-
-
-
 
 
     public WebAppService(PatientserviceFeignClient patientserviceFeignClient, PasswordEncoder passwordEncoder) {
@@ -54,7 +41,6 @@ public class WebAppService {
     }
 
 
-
     public User createUser(SignupForm form) {
 
         User user = new User();
@@ -68,7 +54,6 @@ public class WebAppService {
 
         return patientserviceFeignClient.addUser(user);
     }
-
 
 
     public ReportResponse submitFinal(CreateReportTemp form) {
@@ -91,14 +76,13 @@ public class WebAppService {
     }
 
 
-
     public PageResponse<ReportResponse> getAllReports(int page, int size, Category category, Gravity gravity, String q) {
 
         return patientserviceFeignClient.getAllReports(page, size, category, gravity, q);
 
     }
 
-    public List<ProfessionalClient> getClientsForUser(User user){
+    public List<ProfessionalClient> getClientsForUser(User user) {
 
 
         return patientserviceFeignClient.getClientsForUser();
@@ -106,7 +90,7 @@ public class WebAppService {
 
     }
 
-    public List<ReportSummary> getReportsByUser(Long userId){
+    public List<ReportSummary> getReportsByUser(Long userId) {
 
         return patientserviceFeignClient.getReportsByUser(userId);
 
@@ -117,7 +101,7 @@ public class WebAppService {
         return patientserviceFeignClient.getReportById(reportId);
     }
 
-    public ProfessionalClient getClientById(Integer clientId){
+    public ProfessionalClient getClientById(Integer clientId) {
 
         return patientserviceFeignClient.getClientById(clientId);
 
@@ -164,6 +148,8 @@ public class WebAppService {
                 reportId,
                 image
         );
+
+
     }
 
 
@@ -180,29 +166,7 @@ public class WebAppService {
 //        report.setLongitude(form.getLongitude());
 //
 //        return patientserviceFeignClient.submitReportStep1(report);
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}
 
 
 //package com.medical.web_app.service;
