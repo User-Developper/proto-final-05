@@ -12,11 +12,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const passwordToggle = document.getElementById("passwordToggle");
 
-
-    /* =========================
-       VALIDATION DU FORMULAIRE
-       ========================= */
-
     form.addEventListener("submit", function (e) {
 
         let valid = true;
@@ -27,7 +22,6 @@ document.addEventListener("DOMContentLoaded", function () {
         username.style.border = "";
         password.style.border = "";
 
-
         if (!username.value.trim()) {
 
             usernameError.textContent = "Nom d'utilisateur obligatoire";
@@ -35,7 +29,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
             valid = false;
         }
-
 
         if (!password.value.trim()) {
 
@@ -45,24 +38,17 @@ document.addEventListener("DOMContentLoaded", function () {
             valid = false;
         }
 
-
         if (!valid) {
             e.preventDefault();
         }
 
     });
 
-
-    /* =========================
-       MOT DE PASSE VISIBLE
-       ========================= */
-
     if (passwordToggle) {
 
         passwordToggle.addEventListener("click", function () {
 
             const icon = passwordToggle.querySelector("i");
-
 
             if (password.type === "password") {
 
@@ -93,11 +79,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
     }
-
-
-    /* =========================
-       MOT DE PASSE OUBLIÉ
-       ========================= */
 
     if (forgotPassword) {
 

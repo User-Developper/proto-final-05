@@ -1,9 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-    /* =========================================================
-       ELEMENTS
-    ========================================================= */
-
     const searchInput =
         document.getElementById("searchInput");
 
@@ -28,32 +24,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const nextButton =
         document.getElementById("nextButton");
 
-
-    /* =========================================================
-       ACTIVE CLIENT
-    ========================================================= */
-
     const activeClient =
         window.activeClient || null;
-
-
-    /* =========================================================
-       MAP INITIALIZATION
-    ========================================================= */
-
-    /*
-     * Position par défaut si aucun client n'est disponible.
-     */
 
     let defaultLatitude = 45.603354;
     let defaultLongitude = 1.688334;
     let defaultZoom = 8;
-
-
-    /*
-     * Si un client actif existe,
-     * on utilise ses coordonnées.
-     */
 
     if (
         activeClient &&
@@ -79,7 +55,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-
     const map =
         L.map("map").setView(
             [
@@ -97,14 +72,11 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     ).addTo(map);
 
-
     let marker = null;
 
     let clientCircle = null;
 
     let searchTimeout = null;
-
-
 
     if (
         activeClient &&
@@ -118,12 +90,6 @@ document.addEventListener("DOMContentLoaded", function () {
         const clientLng =
             Number(activeClient.longitude);
 
-
-        /*
-         * Si un périmètre existe,
-         * on l'affiche autour du client.
-         */
-
         if (
             activeClient.perimeter != null &&
             Number(activeClient.perimeter) > 0
@@ -134,9 +100,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     [
                         clientLat,
                         clientLng
-
-
-
                     ],
                     {
                         radius:
@@ -153,14 +116,9 @@ document.addEventListener("DOMContentLoaded", function () {
                         fillOpacity: 0.08
                     }
                 )
-                .addTo(map);
+                    .addTo(map);
 
         }
-
-
-        /*
-         * Marqueur du client.
-         */
 
         L.marker(
             [
@@ -168,26 +126,20 @@ document.addEventListener("DOMContentLoaded", function () {
                 clientLng
             ]
         )
-        .addTo(map)
-        .bindPopup(
-            `
+            .addTo(map)
+            .bindPopup(
+                `
                 <strong>
                     ${escapeHtml(
-                        activeClient.name || "Client"
-                    )}
+                    activeClient.name || "Client"
+                )}
                 </strong>
                 <br>
                 ${escapeHtml(
                     activeClient.city || ""
                 )}
             `
-        );
-
-
-        /*
-         * On affiche le popup uniquement
-         * si le client existe.
-         */
+            );
 
         setTimeout(function () {
 
@@ -201,11 +153,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 300);
 
     }
-
-
-    /* =========================================================
-       FIND LAST MARKER
-    ========================================================= */
 
     function findLastMarker() {
 
@@ -222,16 +169,10 @@ document.addEventListener("DOMContentLoaded", function () {
         return lastMarker;
     }
 
-
-    /* =========================================================
-       REVERSE GEOCODING
-    ========================================================= */
-
     function reverseGeocode(lat, lng) {
 
         addressBox.textContent =
             "Recherche de l'adresse...";
-
 
         fetch(
             `https://nominatim.openstreetmap.org/reverse` +
@@ -239,52 +180,45 @@ document.addEventListener("DOMContentLoaded", function () {
             `&lat=${encodeURIComponent(lat)}` +
             `&lon=${encodeURIComponent(lng)}`
         )
-        .then(function (response) {
+            .then(function (response) {
 
-            if (!response.ok) {
-                throw new Error(
-                    "Erreur reverse geocoding"
-                );
-            }
+                if (!response.ok) {
+                    throw new Error(
+                        "Erreur reverse geocoding"
+                    );
+                }
 
-            return response.json();
+                return response.json();
 
-        })
-        .then(function (data) {
+            })
+            .then(function (data) {
 
-            const address =
-                data.display_name ||
-                "Adresse inconnue";
+                const address =
+                    data.display_name ||
+                    "Adresse inconnue";
 
+                addressBox.textContent =
+                    address;
 
-            addressBox.textContent =
-                address;
+                locationInput.value =
+                    address;
 
-            locationInput.value =
-                address;
+            })
+            .catch(function () {
 
-        })
-        .catch(function () {
+                addressBox.textContent =
+                    "Impossible de récupérer l'adresse.";
 
-            addressBox.textContent =
-                "Impossible de récupérer l'adresse.";
+                locationInput.value =
+                    "Position sélectionnée";
 
-            locationInput.value =
-                "Position sélectionnée";
-
-        });
+            });
     }
-
-
-    /* =========================================================
-       SET MARKER
-    ========================================================= */
 
     function setMarker(lat, lng) {
 
         lat = Number(lat);
         lng = Number(lng);
-
 
         if (
             Number.isNaN(lat) ||
@@ -293,21 +227,11 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-
-        /*
-         * Supprime l'ancien marqueur.
-         */
-
         if (marker) {
 
             map.removeLayer(marker);
 
         }
-
-
-        /*
-         * Crée le nouveau marqueur.
-         */
 
         marker =
             L.marker(
@@ -319,13 +243,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     draggable: true
                 }
             )
-            .addTo(map);
-
-
-        /*
-         * Centre la carte sur
-         * la position sélectionnée.
-         */
+                .addTo(map);
 
         map.setView(
             [
@@ -335,41 +253,19 @@ document.addEventListener("DOMContentLoaded", function () {
             16
         );
 
-
-        /*
-         * Stocke les coordonnées
-         * dans les champs cachés.
-         */
-
         latInput.value =
             lat;
 
         lngInput.value =
             lng;
 
-
-        /*
-         * Active le bouton Continuer.
-         */
-
         nextButton.disabled =
             false;
-
-
-        /*
-         * Récupère l'adresse.
-         */
 
         reverseGeocode(
             lat,
             lng
         );
-
-
-        /*
-         * Lorsque l'utilisateur
-         * déplace le marqueur.
-         */
 
         marker.on(
             "dragend",
@@ -388,11 +284,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     }
 
-
-    /* =========================================================
-       MAP CLICK
-    ========================================================= */
-
     map.on(
         "click",
         function (event) {
@@ -405,11 +296,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     );
 
-
-    /* =========================================================
-       SEARCH AUTOCOMPLETE
-    ========================================================= */
-
     searchInput.addEventListener(
         "input",
         function () {
@@ -418,10 +304,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 searchTimeout
             );
 
-
             const query =
                 this.value.trim();
-
 
             if (query.length < 3) {
 
@@ -430,7 +314,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 return;
             }
-
 
             searchTimeout =
                 setTimeout(
@@ -443,99 +326,93 @@ document.addEventListener("DOMContentLoaded", function () {
                             `&limit=5` +
                             `&addressdetails=1`
                         )
-                        .then(function (response) {
+                            .then(function (response) {
 
-                            if (!response.ok) {
-                                throw new Error(
-                                    "Erreur recherche"
-                                );
-                            }
+                                if (!response.ok) {
+                                    throw new Error(
+                                        "Erreur recherche"
+                                    );
+                                }
 
-                            return response.json();
+                                return response.json();
 
-                        })
-                        .then(function (data) {
+                            })
+                            .then(function (data) {
 
-                            suggestionsBox.innerHTML =
-                                "";
+                                suggestionsBox.innerHTML =
+                                    "";
 
+                                if (
+                                    !data ||
+                                    data.length === 0
+                                ) {
 
-                            if (
-                                !data ||
-                                data.length === 0
-                            ) {
+                                    const empty =
+                                        document.createElement(
+                                            "div"
+                                        );
 
-                                const empty =
-                                    document.createElement(
-                                        "div"
+                                    empty.className =
+                                        "suggestion-item";
+
+                                    empty.textContent =
+                                        "Aucun résultat";
+
+                                    suggestionsBox.appendChild(
+                                        empty
                                     );
 
-                                empty.className =
-                                    "suggestion-item";
+                                    return;
+                                }
 
-                                empty.textContent =
-                                    "Aucun résultat";
+                                data
+                                    .slice(0, 5)
+                                    .forEach(
+                                        function (item) {
 
-                                suggestionsBox.appendChild(
-                                    empty
-                                );
-
-                                return;
-                            }
-
-
-                            data
-                                .slice(0, 5)
-                                .forEach(
-                                    function (item) {
-
-                                        const div =
-                                            document.createElement(
-                                                "div"
-                                            );
-
-                                        div.className =
-                                            "suggestion-item";
-
-                                        div.textContent =
-                                            item.display_name;
-
-
-                                        div.addEventListener(
-                                            "click",
-                                            function () {
-
-                                                setMarker(
-                                                    item.lat,
-                                                    item.lon
+                                            const div =
+                                                document.createElement(
+                                                    "div"
                                                 );
 
+                                            div.className =
+                                                "suggestion-item";
 
-                                                searchInput.value =
-                                                    item.display_name;
+                                            div.textContent =
+                                                item.display_name;
 
+                                            div.addEventListener(
+                                                "click",
+                                                function () {
 
-                                                suggestionsBox.innerHTML =
-                                                    "";
+                                                    setMarker(
+                                                        item.lat,
+                                                        item.lon
+                                                    );
 
-                                            }
-                                        );
+                                                    searchInput.value =
+                                                        item.display_name;
 
+                                                    suggestionsBox.innerHTML =
+                                                        "";
 
-                                        suggestionsBox.appendChild(
-                                            div
-                                        );
+                                                }
+                                            );
 
-                                    }
-                                );
+                                            suggestionsBox.appendChild(
+                                                div
+                                            );
 
-                        })
-                        .catch(function () {
+                                        }
+                                    );
 
-                            suggestionsBox.innerHTML =
-                                "";
+                            })
+                            .catch(function () {
 
-                        });
+                                suggestionsBox.innerHTML =
+                                    "";
+
+                            });
 
                     },
                     300
@@ -543,11 +420,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         }
     );
-
-
-    /* =========================================================
-       GPS
-    ========================================================= */
 
     locateBtn.addEventListener(
         "click",
@@ -564,17 +436,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
-
             locateBtn.disabled =
                 true;
-
 
             locateBtn.innerHTML =
                 `
                     <i class="fa-solid fa-spinner fa-spin"></i>
                     Localisation...
                 `;
-
 
             navigator.geolocation.getCurrentPosition(
 
@@ -585,10 +454,8 @@ document.addEventListener("DOMContentLoaded", function () {
                         position.coords.longitude
                     );
 
-
                     locateBtn.disabled =
                         false;
-
 
                     locateBtn.innerHTML =
                         `
@@ -604,10 +471,8 @@ document.addEventListener("DOMContentLoaded", function () {
                         "Impossible d'obtenir votre position."
                     );
 
-
                     locateBtn.disabled =
                         false;
-
 
                     locateBtn.innerHTML =
                         `
@@ -629,11 +494,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     );
 
-
-    /* =========================================================
-       CLOSE SUGGESTIONS WHEN CLICKING OUTSIDE
-    ========================================================= */
-
     document.addEventListener(
         "click",
         function (event) {
@@ -651,11 +511,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     );
 
-
-    /* =========================================================
-       ESCAPE HTML
-    ========================================================= */
-
     function escapeHtml(value) {
 
         if (value == null) {
@@ -669,11 +524,6 @@ document.addEventListener("DOMContentLoaded", function () {
             .replaceAll('"', "&quot;")
             .replaceAll("'", "&#039;");
     }
-
-
-    /* =========================================================
-       MAP RESIZE
-    ========================================================= */
 
     setTimeout(
         function () {

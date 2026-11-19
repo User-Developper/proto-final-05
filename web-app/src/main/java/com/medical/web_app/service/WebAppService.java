@@ -48,7 +48,7 @@ public class WebAppService {
         user.setUsername(form.getUsername());
         user.setPrenom(form.getPrenom());
         user.setEmail(form.getEmail());
-        user.setRole("PATIENT");
+        user.setRole("USER");
 
         user.setPassword(passwordEncoder.encode(form.getPassword()));
 

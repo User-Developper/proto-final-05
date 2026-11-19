@@ -1,7 +1,3 @@
-// =====================
-// MAP INIT
-// =====================
-
 const map = L.map("map").setView([46.6, 2.5], 6);
 
 L.tileLayer(
@@ -10,11 +6,6 @@ L.tileLayer(
         attribution: "&copy; OpenStreetMap"
     }
 ).addTo(map);
-
-
-// =====================
-// ICONS
-// =====================
 
 const clientIcon = L.icon({
     iconUrl:
@@ -27,7 +18,6 @@ const clientIcon = L.icon({
     iconAnchor: [12, 41]
 });
 
-
 const selectedIcon = L.icon({
     iconUrl:
         "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png",
@@ -38,7 +28,6 @@ const selectedIcon = L.icon({
     iconSize: [25, 41],
     iconAnchor: [12, 41]
 });
-
 
 const searchIcon = L.icon({
     iconUrl:
@@ -51,22 +40,12 @@ const searchIcon = L.icon({
     iconAnchor: [12, 41]
 });
 
-
-// =====================
-// STATE
-// =====================
-
 let searchMarker = null;
 let selectedMarker = null;
 let activeCircle = null;
 let selectedClient = null;
 
 const clients = window.clients || [];
-
-
-// =====================
-// DOM
-// =====================
 
 const searchInput =
     document.getElementById("searchClient");
@@ -95,21 +74,11 @@ const activeBadge =
 const submitButton =
     document.querySelector(".btn-primary");
 
-
-// =====================
-// INITIAL STATE
-// =====================
-
 submitButton.disabled = true;
 
 activeBadge.style.display = "none";
 
 deselectButton.style.display = "none";
-
-
-// =====================
-// DISTANCE
-// =====================
 
 function distance(lat1, lon1, lat2, lon2) {
 
@@ -137,17 +106,9 @@ function distance(lat1, lon1, lat2, lon2) {
     );
 }
 
-
-// =====================
-// DESELECT CLIENT
-// =====================
-
 function deselectClient() {
 
     selectedClient = null;
-
-
-    // Supprimer le marker sélectionné
 
     if (selectedMarker) {
 
@@ -156,9 +117,6 @@ function deselectClient() {
         selectedMarker = null;
     }
 
-
-    // Supprimer le périmètre
-
     if (activeCircle) {
 
         map.removeLayer(activeCircle);
@@ -166,13 +124,7 @@ function deselectClient() {
         activeCircle = null;
     }
 
-
-    // Vider l'ID client
-
     clientIdInput.value = "";
-
-
-    // Réinitialiser les informations
 
     selectedText.innerText =
         "Aucun client sélectionné";
@@ -180,28 +132,14 @@ function deselectClient() {
     selectedZone.innerHTML =
         "Sélectionnez un client sur la carte.";
 
-
-    // Masquer le badge
-
     activeBadge.style.display =
         "none";
-
-
-    // Masquer le bouton X extérieur
 
     deselectButton.style.display =
         "none";
 
-
-    // Désactiver le bouton continuer
-
     submitButton.disabled = true;
 }
-
-
-// =====================
-// X EXTERIEUR
-// =====================
 
 deselectButton.addEventListener(
     "click",
@@ -215,11 +153,6 @@ deselectButton.addEventListener(
     }
 );
 
-
-// =====================
-// DISPLAY CLIENTS
-// =====================
-
 clients.forEach(function (client) {
 
     if (
@@ -229,13 +162,11 @@ clients.forEach(function (client) {
         return;
     }
 
-
     const lat =
         parseFloat(client.latitude);
 
     const lng =
         parseFloat(client.longitude);
-
 
     if (
         Number.isNaN(lat) ||
@@ -243,7 +174,6 @@ clients.forEach(function (client) {
     ) {
         return;
     }
-
 
     const marker =
         L.circleMarker(
@@ -259,7 +189,6 @@ clients.forEach(function (client) {
             }
         ).addTo(map);
 
-
     marker.bindPopup(`
         <div>
             <strong>${client.name}</strong>
@@ -267,7 +196,6 @@ clients.forEach(function (client) {
             Zone : ${client.perimeter ?? 0} km
         </div>
     `);
-
 
     marker.on(
         "click",
@@ -278,11 +206,6 @@ clients.forEach(function (client) {
     );
 });
 
-
-// =====================
-// SELECT CLIENT
-// =====================
-
 function selectClient(client) {
 
     const lat =
@@ -291,7 +214,6 @@ function selectClient(client) {
     const lng =
         parseFloat(client.longitude);
 
-
     if (
         Number.isNaN(lat) ||
         Number.isNaN(lng)
@@ -299,17 +221,10 @@ function selectClient(client) {
         return;
     }
 
-
     selectedClient = client;
-
-
-    // =====================
-    // INFORMATIONS
-    // =====================
 
     selectedText.innerText =
         client.name;
-
 
     selectedZone.innerHTML = `
 
@@ -323,7 +238,6 @@ function selectClient(client) {
 
         </div>
 
-
         <div class="zone-row">
 
             <i class="fa-solid fa-location-dot"></i>
@@ -333,7 +247,6 @@ function selectClient(client) {
             </span>
 
         </div>
-
 
         <div class="zone-row">
 
@@ -346,32 +259,17 @@ function selectClient(client) {
         </div>
     `;
 
-
-    // =====================
-    // FORM
-    // =====================
-
     clientIdInput.value =
         client.id;
 
     submitButton.disabled =
         false;
 
-
-    // =====================
-    // UI
-    // =====================
-
     activeBadge.style.display =
         "inline-flex";
 
     deselectButton.style.display =
         "flex";
-
-
-    // =====================
-    // REMOVE OLD SELECTION
-    // =====================
 
     if (selectedMarker) {
 
@@ -380,18 +278,12 @@ function selectClient(client) {
         selectedMarker = null;
     }
 
-
     if (activeCircle) {
 
         map.removeLayer(activeCircle);
 
         activeCircle = null;
     }
-
-
-    // =====================
-    // SELECTED MARKER
-    // =====================
 
     selectedMarker =
         L.marker(
@@ -401,14 +293,8 @@ function selectClient(client) {
             }
         ).addTo(map);
 
-
-    // =====================
-    // CLIENT PERIMETER
-    // =====================
-
     const perimeter =
         parseFloat(client.perimeter) || 0;
-
 
     activeCircle =
         L.circle(
@@ -429,11 +315,6 @@ function selectClient(client) {
             }
         ).addTo(map);
 
-
-    // =====================
-    // POPUP
-    // =====================
-
     selectedMarker.bindPopup(`
 
         <div class="client-map-popup">
@@ -449,16 +330,13 @@ function selectClient(client) {
 
             </button>
 
-
             <div class="client-map-popup-label">
                 CLIENT SÉLECTIONNÉ
             </div>
 
-
             <div class="client-map-popup-name">
                 ${client.name}
             </div>
-
 
             <div class="client-map-popup-info">
 
@@ -468,7 +346,6 @@ function selectClient(client) {
 
             </div>
 
-
             <div class="client-map-popup-info">
 
                 <i class="fa-solid fa-location-dot"></i>
@@ -476,7 +353,6 @@ function selectClient(client) {
                 ${client.address ?? "Adresse inconnue"}
 
             </div>
-
 
             <div class="client-map-popup-info">
 
@@ -490,11 +366,6 @@ function selectClient(client) {
 
     `);
 
-
-    // =====================
-    // POPUP OPEN
-    // =====================
-
     selectedMarker.on(
         "popupopen",
         function (event) {
@@ -502,22 +373,18 @@ function selectClient(client) {
             const popupElement =
                 event.popup.getElement();
 
-
             if (!popupElement) {
                 return;
             }
-
 
             const mapDeselectButton =
                 popupElement.querySelector(
                     "#mapDeselectClient"
                 );
 
-
             if (!mapDeselectButton) {
                 return;
             }
-
 
             mapDeselectButton.onclick =
                 function (event) {
@@ -526,30 +393,14 @@ function selectClient(client) {
 
                     event.stopPropagation();
 
-
-                    // Désélection complète
-
                     deselectClient();
-
-
-                    // Fermer la popup
 
                     map.closePopup();
                 };
         }
     );
 
-
-    // =====================
-    // OPEN POPUP
-    // =====================
-
     selectedMarker.openPopup();
-
-
-    // =====================
-    // CENTER MAP
-    // =====================
 
     map.flyTo(
         [lat, lng],
@@ -560,15 +411,9 @@ function selectClient(client) {
     );
 }
 
-
-// =====================
-// SEARCH OSM
-// =====================
-
 let timeout = null;
 
 let controller = null;
-
 
 searchInput.addEventListener(
     "input",
@@ -577,18 +422,14 @@ searchInput.addEventListener(
         const query =
             this.value.trim();
 
-
         suggestions.innerHTML =
             "";
-
 
         if (query.length < 3) {
             return;
         }
 
-
         clearTimeout(timeout);
-
 
         timeout = setTimeout(
             function () {
@@ -597,16 +438,14 @@ searchInput.addEventListener(
                     controller.abort();
                 }
 
-
                 controller =
                     new AbortController();
-
 
                 fetch(
                     `https://nominatim.openstreetmap.org/search?format=json&countrycodes=fr&limit=8&q=${encodeURIComponent(query)}`,
                     {
                         signal:
-                            controller.signal
+                        controller.signal
                     }
                 )
                     .then(
@@ -621,10 +460,8 @@ searchInput.addEventListener(
                             suggestions.innerHTML =
                                 "";
 
-
                             const unique =
                                 new Map();
-
 
                             data.forEach(
                                 function (item) {
@@ -636,12 +473,10 @@ searchInput.addEventListener(
                                 }
                             );
 
-
                             const results =
                                 [
                                     ...unique.values()
                                 ].slice(0, 5);
-
 
                             if (
                                 results.length === 0
@@ -656,7 +491,6 @@ searchInput.addEventListener(
                                 return;
                             }
 
-
                             results.forEach(
                                 function (item) {
 
@@ -665,10 +499,8 @@ searchInput.addEventListener(
                                             "div"
                                         );
 
-
                                     div.className =
                                         "suggestion-item";
-
 
                                     div.innerHTML = `
 
@@ -681,7 +513,6 @@ searchInput.addEventListener(
                                         </div>
 
                                     `;
-
 
                                     div.onclick =
                                         function () {
@@ -696,34 +527,21 @@ searchInput.addEventListener(
                                                     item.lon
                                                 );
 
-
-                                            // =====================
-                                            // SEARCH MARKER
-                                            // =====================
-
-                                            if (
-                                                searchMarker
-                                            ) {
+                                            if (searchMarker) {
 
                                                 map.removeLayer(
                                                     searchMarker
                                                 );
                                             }
 
-
                                             searchMarker =
                                                 L.marker(
                                                     [lat, lon],
                                                     {
                                                         icon:
-                                                            searchIcon
+                                                        searchIcon
                                                     }
                                                 ).addTo(map);
-
-
-                                            // =====================
-                                            // PERIMETER DE RECHERCHE
-                                            // =====================
 
                                             if (
                                                 window.searchCircle
@@ -733,7 +551,6 @@ searchInput.addEventListener(
                                                     window.searchCircle
                                                 );
                                             }
-
 
                                             window.searchCircle =
                                                 L.circle(
@@ -754,11 +571,6 @@ searchInput.addEventListener(
                                                     }
                                                 ).addTo(map);
 
-
-                                            // =====================
-                                            // MAP
-                                            // =====================
-
                                             map.flyTo(
                                                 [lat, lon],
                                                 13,
@@ -768,28 +580,12 @@ searchInput.addEventListener(
                                                 }
                                             );
 
-
                                             searchInput.value =
                                                 item.display_name;
 
-
                                             suggestions.innerHTML =
                                                 "";
-
-
-                                            /*
-                                             * IMPORTANT :
-                                             *
-                                             * On NE sélectionne plus
-                                             * automatiquement le client
-                                             * le plus proche.
-                                             *
-                                             * L'utilisateur doit
-                                             * cliquer lui-même sur
-                                             * un client.
-                                             */
                                         };
-
 
                                     suggestions.appendChild(
                                         div
@@ -820,11 +616,6 @@ searchInput.addEventListener(
     }
 );
 
-
-// =====================
-// CLOSE SUGGESTIONS
-// =====================
-
 document.addEventListener(
     "click",
     function (event) {
@@ -844,11 +635,6 @@ document.addEventListener(
     }
 );
 
-
-/* =====================================================
-   MODAL CLIENT SÉLECTIONNÉ
-===================================================== */
-
 document.addEventListener("DOMContentLoaded", function () {
 
     const modal = document.getElementById("clientSelectedModal");
@@ -856,14 +642,6 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!modal) {
         return;
     }
-
-
-    /*
-     * La classe "show" est déjà ajoutée par Thymeleaf
-     * lorsque le serveur confirme que le client a été sauvegardé.
-     *
-     * On ajoute simplement la gestion de fermeture avec ESC.
-     */
 
     document.addEventListener("keydown", function (event) {
 
@@ -874,12 +652,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
     });
-
-
-    /*
-     * Permet de fermer la modal en cliquant
-     * sur l'arrière-plan.
-     */
 
     modal.addEventListener("click", function (event) {
 
