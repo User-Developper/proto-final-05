@@ -1,14 +1,8 @@
-
 <th:block th:fragment="header"
           xmlns:sec="http://www.w3.org/1999/xhtml">
 
-    <!-- =====================================================
-         HEADER
-    ====================================================== -->
-
     <header class="app-header">
 
-        <!-- Bouton menu -->
         <button class="burger-btn"
                 type="button"
                 onclick="toggleSidebar()"
@@ -18,23 +12,17 @@
 
         </button>
 
-
-        <!-- Logo -->
         <a th:href="@{/}"
            class="app-logo">
 
-            Alert
+            <img th:src="@{/images/echovoce-logo.png}"
+                 alt="EchoVOCE"
+                 class="app-logo-img">
 
         </a>
 
-
-        <!-- =================================================
-             DESKTOP : COMPTE
-        ================================================== -->
-
         <div class="desktop-account">
 
-            <!-- VISITEUR -->
             <div sec:authorize="isAnonymous()"
                  class="account-container">
 
@@ -50,9 +38,6 @@
 
                 </button>
 
-
-                <!-- MENU CONNEXION -->
-
                 <div class="account-menu">
 
                     <div class="account-menu-header">
@@ -66,9 +51,6 @@
                         </span>
 
                     </div>
-
-
-                    <!-- Utilisateur -->
 
                     <a th:href="@{/signin}"
                        class="account-option">
@@ -92,9 +74,6 @@
                         <i class="fa-solid fa-chevron-right account-option-arrow"></i>
 
                     </a>
-
-
-                    <!-- Professionnel -->
 
                     <a th:href="@{/pro-signup}"
                        class="account-option">
@@ -123,9 +102,6 @@
 
             </div>
 
-
-            <!-- UTILISATEUR CONNECTÉ -->
-
             <div sec:authorize="isAuthenticated()"
                  class="account-container">
 
@@ -146,9 +122,6 @@
 
                 </button>
 
-
-                <!-- MENU COMPTE -->
-
                 <div class="account-menu">
 
                     <div class="account-menu-header">
@@ -163,9 +136,6 @@
                         </span>
 
                     </div>
-
-
-                    <!-- Profil -->
 
                     <a th:href="@{/profile}"
                        class="account-option">
@@ -190,9 +160,6 @@
 
                     </a>
 
-
-                    <!-- Signalements -->
-
                     <a th:href="@{/report-list}"
                        class="account-option">
 
@@ -203,11 +170,11 @@
                         <span class="account-option-content">
 
                             <strong>
-                                Mes signalements
+                                Signalements
                             </strong>
 
                             <small>
-                                Consulter mes signalements
+                                Consulter les signalements
                             </small>
 
                         </span>
@@ -216,13 +183,7 @@
 
                     </a>
 
-
-                    <!-- Séparateur -->
-
                     <div class="account-menu-divider"></div>
-
-
-                    <!-- Déconnexion -->
 
                     <a th:href="@{/logout}"
                        class="account-option logout-option">
@@ -247,14 +208,6 @@
 
         </div>
 
-
-        <!-- =================================================
-             MOBILE : COMPTE
-        ================================================== -->
-
-
-        <!-- VISITEUR MOBILE -->
-
         <div sec:authorize="isAnonymous()"
              class="mobile-account account-container">
 
@@ -265,9 +218,6 @@
                 <i class="fa-solid fa-user"></i>
 
             </button>
-
-
-            <!-- MENU MOBILE -->
 
             <div class="account-menu mobile-account-menu">
 
@@ -282,9 +232,6 @@
                     </span>
 
                 </div>
-
-
-                <!-- Utilisateur -->
 
                 <a th:href="@{/signin}"
                    class="account-option">
@@ -308,9 +255,6 @@
                     <i class="fa-solid fa-chevron-right account-option-arrow"></i>
 
                 </a>
-
-
-                <!-- Professionnel -->
 
                 <a th:href="@{/pro-signup}"
                    class="account-option">
@@ -339,9 +283,6 @@
 
         </div>
 
-
-        <!-- UTILISATEUR CONNECTÉ MOBILE -->
-
         <div sec:authorize="isAuthenticated()"
              class="mobile-account account-container">
 
@@ -352,9 +293,6 @@
                 <i class="fa-solid fa-user"></i>
 
             </button>
-
-
-            <!-- MENU COMPTE MOBILE -->
 
             <div class="account-menu mobile-account-menu">
 
@@ -372,9 +310,6 @@
                     </span>
 
                 </div>
-
-
-                <!-- Profil -->
 
                 <a th:href="@{/profile}"
                    class="account-option">
@@ -399,9 +334,6 @@
 
                 </a>
 
-
-                <!-- Signalements -->
-
                 <a th:href="@{/report-list}"
                    class="account-option">
 
@@ -425,13 +357,7 @@
 
                 </a>
 
-
-                <!-- Séparateur -->
-
                 <div class="account-menu-divider"></div>
-
-
-                <!-- Déconnexion -->
 
                 <a th:href="@{/logout}"
                    class="account-option logout-option">
@@ -456,15 +382,8 @@
 
     </header>
 
-
-    <!-- =====================================================
-         SIDEBAR
-    ====================================================== -->
-
     <div id="sidebar"
          class="sidebar">
-
-        <!-- SIDEBAR HEADER -->
 
         <div class="sidebar-header">
 
@@ -476,10 +395,7 @@
 
                 </div>
 
-
                 <div class="user-info">
-
-                    <!-- Utilisateur connecté -->
 
                     <div sec:authorize="isAuthenticated()">
 
@@ -492,9 +408,6 @@
                         </a>
 
                     </div>
-
-
-                    <!-- Visiteur -->
 
                     <div sec:authorize="isAnonymous()">
 
@@ -512,9 +425,6 @@
 
             </div>
 
-
-            <!-- Fermer -->
-
             <button class="close-btn"
                     type="button"
                     onclick="toggleSidebar()"
@@ -525,11 +435,6 @@
             </button>
 
         </div>
-
-
-        <!-- =================================================
-             SIDEBAR NAVIGATION
-        ================================================== -->
 
         <nav class="sidebar-nav">
 
@@ -543,7 +448,6 @@
 
             </a>
 
-
             <a th:href="@{/create-report}">
 
                 <i class="fa-solid fa-triangle-exclamation"></i>
@@ -554,17 +458,15 @@
 
             </a>
 
-
             <a th:href="@{/report-list}">
 
                 <i class="fa-solid fa-list"></i>
 
                 <span>
-                    Mes signalements
+                    Signalements
                 </span>
 
             </a>
-
 
             <a th:href="@{/map}">
 
@@ -576,7 +478,6 @@
 
             </a>
 
-
             <a th:href="@{/profile}">
 
                 <i class="fa-solid fa-user"></i>
@@ -586,7 +487,6 @@
                 </span>
 
             </a>
-
 
             <a th:href="@{/logout}"
                class="danger">
@@ -603,11 +503,6 @@
 
     </div>
 
-
-    <!-- =====================================================
-         OVERLAY
-    ====================================================== -->
-
     <div id="sidebar-overlay"
          class="sidebar-overlay"
          onclick="toggleSidebar()">
@@ -615,16 +510,9 @@
 
 </th:block>
 
-
-<!-- =========================================================
-     MOBILE NAVIGATION
-========================================================= -->
-
 <th:block th:fragment="mobile-nav">
 
     <nav class="mobile-nav">
-
-        <!-- Accueil -->
 
         <a th:href="@{/}"
            class="nav-item">
@@ -637,9 +525,6 @@
 
         </a>
 
-
-        <!-- Carte -->
-
         <a th:href="@{/map}"
            class="nav-item">
 
@@ -651,9 +536,6 @@
 
         </a>
 
-
-        <!-- Action principale -->
-
         <a th:href="@{/create-report}"
            class="nav-item nav-center"
            aria-label="Signaler un problème">
@@ -661,9 +543,6 @@
             <i class="fa-solid fa-plus"></i>
 
         </a>
-
-
-        <!-- Alertes -->
 
         <a th:href="@{/report-list}"
            class="nav-item">
@@ -675,9 +554,6 @@
             </span>
 
         </a>
-
-
-        <!-- Profil -->
 
         <a th:href="@{/profile}"
            class="nav-item">
@@ -693,4 +569,3 @@
     </nav>
 
 </th:block>
-

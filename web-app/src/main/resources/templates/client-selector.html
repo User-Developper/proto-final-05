@@ -29,9 +29,7 @@
 
 <div class="container">
 
-    <!-- =========================
-         HEADER
-    ========================== -->
+
 
     <div class="step-header">
 
@@ -47,9 +45,7 @@
     </div>
 
 
-    <!-- =========================
-         SEARCH
-    ========================== -->
+
 
     <div class="search-card">
 
@@ -70,9 +66,6 @@
     </div>
 
 
-    <!-- =========================
-         SELECTED CLIENT
-    ========================== -->
 
     <div
             class="selected-card"
@@ -121,9 +114,6 @@
     </div>
 
 
-    <!-- =========================
-         MAP
-    ========================== -->
 
     <div class="map-card">
 
@@ -139,10 +129,6 @@
 
     </div>
 
-
-    <!-- =========================
-         FORM / BOTTOM BAR
-    ========================== -->
 
     <div class="bottom-bar">
 
@@ -173,9 +159,6 @@
 </div>
 
 
-<!-- =====================================================
-     MODAL CLIENT SÉLECTIONNÉ
-====================================================== -->
 
 <div
         class="client-modal-overlay"
@@ -197,14 +180,14 @@
         </div>
 
 
-        <!-- TITLE -->
+
 
         <h2 id="clientModalTitle">
             Client sélectionné
         </h2>
 
 
-        <!-- CLIENT NAME -->
+
 
         <div class="modal-client-name"
              th:text="${selectedClient != null ? selectedClient.name : ''}">
@@ -212,7 +195,7 @@
         </div>
 
 
-        <!-- CLIENT LOCATION -->
+
 
         <div
                 class="modal-client-location"

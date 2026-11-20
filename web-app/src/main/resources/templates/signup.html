@@ -30,7 +30,7 @@
     <main class="signup-container">
 
 
-        <!-- IDENTITÉ DE L'APPLICATION -->
+
         <div class="signup-brand">
 
             <div class="brand-mark">
@@ -48,17 +48,17 @@
         </div>
 
 
-        <!-- CARTE D'INSCRIPTION -->
+
         <div class="signup-card">
 
 
-            <!-- FORMULAIRE -->
+
             <form th:action="@{/signup}"
                   th:object="${signupForm}"
                   method="post">
 
 
-                <!-- NOM -->
+
                 <div class="form-group">
 
                     <label for="username">
@@ -80,7 +80,7 @@
                 </div>
 
 
-                <!-- PRÉNOM -->
+
                 <div class="form-group">
 
                     <label for="prenom">
@@ -198,7 +198,7 @@
                 </div>
 
 
-                <!-- CONDITIONS -->
+
                 <div class="form-group checkbox-group">
 
                     <label class="checkbox-label">
@@ -223,7 +223,7 @@
                 </div>
 
 
-                <!-- BOUTON INSCRIPTION -->
+
                 <button
                         type="submit"
                         class="signup-button"
@@ -237,7 +237,7 @@
             </form>
 
 
-            <!-- CONNEXION -->
+
             <div class="login-section">
 
                 <p>
@@ -254,7 +254,7 @@
         </div>
 
 
-        <!-- TEXTE BAS DE PAGE -->
+
         <p class="signup-footer">
 
             Une plateforme pour signaler et suivre les problèmes
@@ -268,7 +268,7 @@
 </div>
 
 
-<!-- JAVASCRIPT -->
+
 <script th:src="@{/js/signup.js}"></script>
 
 </body>
