@@ -1,5 +1,6 @@
-package com.medical.web_app.controller;
+package com.medical.web_app;
 
+import com.medical.web_app.controller.ReportApiController;
 import com.medical.web_app.model.Category;
 import com.medical.web_app.model.Gravity;
 import com.medical.web_app.service.WebAppService;
@@ -27,69 +28,50 @@ class ReportApiControllerTest {
     private ReportApiController reportApiController;
 
     @Test
-    void shouldGetReports() {
+    void getReportsOk() {
         PageResponse<ReportResponse> response = mock(PageResponse.class);
+        when(webAppService.getAllReports(0, 6, null, null, null)).thenReturn(response);
 
-        when(webAppService.getAllReports(
-                0, 6, null, null, null
-        )).thenReturn(response);
-
-        PageResponse<ReportResponse> result =
-                reportApiController.getReports(0, 6, null, null, null);
+        PageResponse<ReportResponse> result = reportApiController.getReports(0, 6, null, null, null);
 
         assertSame(response, result);
-
-        verify(webAppService).getAllReports(
-                0, 6, null, null, null
-        );
+        verify(webAppService).getAllReports(0, 6, null, null, null);
     }
 
     @Test
-    void shouldGetReportsWithFilters() {
+    void getReportsAvecFiltres() {
         PageResponse<ReportResponse> response = mock(PageResponse.class);
+        when(webAppService.getAllReports(1, 10, Category.WASTE, Gravity.HIGH, "déchets"))
+                .thenReturn(response);
 
-        when(webAppService.getAllReports(
-                1, 10, Category.WASTE, Gravity.HIGH, "déchets"
-        )).thenReturn(response);
-
-        PageResponse<ReportResponse> result =
-                reportApiController.getReports(
-                        1, 10, Category.WASTE, Gravity.HIGH, "déchets"
-                );
-
-        assertSame(response, result);
-
-        verify(webAppService).getAllReports(
+        PageResponse<ReportResponse> result = reportApiController.getReports(
                 1, 10, Category.WASTE, Gravity.HIGH, "déchets"
         );
+
+        assertSame(response, result);
+        verify(webAppService).getAllReports(1, 10, Category.WASTE, Gravity.HIGH, "déchets");
     }
 
     @Test
-    void shouldGetReportImages() {
-        List<ReportImageResponse> images =
-                List.of(new ReportImageResponse());
-
+    void getReportImagesOk() {
+        List<ReportImageResponse> images = List.of(new ReportImageResponse());
         when(webAppService.getReportImages(10)).thenReturn(images);
 
-        List<ReportImageResponse> result =
-                reportApiController.getReportImages(10);
+        List<ReportImageResponse> result = reportApiController.getReportImages(10);
 
         assertEquals(1, result.size());
         assertSame(images, result);
-
         verify(webAppService).getReportImages(10);
     }
 
     @Test
-    void shouldReturnEmptyListWhenReportHasNoImages() {
+    void getReportImagesVide() {
         when(webAppService.getReportImages(10)).thenReturn(List.of());
 
-        List<ReportImageResponse> result =
-                reportApiController.getReportImages(10);
+        List<ReportImageResponse> result = reportApiController.getReportImages(10);
 
         assertNotNull(result);
         assertTrue(result.isEmpty());
-
         verify(webAppService).getReportImages(10);
     }
 }

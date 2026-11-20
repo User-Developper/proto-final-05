@@ -15,9 +15,7 @@ public class UsersController {
     UserRepository userRepository;
 
 
-    // =========================================================
-    // AJOUTER UN UTILISATEUR
-    // =========================================================
+
 
     @PostMapping()
     public User addUser(@RequestBody User user) {
@@ -34,9 +32,7 @@ public class UsersController {
     }
 
 
-    // =========================================================
-    // RECHERCHER PAR USERNAME
-    // =========================================================
+
 
     @GetMapping()
     public Optional<User> findUser(
@@ -46,9 +42,7 @@ public class UsersController {
     }
 
 
-    // =========================================================
-    // RECHERCHER PAR ID
-    // =========================================================
+
 
     @GetMapping("/{userId}")
     public Optional<User> getUserById(
@@ -58,9 +52,7 @@ public class UsersController {
     }
 
 
-    // =========================================================
-    // MODIFIER
-    // =========================================================
+
 
     @PutMapping()
     public User update(
@@ -70,9 +62,7 @@ public class UsersController {
     }
 
 
-    // =========================================================
-    // SUPPRIMER
-    // =========================================================
+
 
     @DeleteMapping()
     public void delete(

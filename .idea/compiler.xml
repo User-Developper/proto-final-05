@@ -11,28 +11,21 @@
         <module name="config-server" />
         <module name="patient-service" />
       </profile>
-      <profile name="Annotation profile for report-storage-service" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.46/lombok-1.18.46.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.46/lombok-1.18.46.jar" />
-        </processorPath>
-        <module name="report-storage-service" />
-      </profile>
       <profile name="Annotation profile for web-app" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.46/lombok-1.18.46.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.46/lombok-1.18.46.jar" />
         </processorPath>
         <module name="web-app" />
+        <module name="report-storage-service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="mongo_bd" target="17" />
+      <module name="user-report-service" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
@@ -41,6 +34,7 @@
       <module name="data-service" options="-parameters" />
       <module name="patient-service" options="-parameters" />
       <module name="report-storage-service" options="-parameters" />
+      <module name="user-report-service" options="-parameters" />
       <module name="web-app" options="-parameters" />
     </option>
   </component>

@@ -32,9 +32,6 @@ public class ReportController {
     ReportImageRepository reportImageRepository;
 
 
-    // =========================================================
-    // CLIENT
-    // =========================================================
 
     @GetMapping("/client/{clientId}")
     public ProfessionalClient getClientById(
@@ -50,9 +47,6 @@ public class ReportController {
     }
 
 
-    // =========================================================
-    // CREATION REPORT
-    // =========================================================
 
     @PostMapping()
     public ReportResponse submitReportStep1(
@@ -95,9 +89,6 @@ public class ReportController {
     }
 
 
-    // =========================================================
-    // REPORTS D'UN UTILISATEUR
-    // =========================================================
 
     @GetMapping()
     public List<Report> getReportsByUser(
@@ -107,9 +98,6 @@ public class ReportController {
     }
 
 
-    // =========================================================
-    // REPORT PAR ID
-    // =========================================================
 
     @GetMapping("/{reportId}")
     public Report getReportById(
@@ -124,9 +112,6 @@ public class ReportController {
     }
 
 
-    // =========================================================
-    // AJOUT IMAGE
-    // =========================================================
 
     @PostMapping("/{reportId}/images")
     public ReportImageResponse addImage(
@@ -184,9 +169,6 @@ public class ReportController {
     }
 
 
-    // =========================================================
-    // IMAGES D'UN REPORT
-    // =========================================================
 
     @GetMapping("/{reportId}/images")
     public List<ReportImageResponse> getReportImages(
@@ -200,9 +182,6 @@ public class ReportController {
     }
 
 
-    // =========================================================
-    // CONVERSION REPORT IMAGE -> DTO
-    // =========================================================
 
     private ReportImageResponse convertToResponse(
             ReportImage image) {

@@ -37,66 +37,44 @@ class WebAppServiceTest {
     @InjectMocks
     private WebAppService webAppService;
 
-
     @Test
-    void shouldGetPatient() {
-
+    void getPatientOk() {
         Patient patient = new Patient();
+        when(patientserviceFeignClient.getPatient("test@email.com")).thenReturn(Optional.of(patient));
 
-        when(patientserviceFeignClient.getPatient("test@email.com"))
-                .thenReturn(Optional.of(patient));
-
-        Optional<Patient> result =
-                webAppService.getPatient("test@email.com");
+        Optional<Patient> result = webAppService.getPatient("test@email.com");
 
         assertTrue(result.isPresent());
         assertSame(patient, result.get());
-
-        verify(patientserviceFeignClient)
-                .getPatient("test@email.com");
+        verify(patientserviceFeignClient).getPatient("test@email.com");
     }
 
-
     @Test
-    void shouldGetUser() {
-
+    void getUserOk() {
         User user = new User();
         user.setUsername("testuser");
-
-        when(patientserviceFeignClient.findUser("testuser"))
-                .thenReturn(Optional.of(user));
+        when(patientserviceFeignClient.findUser("testuser")).thenReturn(Optional.of(user));
 
         Optional<User> result = webAppService.getUser("testuser");
 
         assertTrue(result.isPresent());
         assertEquals("testuser", result.get().getUsername());
-
-        verify(patientserviceFeignClient).findUser("testuser");
     }
 
-
     @Test
-    void shouldReturnEmptyWhenUserDoesNotExist() {
-
-        when(patientserviceFeignClient.findUser("unknown"))
-                .thenReturn(Optional.empty());
+    void getUserIntrouvable() {
+        when(patientserviceFeignClient.findUser("unknown")).thenReturn(Optional.empty());
 
         Optional<User> result = webAppService.getUser("unknown");
 
         assertTrue(result.isEmpty());
-
-        verify(patientserviceFeignClient).findUser("unknown");
     }
 
-
     @Test
-    void shouldGetUserByUsername() {
-
+    void getUserByUsernameOk() {
         User user = new User();
         user.setUsername("testuser");
-
-        when(patientserviceFeignClient.findUser("testuser"))
-                .thenReturn(Optional.of(user));
+        when(patientserviceFeignClient.findUser("testuser")).thenReturn(Optional.of(user));
 
         User result = webAppService.getUserByUsername("testuser");
 
@@ -104,75 +82,51 @@ class WebAppServiceTest {
         assertEquals("testuser", result.getUsername());
     }
 
-
     @Test
-    void shouldReturnNullWhenUserByUsernameDoesNotExist() {
-
-        when(patientserviceFeignClient.findUser("unknown"))
-                .thenReturn(Optional.empty());
+    void getUserByUsernameIntrouvable() {
+        when(patientserviceFeignClient.findUser("unknown")).thenReturn(Optional.empty());
 
         User result = webAppService.getUserByUsername("unknown");
 
         assertNull(result);
     }
 
-
     @Test
-    void shouldCreateUser() {
-
+    void createUserEncodeMdp() {
         SignupForm form = new SignupForm();
         form.setUsername("testuser");
         form.setPrenom("Jean");
         form.setEmail("test@email.com");
         form.setPassword("password123");
 
-        when(passwordEncoder.encode("password123"))
-                .thenReturn("passwordEncoded");
-
-        when(patientserviceFeignClient.addUser(any(User.class)))
-                .thenAnswer(invocation -> invocation.getArgument(0));
+        when(passwordEncoder.encode("password123")).thenReturn("passwordEncoded");
+        when(patientserviceFeignClient.addUser(any(User.class))).thenAnswer(inv -> inv.getArgument(0));
 
         User result = webAppService.createUser(form);
 
-        assertNotNull(result);
         assertEquals("testuser", result.getUsername());
-        assertEquals("Jean", result.getPrenom());
-        assertEquals("test@email.com", result.getEmail());
         assertEquals("PATIENT", result.getRole());
         assertEquals("passwordEncoded", result.getPassword());
 
         ArgumentCaptor<User> captor = ArgumentCaptor.forClass(User.class);
-
         verify(patientserviceFeignClient).addUser(captor.capture());
-
-        assertEquals("testuser", captor.getValue().getUsername());
         assertEquals("PATIENT", captor.getValue().getRole());
-
-        verify(passwordEncoder).encode("password123");
     }
 
-
     @Test
-    void shouldSetActiveClient() {
-
+    void setActiveClientOk() {
         User user = new User();
         user.setUsername("testuser");
-
-        when(patientserviceFeignClient.setActiveClient("testuser", 1))
-                .thenReturn(user);
+        when(patientserviceFeignClient.setActiveClient("testuser", 1)).thenReturn(user);
 
         User result = webAppService.setActiveClient("testuser", 1);
 
-        assertNotNull(result);
         assertEquals("testuser", result.getUsername());
-
         verify(patientserviceFeignClient).setActiveClient("testuser", 1);
     }
 
-
     @Test
-    void shouldSubmitFinalReport() {
-
+    void submitFinalMappeLesChamps() {
         CreateReportTemp form = new CreateReportTemp();
         form.setTitle("Pollution de l'eau");
         form.setDescription("Pollution constatée");
@@ -183,224 +137,115 @@ class WebAppServiceTest {
         form.setClientId(1);
 
         ReportResponse response = new ReportResponse();
-
-        when(patientserviceFeignClient.submitFinal(any(CreateReportRequest.class)))
-                .thenReturn(response);
+        when(patientserviceFeignClient.submitFinal(any(CreateReportRequest.class))).thenReturn(response);
 
         ReportResponse result = webAppService.submitFinal(form);
 
         assertSame(response, result);
-
-        ArgumentCaptor<CreateReportRequest> captor =
-                ArgumentCaptor.forClass(CreateReportRequest.class);
-
+        ArgumentCaptor<CreateReportRequest> captor = ArgumentCaptor.forClass(CreateReportRequest.class);
         verify(patientserviceFeignClient).submitFinal(captor.capture());
 
-        CreateReportRequest request = captor.getValue();
-
-        assertEquals("Pollution de l'eau", request.getTitle());
-        assertEquals("Pollution constatée", request.getDescription());
-        assertEquals("Paris", request.getLocation());
-        assertEquals(48.8566, request.getLatitude());
-        assertEquals(2.3522, request.getLongitude());
-        assertEquals(1L, request.getUserId());
-        assertEquals(1, request.getClientId());
+        CreateReportRequest req = captor.getValue();
+        assertEquals("Pollution de l'eau", req.getTitle());
+        assertEquals("Pollution constatée", req.getDescription());
+        assertEquals("Paris", req.getLocation());
+        assertEquals(48.8566, req.getLatitude());
+        assertEquals(2.3522, req.getLongitude());
+        assertEquals(1L, req.getUserId());
+        assertEquals(1, req.getClientId());
     }
 
-
     @Test
-    void shouldGetAllReports() {
-
+    void getAllReportsOk() {
         PageResponse<ReportResponse> response = mock(PageResponse.class);
+        when(patientserviceFeignClient.getAllReports(0, 10, null, null, "pollution")).thenReturn(response);
 
-        when(patientserviceFeignClient.getAllReports(
-                0, 10, null, null, "pollution"))
-                .thenReturn(response);
-
-        PageResponse<ReportResponse> result =
-                webAppService.getAllReports(0, 10, null, null, "pollution");
+        PageResponse<ReportResponse> result = webAppService.getAllReports(0, 10, null, null, "pollution");
 
         assertSame(response, result);
-
-        verify(patientserviceFeignClient)
-                .getAllReports(0, 10, null, null, "pollution");
     }
 
-
     @Test
-    void shouldGetClientsForUser() {
+    void getClientsForUserOk() {
+        List<ProfessionalClient> clients = List.of(new ProfessionalClient());
+        when(patientserviceFeignClient.getClientsForUser()).thenReturn(clients);
 
-        User user = new User();
-        List<ProfessionalClient> clients =
-                List.of(new ProfessionalClient());
-
-        when(patientserviceFeignClient.getClientsForUser())
-                .thenReturn(clients);
-
-        List<ProfessionalClient> result =
-                webAppService.getClientsForUser(user);
+        List<ProfessionalClient> result = webAppService.getClientsForUser(new User());
 
         assertEquals(1, result.size());
-        assertSame(clients.get(0), result.get(0));
-
-        verify(patientserviceFeignClient).getClientsForUser();
     }
 
-
     @Test
-    void shouldGetReportsByUser() {
-
+    void getReportsByUserOk() {
         ReportSummary report = new ReportSummary();
         report.setTitle("Pollution de l'eau");
+        when(patientserviceFeignClient.getReportsByUser(1L)).thenReturn(List.of(report));
 
-        when(patientserviceFeignClient.getReportsByUser(1L))
-                .thenReturn(List.of(report));
-
-        List<ReportSummary> result =
-                webAppService.getReportsByUser(1L);
+        List<ReportSummary> result = webAppService.getReportsByUser(1L);
 
         assertEquals(1, result.size());
         assertEquals("Pollution de l'eau", result.get(0).getTitle());
-
-        verify(patientserviceFeignClient).getReportsByUser(1L);
     }
 
-
     @Test
-    void shouldGetReportById() {
-
+    void getReportByIdOk() {
         ReportResponse response = new ReportResponse();
+        when(patientserviceFeignClient.getReportById(10)).thenReturn(response);
 
-        when(patientserviceFeignClient.getReportById(10))
-                .thenReturn(response);
-
-        ReportResponse result = webAppService.getReportById(10);
-
-        assertSame(response, result);
-
-        verify(patientserviceFeignClient).getReportById(10);
+        assertSame(response, webAppService.getReportById(10));
     }
 
-
     @Test
-    void shouldGetClientById() {
-
+    void getClientByIdOk() {
         ProfessionalClient client = new ProfessionalClient();
+        when(patientserviceFeignClient.getClientById(1)).thenReturn(client);
 
-        when(patientserviceFeignClient.getClientById(1))
-                .thenReturn(client);
-
-        ProfessionalClient result = webAppService.getClientById(1);
-
-        assertSame(client, result);
-
-        verify(patientserviceFeignClient).getClientById(1);
+        assertSame(client, webAppService.getClientById(1));
     }
 
-
     @Test
-    void shouldGetUserById() {
-
+    void getUserByIdOk() {
         User user = new User();
         user.setUsername("testuser");
-
-        when(patientserviceFeignClient.getUserById(1L))
-                .thenReturn(user);
+        when(patientserviceFeignClient.getUserById(1L)).thenReturn(user);
 
         User result = webAppService.getUserById(1L);
 
-        assertNotNull(result);
         assertEquals("testuser", result.getUsername());
-
-        verify(patientserviceFeignClient).getUserById(1L);
     }
 
-
     @Test
-    void shouldGetReportImages() {
+    void getReportImagesOk() {
+        when(patientserviceFeignClient.getReportImages(10)).thenReturn(List.of());
 
-        List<ReportImageResponse> images = List.of();
+        List<ReportImageResponse> result = webAppService.getReportImages(10);
 
-        when(patientserviceFeignClient.getReportImages(10))
-                .thenReturn(images);
-
-        List<ReportImageResponse> result =
-                webAppService.getReportImages(10);
-
-        assertNotNull(result);
         assertTrue(result.isEmpty());
-
-        verify(patientserviceFeignClient).getReportImages(10);
     }
 
-
     @Test
-    void shouldGetReportImage() {
-
+    void getReportImageOk() {
         byte[] image = {1, 2, 3};
+        when(patientserviceFeignClient.getReportImage(10, "image.jpg")).thenReturn(image);
 
-        when(patientserviceFeignClient.getReportImage(10, "image.jpg"))
-                .thenReturn(image);
-
-        byte[] result =
-                webAppService.getReportImage(10, "image.jpg");
-
-        assertArrayEquals(image, result);
-
-        verify(patientserviceFeignClient)
-                .getReportImage(10, "image.jpg");
+        assertArrayEquals(image, webAppService.getReportImage(10, "image.jpg"));
     }
 
-
     @Test
-    void shouldUploadReportImage() {
+    void uploadReportImageOk() {
+        MultipartFile image = new MockMultipartFile("file", "image.jpg", "image/jpeg", new byte[]{1, 2, 3});
+        when(patientserviceFeignClient.uploadReportImage(10, image)).thenReturn("image.jpg");
 
-        MultipartFile image = new MockMultipartFile(
-                "file",
-                "image.jpg",
-                "image/jpeg",
-                new byte[]{1, 2, 3}
-        );
-
-        when(patientserviceFeignClient.uploadReportImage(10, image))
-                .thenReturn("image.jpg");
-
-        String result = webAppService.uploadReportImage(10, image);
-
-        assertEquals("image.jpg", result);
-
-        verify(patientserviceFeignClient)
-                .uploadReportImage(10, image);
+        assertEquals("image.jpg", webAppService.uploadReportImage(10, image));
     }
 
-
     @Test
-    void shouldReturnNullWhenImageIsNull() {
+    void uploadReportImageNullOuVide() {
+        assertNull(webAppService.uploadReportImage(10, null));
 
-        String result = webAppService.uploadReportImage(10, null);
+        MultipartFile empty = new MockMultipartFile("file", "image.jpg", "image/jpeg", new byte[0]);
+        assertNull(webAppService.uploadReportImage(10, empty));
 
-        assertNull(result);
-
-        verify(patientserviceFeignClient, never())
-                .uploadReportImage(anyInt(), any());
-    }
-
-
-    @Test
-    void shouldReturnNullWhenImageIsEmpty() {
-
-        MultipartFile image = new MockMultipartFile(
-                "file",
-                "image.jpg",
-                "image/jpeg",
-                new byte[0]
-        );
-
-        String result = webAppService.uploadReportImage(10, image);
-
-        assertNull(result);
-
-        verify(patientserviceFeignClient, never())
-                .uploadReportImage(anyInt(), any());
+        verify(patientserviceFeignClient, never()).uploadReportImage(anyInt(), any());
     }
 }

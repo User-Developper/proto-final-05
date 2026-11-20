@@ -7,14 +7,11 @@ import org.springframework.data.jpa.domain.Specification;
 
 public class ReportSpecification {
 
-    // =========================
-    // SEARCH TEXT (SAFE)
-    // =========================
     public static Specification<Report> containsText(String q) {
         return (root, query, cb) -> {
 
             if (q == null || q.isBlank()) {
-                return cb.conjunction(); // ✅ IMPORTANT (au lieu de null)
+                return cb.conjunction();
             }
 
             String like = "%" + q.toLowerCase() + "%";
@@ -26,28 +23,22 @@ public class ReportSpecification {
         };
     }
 
-    // =========================
-    // CATEGORY FILTER (SAFE)
-    // =========================
     public static Specification<Report> hasCategory(Category category) {
         return (root, query, cb) -> {
 
             if (category == null) {
-                return cb.conjunction(); // ✅ IMPORTANT
+                return cb.conjunction();
             }
 
             return cb.equal(root.get("category"), category);
         };
     }
 
-    // =========================
-    // GRAVITY FILTER (SAFE)
-    // =========================
     public static Specification<Report> hasGravity(Gravity gravity) {
         return (root, query, cb) -> {
 
             if (gravity == null) {
-                return cb.conjunction(); // ✅ IMPORTANT
+                return cb.conjunction();
             }
 
             return cb.equal(root.get("gravity"), gravity);

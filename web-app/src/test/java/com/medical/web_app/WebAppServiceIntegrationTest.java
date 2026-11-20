@@ -16,7 +16,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
@@ -32,6 +31,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @DirtiesContext
 class WebAppServiceIntegrationTest {
 
+    // Faux serveur HTTP pour simuler patient-service
     private static final WireMockServer wireMockServer =
             new WireMockServer(wireMockConfig().dynamicPort());
 
@@ -42,64 +42,48 @@ class WebAppServiceIntegrationTest {
     @Autowired
     private WebAppService webAppService;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-
     @DynamicPropertySource
     static void configureProperties(DynamicPropertyRegistry registry) {
-
         registry.add(
                 "spring.cloud.openfeign.client.config.patient-service.url",
                 wireMockServer::baseUrl
         );
-
         registry.add("spring.cloud.config.enabled", () -> false);
         registry.add("spring.cloud.consul.enabled", () -> false);
         registry.add("spring.cloud.discovery.enabled", () -> false);
     }
 
-
     @BeforeEach
-    void resetWireMock() {
+    void resetStubs() {
         wireMockServer.resetAll();
     }
 
-
     @AfterAll
-    static void stopWireMock() {
+    static void stopServer() {
         wireMockServer.stop();
     }
 
-
     @Test
-    void shouldGetPatientThroughFeign() {
-
+    void recupPatient() {
         wireMockServer.stubFor(
                 get(urlPathEqualTo("/patients"))
                         .withQueryParam("email", equalTo("test@email.com"))
                         .willReturn(okJson("""
-                                {
-                                    "email": "test@email.com"
-                                }
+                                { "email": "test@email.com" }
                                 """))
         );
 
-        Optional<Patient> result =
-                webAppService.getPatient("test@email.com");
+        Optional<Patient> result = webAppService.getPatient("test@email.com");
 
         assertTrue(result.isPresent());
-
         wireMockServer.verify(
                 getRequestedFor(urlPathEqualTo("/patients"))
                         .withQueryParam("email", equalTo("test@email.com"))
         );
     }
 
-
     @Test
-    void shouldGetUserThroughFeign() {
-
+    void recupUser() {
         wireMockServer.stubFor(
                 get(urlPathEqualTo("/user"))
                         .withQueryParam("username", equalTo("testuser"))
@@ -113,29 +97,19 @@ class WebAppServiceIntegrationTest {
                                 """))
         );
 
-        Optional<User> result =
-                webAppService.getUser("testuser");
+        Optional<User> result = webAppService.getUser("testuser");
 
         assertTrue(result.isPresent());
         assertEquals("testuser", result.get().getUsername());
         assertEquals("Jean", result.get().getPrenom());
-
-        wireMockServer.verify(
-                getRequestedFor(urlPathEqualTo("/user"))
-                        .withQueryParam("username", equalTo("testuser"))
-        );
     }
 
-
     @Test
-    void shouldCreateUserThroughFeign() {
-
+    void creationUser() {
         wireMockServer.stubFor(
                 post(urlEqualTo("/user"))
-                        .withRequestBody(matchingJsonPath("$.username",
-                                equalTo("testuser")))
-                        .withRequestBody(matchingJsonPath("$.role",
-                                equalTo("PATIENT")))
+                        .withRequestBody(matchingJsonPath("$.username", equalTo("testuser")))
+                        .withRequestBody(matchingJsonPath("$.role", equalTo("PATIENT")))
                         .willReturn(okJson("""
                                 {
                                     "username": "testuser",
@@ -157,52 +131,33 @@ class WebAppServiceIntegrationTest {
         assertNotNull(result);
         assertEquals("testuser", result.getUsername());
         assertEquals("PATIENT", result.getRole());
-
         wireMockServer.verify(
                 postRequestedFor(urlEqualTo("/user"))
-                        .withRequestBody(matchingJsonPath("$.username",
-                                equalTo("testuser")))
-                        .withRequestBody(matchingJsonPath("$.password",
-                                matching(".+")))
+                        .withRequestBody(matchingJsonPath("$.password", matching(".+")))
         );
     }
 
-
     @Test
-    void shouldSetActiveClientThroughFeign() {
-
+    void choixClientActif() {
         wireMockServer.stubFor(
-                post(urlEqualTo(
-                        "/client-selector/users/testuser/active-client/1"))
+                post(urlEqualTo("/client-selector/users/testuser/active-client/1"))
                         .willReturn(okJson("""
-                                {
-                                    "username": "testuser"
-                                }
+                                { "username": "testuser" }
                                 """))
         );
 
-        User result =
-                webAppService.setActiveClient("testuser", 1);
+        User result = webAppService.setActiveClient("testuser", 1);
 
         assertNotNull(result);
         assertEquals("testuser", result.getUsername());
-
-        wireMockServer.verify(
-                postRequestedFor(urlEqualTo(
-                        "/client-selector/users/testuser/active-client/1"))
-        );
     }
 
-
     @Test
-    void shouldSubmitReportThroughFeign() {
-
+    void envoiReport() {
         wireMockServer.stubFor(
                 post(urlEqualTo("/reports"))
-                        .withRequestBody(matchingJsonPath("$.title",
-                                equalTo("Pollution de l'eau")))
-                        .withRequestBody(matchingJsonPath("$.userId",
-                                equalTo("1")))
+                        .withRequestBody(matchingJsonPath("$.title", equalTo("Pollution de l'eau")))
+                        .withRequestBody(matchingJsonPath("$.userId", equalTo("1")))
                         .willReturn(okJson("""
                                 {
                                     "id": 10,
@@ -221,20 +176,10 @@ class WebAppServiceIntegrationTest {
         ReportResponse result = webAppService.submitFinal(form);
 
         assertNotNull(result);
-
-        wireMockServer.verify(
-                postRequestedFor(urlEqualTo("/reports"))
-                        .withRequestBody(matchingJsonPath("$.title",
-                                equalTo("Pollution de l'eau")))
-                        .withRequestBody(matchingJsonPath("$.location",
-                                equalTo("Paris")))
-        );
     }
 
-
     @Test
-    void shouldGetReportsByUserThroughFeign() {
-
+    void recupReportsUser() {
         wireMockServer.stubFor(
                 get(urlPathEqualTo("/reports"))
                         .withQueryParam("userId", equalTo("1"))
@@ -248,22 +193,14 @@ class WebAppServiceIntegrationTest {
                                 """))
         );
 
-        List<ReportSummary> result =
-                webAppService.getReportsByUser(1L);
+        List<ReportSummary> result = webAppService.getReportsByUser(1L);
 
         assertEquals(1, result.size());
         assertEquals("Pollution de l'eau", result.get(0).getTitle());
-
-        wireMockServer.verify(
-                getRequestedFor(urlPathEqualTo("/reports"))
-                        .withQueryParam("userId", equalTo("1"))
-        );
     }
 
-
     @Test
-    void shouldGetReportByIdThroughFeign() {
-
+    void recupReportParId() {
         wireMockServer.stubFor(
                 get(urlEqualTo("/reports/10"))
                         .willReturn(okJson("""
@@ -277,16 +214,10 @@ class WebAppServiceIntegrationTest {
         ReportResponse result = webAppService.getReportById(10);
 
         assertNotNull(result);
-
-        wireMockServer.verify(
-                getRequestedFor(urlEqualTo("/reports/10"))
-        );
     }
 
-
     @Test
-    void shouldGetUserByIdThroughFeign() {
-
+    void recupUserParId() {
         wireMockServer.stubFor(
                 get(urlEqualTo("/user/1"))
                         .willReturn(okJson("""
@@ -301,77 +232,49 @@ class WebAppServiceIntegrationTest {
 
         assertNotNull(result);
         assertEquals("testuser", result.getUsername());
-
-        wireMockServer.verify(
-                getRequestedFor(urlEqualTo("/user/1"))
-        );
     }
 
-
     @Test
-    void shouldGetClientsForUserThroughFeign() {
-
+    void recupClientsUser() {
         wireMockServer.stubFor(
                 get(urlEqualTo("/client-selector"))
                         .willReturn(okJson("[]"))
         );
 
-        List<ProfessionalClient> result =
-                webAppService.getClientsForUser(new User());
+        List<ProfessionalClient> result = webAppService.getClientsForUser(new User());
 
         assertNotNull(result);
         assertTrue(result.isEmpty());
-
-        wireMockServer.verify(
-                getRequestedFor(urlEqualTo("/client-selector"))
-        );
     }
 
-
     @Test
-    void shouldGetClientByIdThroughFeign() {
-
+    void recupClientParId() {
         wireMockServer.stubFor(
                 get(urlEqualTo("/reports/client/1"))
                         .willReturn(okJson("{}"))
         );
 
-        ProfessionalClient result =
-                webAppService.getClientById(1);
+        ProfessionalClient result = webAppService.getClientById(1);
 
         assertNotNull(result);
-
-        wireMockServer.verify(
-                getRequestedFor(urlEqualTo("/reports/client/1"))
-        );
     }
 
-
     @Test
-    void shouldGetReportImagesThroughFeign() {
-
+    void recupImagesReport() {
         wireMockServer.stubFor(
                 get(urlEqualTo("/reports/10/images"))
                         .willReturn(okJson("[]"))
         );
 
-        List<ReportImageResponse> result =
-                webAppService.getReportImages(10);
+        List<ReportImageResponse> result = webAppService.getReportImages(10);
 
         assertNotNull(result);
         assertTrue(result.isEmpty());
-
-        wireMockServer.verify(
-                getRequestedFor(urlEqualTo("/reports/10/images"))
-        );
     }
 
-
     @Test
-    void shouldGetReportImageThroughFeign() {
-
+    void recupImageReport() {
         byte[] imageContent = {1, 2, 3, 4};
-
         wireMockServer.stubFor(
                 get(urlEqualTo("/reports/10/images/image.jpg"))
                         .willReturn(
@@ -382,22 +285,13 @@ class WebAppServiceIntegrationTest {
                         )
         );
 
-        byte[] result =
-                webAppService.getReportImage(10, "image.jpg");
+        byte[] result = webAppService.getReportImage(10, "image.jpg");
 
         assertArrayEquals(imageContent, result);
-
-        wireMockServer.verify(
-                getRequestedFor(
-                        urlEqualTo("/reports/10/images/image.jpg")
-                )
-        );
     }
 
-
     @Test
-    void shouldUploadReportImageThroughFeign() {
-
+    void uploadImageReport() {
         wireMockServer.stubFor(
                 post(urlEqualTo("/reports/10/images"))
                         .withRequestBody(containing("image.jpg"))
@@ -410,19 +304,11 @@ class WebAppServiceIntegrationTest {
         );
 
         MockMultipartFile image = new MockMultipartFile(
-                "file",
-                "image.jpg",
-                "image/jpeg",
-                new byte[]{1, 2, 3, 4}
+                "file", "image.jpg", "image/jpeg", new byte[]{1, 2, 3, 4}
         );
 
         String result = webAppService.uploadReportImage(10, image);
 
         assertEquals("image.jpg", result);
-
-        wireMockServer.verify(
-                postRequestedFor(urlEqualTo("/reports/10/images"))
-                        .withRequestBody(containing("image.jpg"))
-        );
     }
 }

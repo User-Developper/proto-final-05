@@ -45,39 +45,5 @@ public class UsersController {
 
         return userService.getUserById(userId);
     }
-//    @PutMapping()
-//    public User update(@RequestBody User user){
-//
-//        return dataServiceFeignClient.updateUser(user);
-//    }
-//
-//    @DeleteMapping()
-//    public void delete(@RequestParam String username){
-//
-//         dataServiceFeignClient.deleteUser(username);
-//    }
-
-
-
-
-
-
-//    @PostMapping()
-//    public String submitReportStep1(@RequestBody Report report){
-//
-//
-//
-//        System.out.println(reportForm.getCategory());
-//        System.out.println(reportForm.getTitle());
-//        System.out.println(reportForm.getDescription());
-//        System.out.println(reportForm.getGravity());
-//        System.out.println(reportForm.getLocation());
-//        System.out.println(reportForm.getLatitude());
-//        System.out.println(reportForm.getLongitude());
-//
-//
-//    }
-
-
 
 }
